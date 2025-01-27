@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Parallax Fondo Completo en Movimiento</title>
+  <title>Parallax con Fondo Súper Dinámico</title>
   <style>
     body, html {
       margin: 0;
@@ -13,30 +13,30 @@
       height: 100%;
     }
 
-    /* Contenedor para el fondo dinámico */
+    /* Fondo dinámico */
     .parallax-background {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      height: 150%; /* Más alto que el viewport para que el fondo sea más dinámico */
+      height: 200%; /* Mucho más alto para permitir desplazamiento dinámico */
       background-image: url('https://jdelafuentec.github.io/web/lagunaMirador_Panorama-1paralaxsi.jpg');
       background-size: cover;
       background-position: center;
       z-index: -1; /* Envía el fondo detrás del contenido */
     }
 
-    /* Contenedor de contenido */
+    /* Contenido principal */
     .content {
       position: relative;
       z-index: 1;
       padding: 50px;
-      background-color: rgba(255, 255, 255, 0.9); /* Fondo semitransparente para resaltar contenido */
+      background-color: rgba(255, 255, 255, 0.95); /* Fondo semitransparente para mayor legibilidad */
     }
 
     /* Secciones largas */
     .section {
-      height: 100vh;
+      height: 100vh; /* Altura de pantalla completa */
       display: flex;
       align-items: center;
       justify-content: center;
@@ -44,7 +44,7 @@
     }
 
     .section:nth-child(even) {
-      background-color: #f0f0f0;
+      background-color: #f7f7f7;
     }
 
     .section h1 {
@@ -69,19 +69,19 @@
   <div class="content">
     <div class="section">
       <h1>Bienvenido</h1>
-      <p>El fondo de este sitio web se desplaza más rápido que el contenido, creando un efecto inmersivo único.</p>
+      <p>El fondo se mueve mucho más rápido que el contenido, creando una experiencia inmersiva y única. ¡Sigue bajando para verlo!</p>
     </div>
     <div class="section">
       <h1>Explora el Efecto</h1>
-      <p>Desplázate hacia abajo para ver cómo el fondo y el contenido interactúan con un efecto de movimiento diferencial.</p>
+      <p>Este es un ejemplo dinámico de cómo el fondo puede desplazarse a mayor velocidad que el texto, dándole vida a tu sitio web.</p>
     </div>
     <div class="section">
       <h1>Personalización Total</h1>
-      <p>Usa imágenes largas y dinámicas para crear experiencias únicas en tus proyectos web.</p>
+      <p>Puedes ajustar la velocidad del fondo y personalizar la experiencia visual según tus necesidades.</p>
     </div>
     <div class="section">
       <h1>Gracias por Visitar</h1>
-      <p>¿Quieres añadir más efectos o personalizar este diseño? ¡Pide lo que necesites!</p>
+      <p>¿Te gustaría más personalizaciones o añadir efectos adicionales? ¡Déjamelo saber!</p>
     </div>
   </div>
 
@@ -90,7 +90,7 @@
     window.addEventListener('scroll', () => {
       const scrollPosition = window.scrollY; // Obtén la posición del scroll
       const parallax = document.getElementById('parallax');
-      parallax.style.transform = `translateY(${scrollPosition * 0.5}px)`; // El fondo se mueve más rápido (ajusta el factor 0.5 según lo necesites)
+      parallax.style.transform = `translateY(${scrollPosition * 1.5}px)`; // El fondo se mueve mucho más rápido (1.5x el scroll)
     });
   </script>
 
