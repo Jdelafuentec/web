@@ -3,46 +3,56 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Parallax Ancho Completo</title>
+  <title>Parallax Fondo Completo en Movimiento</title>
   <style>
     body, html {
       margin: 0;
       padding: 0;
       font-family: Arial, sans-serif;
       overflow-x: hidden;
+      height: 100%;
     }
 
-    /* Sección Parallax */
-    .parallax {
-      height: 100vh; /* Altura de pantalla completa */
+    /* Contenedor para el fondo dinámico */
+    .parallax-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 150%; /* Más alto que el viewport para que el fondo sea más dinámico */
       background-image: url('https://jdelafuentec.github.io/web/lagunaMirador_Panorama-1paralaxsi.jpg');
-      background-attachment: fixed; /* Activa el efecto parallax */
-      background-repeat: no-repeat;
-      background-size: cover; /* Ocupa todo el ancho y alto */
-      background-position: center center; /* Centra la imagen */
+      background-size: cover;
+      background-position: center;
+      z-index: -1; /* Envía el fondo detrás del contenido */
     }
 
-    /* Secciones de Contenido */
+    /* Contenedor de contenido */
     .content {
-      height: 100vh; /* Altura de pantalla completa */
-      background-color: #fff;
+      position: relative;
+      z-index: 1;
+      padding: 50px;
+      background-color: rgba(255, 255, 255, 0.9); /* Fondo semitransparente para resaltar contenido */
+    }
+
+    /* Secciones largas */
+    .section {
+      height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 2rem;
     }
 
-    .content:nth-child(even) {
-      background-color: #f0f0f0; /* Alterna los colores de fondo */
+    .section:nth-child(even) {
+      background-color: #f0f0f0;
     }
 
-    .content h1 {
+    .section h1 {
       font-size: 3rem;
       color: #333;
     }
 
-    .content p {
+    .section p {
       font-size: 1.2rem;
       color: #666;
       max-width: 800px;
@@ -52,38 +62,37 @@
 </head>
 <body>
 
-  <!-- Sección Parallax -->
-  <div class="parallax"></div>
+  <!-- Fondo dinámico -->
+  <div class="parallax-background" id="parallax"></div>
 
-  <!-- Sección de Contenido 1 -->
+  <!-- Contenido principal -->
   <div class="content">
-    <div>
-      <h1>Bienvenido al Sitio</h1>
-      <p>Este es un ejemplo de un sitio web con un fondo parallax que ocupa todo el ancho y alto de la pantalla. Sigue desplazándote para explorar.</p>
+    <div class="section">
+      <h1>Bienvenido</h1>
+      <p>El fondo de este sitio web se desplaza más rápido que el contenido, creando un efecto inmersivo único.</p>
+    </div>
+    <div class="section">
+      <h1>Explora el Efecto</h1>
+      <p>Desplázate hacia abajo para ver cómo el fondo y el contenido interactúan con un efecto de movimiento diferencial.</p>
+    </div>
+    <div class="section">
+      <h1>Personalización Total</h1>
+      <p>Usa imágenes largas y dinámicas para crear experiencias únicas en tus proyectos web.</p>
+    </div>
+    <div class="section">
+      <h1>Gracias por Visitar</h1>
+      <p>¿Quieres añadir más efectos o personalizar este diseño? ¡Pide lo que necesites!</p>
     </div>
   </div>
 
-  <!-- Sección de Contenido 2 -->
-  <div class="content">
-    <div>
-      <h1>Sección Intermedia</h1>
-      <p>El efecto parallax genera una experiencia inmersiva, especialmente cuando la imagen ocupa el ancho completo de la pantalla.</p>
-    </div>
-  </div>
-
-  <!-- Sección Parallax -->
-  <div class="parallax"></div>
-
-  <!-- Sección de Contenido 3 -->
-  <div class="content">
-    <div>
-      <h1>Última Sección</h1>
-      <p>Gracias por visitar este sitio. Recuerda que puedes personalizar el contenido y las imágenes según tus necesidades. ¡Explora más efectos!</p>
-    </div>
-  </div>
-
-  <!-- Sección Parallax -->
-  <div class="parallax"></div>
+  <script>
+    // Ajusta la posición del fondo en función del scroll
+    window.addEventListener('scroll', () => {
+      const scrollPosition = window.scrollY; // Obtén la posición del scroll
+      const parallax = document.getElementById('parallax');
+      parallax.style.transform = `translateY(${scrollPosition * 0.5}px)`; // El fondo se mueve más rápido (ajusta el factor 0.5 según lo necesites)
+    });
+  </script>
 
 </body>
 </html>
