@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Parallax con Fondo Extendido</title>
+  <title>Parallax con Fondo Recorrible</title>
   <style>
     body, html {
       margin: 0;
@@ -13,7 +13,7 @@
       height: 100%;
     }
 
-    /* Fondo muy largo */
+    /* Fondo muy largo y desplazable */
     .parallax-background {
       position: fixed;
       top: 0;
@@ -88,7 +88,8 @@
     window.addEventListener('scroll', () => {
       const scrollPosition = window.scrollY; // Posición del scroll
       const parallax = document.getElementById('parallax');
-      parallax.style.transform = `translateY(${scrollPosition * 2}px)`; // Mueve el fondo más rápido que el contenido
+      // Hacer que el fondo se mueva más rápido que el contenido (ajustando el factor de velocidad)
+      parallax.style.transform = `translateY(${scrollPosition * 0.5}px)`; // Ajusta el 0.5 para cambiar la velocidad
     });
   </script>
 
