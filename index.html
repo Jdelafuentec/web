@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Parallax con Fondo que Sube</title>
+  <title>Atacama</title>
   <style>
     body, html {
       margin: 0;
@@ -15,13 +15,13 @@
 
     /* Fondo que sube con el scroll */
     .parallax-background {
-      position: absolute;
+      position: relative;
       top: 0;
       left: 0;
       width: 100%;
-      height: 27099px; /* Altura de la imagen */
+      height: 100%; /* Altura de la imagen */
       background-image: url('https://jdelafuentec.github.io/web/lagunaMirador_Panorama-1paralaxsi.jpg');
-      background-size: cover;
+   
       background-position: center;
       z-index: -1; /* Fondo detrás del contenido */
     }
@@ -53,7 +53,7 @@
 
     .section p {
       font-size: 1.2rem;
-      max-width: 800px;
+      max-width: 400px;
       line-height: 1.6;
     }
   </style>
@@ -89,7 +89,7 @@
       const scrollPosition = window.scrollY; // Posición del scroll
       const parallax = document.getElementById('parallax');
       // Hacer que el fondo se mueva hacia arriba más rápido que el contenido (ajustando el factor de velocidad)
-      parallax.style.transform = `translateY(-${scrollPosition * 0.5}px)`; // Ajusta el 0.5 para cambiar la velocidad
+      parallax.style.transform = `translateY(-${scrollPosition * 1.5}px)`; // Ajusta el 0.5 para cambiar la velocidad
     });
   </script>
 
