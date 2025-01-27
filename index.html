@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Parallax con tu Imagen</title>
+  <title>Parallax con Scroll en Fondo</title>
   <style>
     body, html {
       margin: 0;
@@ -13,15 +13,11 @@
     }
 
     .parallax {
-      height: 100vh; /* Full screen height */
-      background-attachment: fixed; /* Parallax effect */
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-    }
-
-    .parallax-custom {
+      height: 100vh; /* Altura de pantalla completa */
       background-image: url('https://jdelafuentec.github.io/web/lagunaMirador_Panorama-1paralaxsi.jpg');
+      background-repeat: no-repeat;
+      background-size: auto 200%; /* Ajusta la altura para que la imagen sea más larga */
+      background-position: center 0; /* Punto inicial del scroll */
     }
 
     .content {
@@ -42,19 +38,30 @@
 </head>
 <body>
 
-  <div class="parallax parallax-custom"></div>
+  <div class="parallax" id="parallax"></div>
 
   <div class="content">
     <h1>Bienvenido</h1>
-    <p>Disfruta del efecto parallax con la imagen personalizada.</p>
+    <p>La imagen del fondo se desplaza suavemente al hacer scroll.</p>
   </div>
 
-  <div class="parallax parallax-custom"></div>
+  <div class="parallax" id="parallax"></div>
 
   <div class="content">
     <h1>Gracias por visitar</h1>
-    <p>¡Explora más contenido desplazándote hacia arriba o hacia abajo!</p>
+    <p>¡Sigue explorando y disfrutando del efecto!</p>
   </div>
+
+  <script>
+    // Script para el movimiento dinámico del fondo
+    window.addEventListener('scroll', () => {
+      const parallax = document.querySelectorAll('.parallax');
+      parallax.forEach((el) => {
+        let offset = window.pageYOffset;
+        el.style.backgroundPosition = `center ${offset * 0.5}px`; // Ajusta la velocidad con 0.5
+      });
+    });
+  </script>
 
 </body>
 </html>
