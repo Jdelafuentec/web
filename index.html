@@ -19,9 +19,9 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 27099px; /* Altura de la imagen, para que cubra toda su longitud */
+      height: 100%; /* Altura de la imagen */
       background-image: url('https://jdelafuentec.github.io/web/lagunaMirador_Panorama-1paralaxsi.jpg');
-      background-size: cover;
+   
       background-position: center;
       z-index: -1; /* Fondo detrás del contenido */
     }
@@ -30,19 +30,20 @@
     .content {
       position: relative;
       z-index: 1;
+      padding: 50px;
       color: white;
     }
 
     /* Secciones de contenido */
     .section {
-      height: 100vh; /* Cada sección toma el 100% de la altura de la ventana */
+      height: 200vh; /* Aumenta la altura de cada sección para más espacio vacío */
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
       background-color: rgba(0, 0, 0, 0.3); /* Fondo semitransparente para que el texto resalte */
-      margin-bottom: 50px; /* Espacio entre secciones */
+      margin-bottom: 50px; /* Añade espacio entre secciones */
     }
 
     .section h1 {
@@ -87,8 +88,8 @@
     window.addEventListener('scroll', () => {
       const scrollPosition = window.scrollY; // Posición del scroll
       const parallax = document.getElementById('parallax');
-      // Hacer que el fondo se mueva hacia arriba más rápido que el contenido
-      parallax.style.transform = `translateY(-${scrollPosition * 1.5}px)`; // Ajusta el 1.5 para cambiar la velocidad del fondo
+      // Hacer que el fondo se mueva hacia arriba más rápido que el contenido (ajustando el factor de velocidad)
+      parallax.style.transform = translateY(-${scrollPosition * 1.5}px); // Ajusta el 0.5 para cambiar la velocidad
     });
   </script>
 
