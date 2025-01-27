@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Parallax con Fondo Recorrible</title>
+  <title>Parallax con Fondo que Sube</title>
   <style>
     body, html {
       margin: 0;
@@ -13,9 +13,9 @@
       height: 100%;
     }
 
-    /* Fondo muy largo y desplazable */
+    /* Fondo que sube con el scroll */
     .parallax-background {
-      position: fixed;
+      position: absolute;
       top: 0;
       left: 0;
       width: 100%;
@@ -67,15 +67,15 @@
   <div class="content">
     <div class="section">
       <h1>Bienvenido</h1>
-      <p>Disfruta de una imagen de fondo espectacular que se mueve más rápido que el contenido a medida que te desplazas.</p>
+      <p>Disfruta de una imagen de fondo espectacular que se mueve a medida que haces scroll.</p>
     </div>
     <div class="section">
       <h1>Efecto Parallax</h1>
-      <p>El fondo se mueve mucho más rápido que el contenido, dando la sensación de profundidad mientras navegas.</p>
+      <p>El fondo se desplaza hacia arriba con el contenido, creando una experiencia de navegación única.</p>
     </div>
     <div class="section">
       <h1>Explora el Diseño</h1>
-      <p>La imagen de fondo se extiende para aprovechar toda su longitud, mientras el contenido fluye de manera suave.</p>
+      <p>La imagen de fondo se mueve mientras navegas, aprovechando toda su longitud.</p>
     </div>
     <div class="section">
       <h1>Gracias por Visitar</h1>
@@ -84,12 +84,12 @@
   </div>
 
   <script>
-    // Movimiento del fondo
+    // Movimiento del fondo: El fondo sube mientras haces scroll
     window.addEventListener('scroll', () => {
       const scrollPosition = window.scrollY; // Posición del scroll
       const parallax = document.getElementById('parallax');
-      // Hacer que el fondo se mueva más rápido que el contenido (ajustando el factor de velocidad)
-      parallax.style.transform = `translateY(${scrollPosition * 0.5}px)`; // Ajusta el 0.5 para cambiar la velocidad
+      // Hacer que el fondo se mueva hacia arriba más rápido que el contenido (ajustando el factor de velocidad)
+      parallax.style.transform = `translateY(-${scrollPosition * 0.5}px)`; // Ajusta el 0.5 para cambiar la velocidad
     });
   </script>
 
