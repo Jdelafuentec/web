@@ -1,1 +1,64 @@
-<h1>hello hello</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parallax Effect</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    .parallax {
+      height: 100vh; /* Full screen height */
+      background-attachment: fixed; /* Parallax effect */
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .parallax-1 {
+      background-image: url('https://source.unsplash.com/random/1920x1080?nature');
+    }
+
+    .parallax-2 {
+      background-image: url('https://source.unsplash.com/random/1920x1080?water');
+    }
+
+    .content {
+      height: 50vh;
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .content h1 {
+      font-size: 2.5rem;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="parallax parallax-1"></div>
+
+  <div class="content">
+    <h1>Bienvenido a la sección 1</h1>
+    <p>Este es contenido estático que contrasta con el fondo parallax.</p>
+  </div>
+
+  <div class="parallax parallax-2"></div>
+
+  <div class="content">
+    <h1>Bienvenido a la sección 2</h1>
+    <p>Desplázate hacia arriba o hacia abajo para ver más efectos.</p>
+  </div>
+
+</body>
+</html>
