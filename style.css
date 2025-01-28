@@ -26,7 +26,7 @@ body, html {
 
 /* Imagen de fondo 3 */
 .bg-3 {
-  background-image: url('https://jdelafuentec.github.io/web/transecto6_Panorama_part1.jpg'); /* Cambia esta URL */
+  background-image: url('https://jdelafuentec.github.io/web/transectoSal.jpg'); /* Cambia esta URL */
   background-size: 100% auto;
   background-repeat: no-repeat;
   background-position: top center;
@@ -42,7 +42,7 @@ body, html {
 }
 /* Imagen de fondo 3 */
 .bg-5 {
-  background-image: url('https://jdelafuentec.github.io/web/transecto6_Panorama_part1.jpg'); /* Cambia esta URL */
+  background-image: url('https://jdelafuentec.github.io/web/bofedalInter.jpg'); /* Cambia esta URL */
   background-size: 100% auto;
   background-repeat: no-repeat;
   background-position: top center;
