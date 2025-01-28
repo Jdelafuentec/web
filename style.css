@@ -75,14 +75,14 @@ body, html {
   
 }
 
+
+
 .index-container-abajo {
   background-color: white;
   width: 80%;
   margin: 0 auto !important;
- /* Alineamos el texto a la derecha */
   padding: 0;
-  
-   
+  margin-top: 0; /* Asegura que no haya margen adicional en la parte inferior */
 }
 
 /* Contenedor del cuadrado dividido en 5 */
