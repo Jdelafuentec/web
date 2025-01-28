@@ -52,11 +52,12 @@ body, html {
   background-attachment: scroll;
 }
 
-/* Contenido de la página */
 .content {
-  min-height: 800px; 
-  background-color: none;
-  bottom:0 !important;
+  min-height: auto !important; /* Permite que la altura se adapte al contenido */
+  height: auto !important; /* Garantiza que no haya altura fija */
+  margin: 0 !important; /* Sin márgenes adicionales */
+  padding: 0 !important; /* Sin relleno interno */
+  background-color: transparent; /* Esto reemplaza a 'none' */
 }
 
 /* Fondo blanco para la sección */
