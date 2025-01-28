@@ -218,7 +218,7 @@ margin: 0 auto; /* Centra horizontalmente */
 .infoScroll{
   width:100%;
   margin: 0 auto !important;
-  height: 40px !important;
+  height: 30px !important;
   background-color: white !important;
   box-sizing: border-box;
   top: 0;
@@ -232,6 +232,7 @@ margin: 0 auto; /* Centra horizontalmente */
   margin: 0 auto !important;
   font-size: 0.7rem;
   color: #333;
+  padding: 1% !important;
 }
 
   .white-row {
