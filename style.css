@@ -1,32 +1,14 @@
-/* Common styles */
-body, html {
+ody, html {
   margin: 0;
   padding: 0;
-  
-  height: 100%;
-  background-size: cover;
+  width: 100%;
+  height: 15500px !important;
+}
+
+/* Imagen de fondo y otros estilos */
+body {
+  background-size: 100% auto; /* Ajusta la imagen al ancho de la ventana */
   background-repeat: no-repeat;
   background-position: top center;
-  overflow-y: scroll;
-}
-
-/* Mobile */
-@media (max-width: 480px) {
-  body {
-    height: calc(100vw * 2.5); /* Adjust dynamically for tall images */
-  }
-}
-
-/* Tablet */
-@media (min-width: 481px) and (max-width: 1024px) {
-  body {
-    height: calc(100vw * 1.5);
-  }
-}
-
-/* Desktop */
-@media (min-width: 1025px) {
-  body {
-    height: calc(100vw * 1.1); /* Based on your large screens */
-  }
+  height: 100%; /* Altura total de la imagen */
 }
