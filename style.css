@@ -67,6 +67,7 @@ body, html {
  height: 100vh; /* Ajusta la altura de la grilla automáticamente */
 margin: 0 auto; /* Centra horizontalmente */
   padding: 0; /* Sin relleno interno */
+  margin-bottom: -241px !important;
 
 }
 
