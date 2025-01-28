@@ -73,7 +73,7 @@ body, html {
   width: 80%;
   margin: 0 auto !important;
   /* Alineamos el título a la izquierda */
-  padding: 0;
+  padding: 0 !important;
   
 }
 
