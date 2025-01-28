@@ -219,10 +219,13 @@ margin: 0 auto; /* Centra horizontalmente */
   margin: 0 auto !important;
 
   .white-row {
-  background-color: white; /* White background */
+ background-color: white; /* White background */
   width: 100%; /* Full width */
   padding: 20px; /* Space inside the row */
   box-sizing: border-box; /* Ensure padding is included in the width */
   text-align: center; /* Center the text */
-  border-top: 1px solid #ddd; /* Optional: Adds a subtle border at the top */
+  position: fixed; /* Fix the footer to the bottom of the page */
+  bottom: 0; /* Align to the bottom */
+  left: 0; /* Ensure it spans the full width */
+  z-index: 999; /* Make sure the footer stays on top of other content */
 }
