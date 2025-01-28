@@ -204,7 +204,7 @@ margin: 0 auto; /* Centra horizontalmente */
   padding: 15px 30px;
   font-size: 1rem;
   background-color: #ffff !important; /* Color de fondo */
-  color: #0000; /* Color de texto */
+  color: black; /* Color de texto */
   border: none !important;
   border-radius: 0px;
   cursor: pointer;
