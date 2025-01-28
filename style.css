@@ -62,20 +62,16 @@ body, html {
 
 /* Fondo blanco para la sección */
 .index-container {
-  background: none !important;
+  background: transparent !important;
   width: 80%; 
  height: 100vh; /* Ajusta la altura de la grilla automáticamente */
 margin: 0 auto; /* Centra horizontalmente */
   padding: 0; /* Sin relleno interno */
-  display: flex; /* Flex para manejar el contenido */
-  justify-content: center; /* Alineación horizontal */
-  align-items: flex-start; /* Alineación superior */
-  box-sizing: border-box; /* Incluye padding/border en el cálculo del tamaño */
-  overflow: hidden;*
+
 }
 
 .index-container-arriba {
-  background-color: white;
+  background-color: transparent;
   width: 80%;
   margin: 0 auto !important;
   /* Alineamos el título a la izquierda */
