@@ -62,7 +62,7 @@ body, html {
 
 /* Fondo blanco para la sección */
 .index-container {
-  background-color: white;
+  background: none !important;
   width: 80%; 
  height: 100vh; /* Ajusta la altura de la grilla automáticamente */
 margin: 0 auto; /* Centra horizontalmente */
@@ -71,7 +71,7 @@ margin: 0 auto; /* Centra horizontalmente */
   justify-content: center; /* Alineación horizontal */
   align-items: flex-start; /* Alineación superior */
   box-sizing: border-box; /* Incluye padding/border en el cálculo del tamaño */
-  overflow: hidden; /*
+  overflow: hidden;*
 }
 
 .index-container-arriba {
