@@ -265,7 +265,7 @@ margin: 0 auto; /* Centra horizontalmente */
   z-index: 999; /* Make sure the footer stays on top of other content */
 }
 
-h3, h4 {
+h3, h4, bajada {
   display: inline;
 }
 
