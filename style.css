@@ -61,8 +61,11 @@ body, html {
 .index-container {
   background-color: white;
   width: 80%;
-  height: 100vh; /* Alcanza toda la altura de la ventana */
   
+  height: auto; /* Ajusta la altura de la grilla automáticamente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 0; /* Sin padding */
   margin: 0 auto !important;
   
