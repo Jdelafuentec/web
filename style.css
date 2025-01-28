@@ -6,6 +6,7 @@ body, html {
   width: 100%;
   height: auto; /* Permite que la imagen de fondo se desplace con el contenido */
   overflow-x: hidden; /* Evita desplazamiento horizontal */
+  box-sizing: border-box;
 }
 
 /* Imagen de fondo 1 */
@@ -91,6 +92,8 @@ body, html {
   margin-top: 0 !important; /* Asegura que no haya margen adicional en la parte inferior */
   height: auto !important;
   align-items: flex-start;
+  position: relative;
+  overflow: hidden;
 }
 
 /* Contenedor del cuadrado dividido en 5 */
