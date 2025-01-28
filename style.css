@@ -63,17 +63,15 @@ body, html {
 /* Fondo blanco para la sección */
 .index-container {
   background-color: white;
-  width: 80%;
-  
+  width: 80%; 
  height: 100vh; /* Ajusta la altura de la grilla automáticamente */
-
-  justify-content: center;
- 
-  padding: 0; /* Sin padding */
-  margin: 0 auto !important;
-  align-items: flex-start;
-  bottom: 0 !important;
-  
+margin: 0 auto; /* Centra horizontalmente */
+  padding: 0; /* Sin relleno interno */
+  display: flex; /* Flex para manejar el contenido */
+  justify-content: center; /* Alineación horizontal */
+  align-items: flex-start; /* Alineación superior */
+  box-sizing: border-box; /* Incluye padding/border en el cálculo del tamaño */
+  overflow: hidden; /*
 }
 
 .index-container-arriba {
