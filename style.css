@@ -221,7 +221,7 @@ margin: 0 auto; /* Centra horizontalmente */
 .white-row {
     bottom: 0; /* Stick to the bottom */
  background-color: white; /* White background */
-    height:75px !important;
+    height:10% !important;
   width: 100%; /* Full width */
   padding: 20px; /* Space inside the row */
   box-sizing: border-box; /* Ensure padding is included in the width */
@@ -273,7 +273,7 @@ margin: 0 auto; /* Centra horizontalmente */
 .white-row {
     bottom: 0;
     background-color: white;
-    height: 100px !important;
+    height: 15% !important;
     width: 100%;
     padding: 20px;
     box-sizing: border-box;
@@ -306,7 +306,7 @@ margin: 0 auto; /* Centra horizontalmente */
   .white-row {
     bottom: 0;
     background-color: white;
-    height: 100px !important;
+    height: 15% !important;
     width: 100%;
     padding: 20px;
     box-sizing: border-box;
