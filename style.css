@@ -92,7 +92,7 @@ body, html {
 @media (max-width: 1199px) and (min-width: 768px) {
   .content {
     height: auto; /* Altura dinámica según el contenido */
-    min-height: 10000px; /* Ajusta el mínimo para tabletas */
+    min-height: 8000px; /* Ajusta el mínimo para tabletas */
   }
    .content1 {
     height: auto; /* Mantiene el contenido visible */
@@ -116,7 +116,7 @@ body, html {
   }
   .content2 {
     height: auto; /* Mantiene el contenido visible */
-    min-height: 4000px; /* Respeta la altura inicial de la imagen */
+    min-height: 3800px; /* Respeta la altura inicial de la imagen */
   }
 }
 
