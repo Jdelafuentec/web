@@ -196,7 +196,7 @@ margin: 0 auto; /* Centra horizontalmente */
  padding: 0 4%;
   margin: 0 auto !important; 
   position: absolute;
-  bottom: 10%; /* Stick to the bottom */
+  
   background-color: white;
 }
 
@@ -219,6 +219,7 @@ margin: 0 auto; /* Centra horizontalmente */
   margin: 0 auto !important;
 
   .white-row {
+    bottom: 0; /* Stick to the bottom */
  background-color: white; /* White background */
     height:200px;
   width: 100%; /* Full width */
