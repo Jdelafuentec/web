@@ -108,7 +108,7 @@ body, html {
 @media (max-width: 767px) {
   .content {
     height: auto; /* Adapta la altura al contenido */
-    min-height: 5200px; /* Un mínimo más pequeño para pantallas pequeñas */
+    min-height: 4500px; /* Un mínimo más pequeño para pantallas pequeñas */
   }
   .content1 {
     height: auto; /* Mantiene el contenido visible */
