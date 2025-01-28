@@ -159,8 +159,8 @@ margin: 0 auto; /* Centra horizontalmente */
   font-size: 2rem; /* Ajusta el tamaño del título */
   margin: 0;
   padding-left: 0px; /* Añadir espacio a la izquierda */
-  padding-top: 60%;
-  line-height: 1; 
+  padding-top: 6%;
+  line-height: 1.2; 
 }
 
 .titulo p {
@@ -169,6 +169,7 @@ margin: 0 auto; /* Centra horizontalmente */
   font-size: 0.8rem; /* Ajusta el tamaño del título */
   margin: 0;
   padding-left: 0px; /* Añadir espacio a la izquierda */
+  padding-bottom: 2%;
 
 }
 
