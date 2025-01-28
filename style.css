@@ -252,12 +252,23 @@ margin: 0 auto; /* Centra horizontalmente */
 /* Móviles: Pantallas pequeñas */
 @media (max-width: 600px) {
   .button-container {
-    height: 120px;
     grid-template-columns: 1fr; /* En móviles, todos los botones se apilan en una columna */
     gap: 10px;
     padding: 0px;
   }
-
+.white-row {
+    bottom: 0;
+    background-color: white;
+    height: 200px !important;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 999;
+}
   .button {
     width: 100%; /* Los botones ocupan todo el ancho disponible */
     padding: 0px;
@@ -268,7 +279,6 @@ margin: 0 auto; /* Centra horizontalmente */
 /* Tabletas: Pantallas medianas */
 @media (max-width: 1024px) {
   .button-container {
-    height: 120px;
     grid-template-columns: 1fr; /* En tabletas, los botones se apilan en una columna */
     gap: 10px;
     padding: 0 4%;
@@ -279,6 +289,19 @@ margin: 0 auto; /* Centra horizontalmente */
     padding: 0px;
     font-size: 1rem;
   }
+  .white-row {
+    bottom: 0;
+    background-color: white;
+    height: 200px !important;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 999;
+}
 }
 
 /* Pantallas grandes (escritorios) */
