@@ -84,7 +84,8 @@ body, html {
   width: 80%;
   margin: 0 auto !important;
   padding: 0 !important ;
-  margin-top: 0; /* Asegura que no haya margen adicional en la parte inferior */
+  margin-top: 0 !important; /* Asegura que no haya margen adicional en la parte inferior */
+  height: auto !important;
 }
 
 /* Contenedor del cuadrado dividido en 5 */
@@ -169,7 +170,7 @@ body, html {
 }
 
 .bajada h3 {
-  font-size: 0.5rem;
+  font-size: 0.6rem;
   color: #333;
   margin-right: 0px; /* Alinea el texto a la derecha */
 }
