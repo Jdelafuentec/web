@@ -65,9 +65,10 @@ body, html {
  height: 100vh; /* Ajusta la altura de la grilla automáticamente */
 
   justify-content: center;
-  align-items: center;
+ 
   padding: 0; /* Sin padding */
   margin: 0 auto !important;
+  align-items: flex-start;
   
 }
 
@@ -89,6 +90,7 @@ body, html {
   padding: 0 !important ;
   margin-top: 0 !important; /* Asegura que no haya margen adicional en la parte inferior */
   height: auto !important;
+  align-items: flex-start;
 }
 
 /* Contenedor del cuadrado dividido en 5 */
