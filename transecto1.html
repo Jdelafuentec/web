@@ -22,36 +22,43 @@
     }
 
     /* Altura general para pantallas estándar */
-    @media screen and (min-width: 3001px) {
+  
     body {
       height: 15500px; /* Ajusta esta altura inicial para pantallas grandes */
     }
-    }
-    /* Para pantallas de mayor resolución */
-    @media screen and (min-width: 1600px) {
+  
+   /* Ultrawide monitors */
+    @media screen and (min-width: 1920px) {
       body {
-        height: 10000px; /* Ajusta la altura según el tamaño del fondo y la resolución */
+        height: 20000px; /* Extend height for larger resolutions */
       }
     }
 
-    /* Para pantallas medianas (tabletas o laptops pequeñas) */
-    @media screen and (max-width: 3000px) {
+    /* Large laptops (1440px width) */
+    @media screen and (max-width: 1440px) {
       body {
-        height: 10000px; /* Ajusta proporcionalmente la altura */
+        height: 13000px; /* Adjust for 1440p devices */
       }
     }
 
-    /* Para pantallas pequeñas (móviles) */
+    /* Tablets in landscape (1280px width) */
+    @media screen and (max-width: 1280px) {
+      body {
+        height: 11000px; /* Reduce height for tablets */
+      }
+    }
+
+    /* Modern smartphones (768px width) */
     @media screen and (max-width: 768px) {
       body {
-        height: 8000px; /* Altura menor para pantallas móviles */
+        height: 9000px; /* Shorter height for modern smartphones */
       }
     }
 
-    /* Para pantallas muy pequeñas (teléfonos antiguos o resoluciones bajas) */
+    /* Small smartphones (480px width) */
     @media screen and (max-width: 480px) {
       body {
-        height: 6000px; /* Ajuste para pantallas de baja resolución */
+        height: 7000px; /* Compact for smaller devices */
       }
     }
   </style>
