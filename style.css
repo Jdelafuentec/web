@@ -220,6 +220,7 @@ margin: 0 auto; /* Centra horizontalmente */
 /* Contenedor de botones */
 .button-container {
   display: grid;
+  height:70px;
   grid-template-columns: repeat(3, 1fr); /* Por defecto, 3 botones en una fila */
   gap: 10px;
   width: 100%;
@@ -236,7 +237,7 @@ margin: 0 auto; /* Centra horizontalmente */
   background-color: #ffff;
   color: black;
   border: none;
-  border-radius: 5px;
+  border-radius: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
   width: 100%; /* Los botones ocupan todo el ancho de su celda */
@@ -251,14 +252,15 @@ margin: 0 auto; /* Centra horizontalmente */
 /* Móviles: Pantallas pequeñas */
 @media (max-width: 600px) {
   .button-container {
+    height: 120px;
     grid-template-columns: 1fr; /* En móviles, todos los botones se apilan en una columna */
     gap: 10px;
-    padding: 10px 0;
+    padding: 0px;
   }
 
   .button {
     width: 100%; /* Los botones ocupan todo el ancho disponible */
-    padding: 15px;
+    padding: 0px;
     font-size: 1rem;
   }
 }
@@ -266,6 +268,7 @@ margin: 0 auto; /* Centra horizontalmente */
 /* Tabletas: Pantallas medianas */
 @media (max-width: 1024px) {
   .button-container {
+    height: 120px;
     grid-template-columns: 1fr; /* En tabletas, los botones se apilan en una columna */
     gap: 10px;
     padding: 0 4%;
@@ -273,7 +276,7 @@ margin: 0 auto; /* Centra horizontalmente */
 
   .button {
     width: 100%; /* Los botones ocupan todo el ancho disponible */
-    padding: 15px;
+    padding: 0px;
     font-size: 1rem;
   }
 }
