@@ -220,6 +220,7 @@ margin: 0 auto; /* Centra horizontalmente */
 
   .white-row {
  background-color: white; /* White background */
+    height:200px;
   width: 100%; /* Full width */
   padding: 20px; /* Space inside the row */
   box-sizing: border-box; /* Ensure padding is included in the width */
