@@ -63,7 +63,7 @@ body, html {
   height: 100vh; /* Alcanza toda la altura de la ventana */
   
   padding: 0; /* Sin padding */
-  margin: 0 auto !important;
+  
 }
 
 .index-container-arriba {
@@ -92,6 +92,7 @@ body, html {
   grid-gap: 10px; /* Espacio entre las imágenes */
   width: 80%; /* Tamaño del cuadrado */
   height: 70%; /* Altura del cuadrado */
+  margin: 0 auto !important;
 }
 
 /* Cada imagen del cuadrado que actúa como botón */
