@@ -147,6 +147,14 @@ body, html {
   padding-top: 10%;
 }
 
+titulo p {
+  text-align: left;
+  font-size: 0.8rem; /* Ajusta el tamaño del título */
+  margin: 0;
+  padding-left: 0px; /* Añadir espacio a la izquierda */
+  padding-top: 10%;
+}
+
 /* Sección de bajada (texto debajo del grid de imágenes) */
 .bajada {
   text-align: right;
