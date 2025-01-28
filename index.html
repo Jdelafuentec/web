@@ -19,12 +19,13 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 200%; /* Altura de fondo mayor para movimiento */
+      height: 200%; /* Mayor altura para permitir movimiento */
       background-image: url('https://jdelafuentec.github.io/web/lagunaMirador_Panorama-1paralaxsi.jpg');
-      background-size: cover; /* Asegura que la imagen cubra todo el fondo */
+      background-size: cover; /* Ajusta la imagen de fondo para cubrir toda la pantalla */
       background-position: center;
       background-repeat: no-repeat;
       z-index: -1; /* Fondo detrás del contenido */
+      transform: translateZ(0);
     }
 
     /* Contenido */
@@ -85,11 +86,12 @@
 
   <script>
     // Movimiento del fondo: El fondo sube mientras haces scroll
-    window.addEventListener('scroll', () => {
-      const scrollPosition = window.scrollY; // Posición del scroll
+    window.addEventListener('scroll', function() {
       const parallax = document.getElementById('parallax');
-      // Mover el fondo más rápido que el contenido (ajustando la velocidad)
-      parallax.style.transform = `translateY(-${scrollPosition * 0.4}px)`; // Ajuste de velocidad para el parallax
+      const scrollPosition = window.scrollY;
+
+      // Ajusta la velocidad de movimiento del fondo (puedes cambiar 0.5 para modificar la velocidad)
+      parallax.style.transform = `translateY(${scrollPosition * 0.5}px)`;
     });
   </script>
 
