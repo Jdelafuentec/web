@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Imagen de Fondo Scroll</title>
+  <title>Imagen de Fondo</title>
   <style>
     body, html {
       margin: 0;
@@ -12,20 +12,49 @@
       height: 100%;
     }
 
-    /* Contenedor para la imagen de fondo */
-    .background {
-      width: 100%;
-      height: 15500px; /* La altura completa de la imagen */
+    /* Imagen de fondo */
+    body {
       background-image: url('https://jdelafuentec.github.io/web/lagunaMirador_Panorama-1paralaxsi.jpg');
-      background-size: cover; /* Asegura que la imagen cubra el ancho completo */
+      background-size: 100% auto; /* Ajusta al ancho completo */
       background-repeat: no-repeat;
-      background-attachment: scroll; /* Hace que la imagen se mueva con el scroll */
-      background-position: top center; /* Centra la imagen horizontalmente */
+      background-position: top center;
+      background-attachment: scroll; /* La imagen se mueve con el scroll */
+    }
+
+    /* Altura general para pantallas estándar */
+    body {
+      height: 15500px; /* Ajusta esta altura inicial para pantallas grandes */
+    }
+
+    /* Para pantallas de mayor resolución */
+    @media screen and (min-width: 1600px) {
+      body {
+        height: 18000px; /* Ajusta la altura según el tamaño del fondo y la resolución */
+      }
+    }
+
+    /* Para pantallas medianas (tabletas o laptops pequeñas) */
+    @media screen and (max-width: 1024px) {
+      body {
+        height: 10000px; /* Ajusta proporcionalmente la altura */
+      }
+    }
+
+    /* Para pantallas pequeñas (móviles) */
+    @media screen and (max-width: 768px) {
+      body {
+        height: 8000px; /* Altura menor para pantallas móviles */
+      }
+    }
+
+    /* Para pantallas muy pequeñas (teléfonos antiguos o resoluciones bajas) */
+    @media screen and (max-width: 480px) {
+      body {
+        height: 6000px; /* Ajuste para pantallas de baja resolución */
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Imagen de fondo -->
-  <div class="background"></div>
 </body>
 </html>
