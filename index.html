@@ -15,13 +15,13 @@
 
     /* Fondo que sube con el scroll */
     .parallax-background {
-      position: absolute; /* Cambié a absolute para que se mueva libremente */
+      position: fixed; /* Usamos fixed para que el fondo se quede fijo */
       top: 0;
       left: 0;
       width: 100%;
       height: 27099px; /* Altura de la imagen */
       background-image: url('https://jdelafuentec.github.io/web/lagunaMirador_Panorama-1paralaxsi.jpg');
-      background-size: cover;
+    
       background-position: center;
       z-index: -1; /* Fondo detrás del contenido */
     }
@@ -30,20 +30,19 @@
     .content {
       position: relative;
       z-index: 1;
-      padding: 50px;
       color: white;
     }
 
     /* Secciones de contenido */
     .section {
-      min-height: 100vh; /* Cada sección debe ocupar al menos el 100% de la altura de la ventana */
+      min-height: 100vh; /* Cada sección ocupa el 100% de la altura de la ventana */
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
       background-color: rgba(0, 0, 0, 0.3); /* Fondo semitransparente para que el texto resalte */
-      margin-bottom: 50px;
+      margin-bottom: 50px; /* Añadir espacio entre secciones */
     }
 
     .section h1 {
@@ -88,8 +87,8 @@
     window.addEventListener('scroll', () => {
       const scrollPosition = window.scrollY; // Posición del scroll
       const parallax = document.getElementById('parallax');
-      // Mueve el fondo hacia arriba más rápido que el contenido (ajustamos la velocidad aquí)
-      parallax.style.transform = `translateY(-${scrollPosition * 2}px)`; // Cambia el 2 para ajustar la velocidad
+      // Mover el fondo más rápido que el contenido (ajustando la velocidad)
+      parallax.style.transform = `translateY(-${scrollPosition * 0.5}px)`; // Cambiar el 0.5 para ajustar la velocidad del fondo
     });
   </script>
 
