@@ -3,32 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Imagen de Fondo Responsive</title>
+  <title>Imagen de Fondo Scroll Responsive</title>
   <style>
     body, html {
       margin: 0;
       padding: 0;
       width: 100%;
       height: 100%;
-      overflow-x: hidden;
+      overflow: hidden; /* Evita un scroll horizontal no deseado */
     }
 
-    /* Imagen de fondo */
-    body {
+    /* Contenedor principal */
+    .background {
+      width: 100%;
+      height: 15500px; /* Altura total de la imagen */
       background-image: url('https://jdelafuentec.github.io/web/lagunaMirador_Panorama-1paralaxsi.jpg');
-      background-size: cover; /* Asegura que la imagen cubra todo el área visible */
+      background-size: contain; /* La imagen mantiene sus proporciones */
       background-repeat: no-repeat;
-      background-position: center top; /* Centra la imagen */
-    }
-
-    /* Contenedor para mantener la altura total del scroll */
-    .scroll-container {
-      height: 15500px; /* Altura total del contenido para scroll */
+      background-position: top center; /* Centra la imagen al ancho */
     }
   </style>
 </head>
 <body>
-  <!-- Contenedor vacío solo para permitir el scroll -->
-  <div class="scroll-container"></div>
+  <!-- Imagen de fondo que se scrollea -->
+  <div class="background"></div>
 </body>
 </html>
