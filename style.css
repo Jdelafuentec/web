@@ -64,21 +64,27 @@ body, html {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 0; /* Sin padding */
+  margin: 0; /* Sin márgenes */
 }
 
 .index-container-arriba {
   background-color: white;
   width: 100%;
-
-  padding: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Alineamos el título a la izquierda */
+  padding: 0;
 }
+
 .index-container-abajo {
   background-color: white;
   width: 100%;
-  
   display: flex;
-  padding: none !important;
+  align-items: center;
+  justify-content: flex-end; /* Alineamos el texto a la derecha */
+  padding: 0;
+  margin-top: 10px; /* Espacio entre la imagen y el texto */
 }
 
 /* Contenedor del cuadrado dividido en 5 */
@@ -133,18 +139,20 @@ body, html {
 
 /* Título principal */
 .titulo h1 {
-  text-align: left !important;
-  font-size: 16;
-  margin: none !important;
+  text-align: left;
+  font-size: 2rem; /* Ajusta el tamaño del título */
+  margin: 0;
+  padding-left: 10px; /* Añadir espacio a la izquierda */
 }
 
 /* Sección de bajada (texto debajo del grid de imágenes) */
 .bajada {
-  text-align: right !important;
-  margin-top: none !important;
+  text-align: right;
+  margin-top: 0;
 }
 
 .bajada h3 {
-  font-size: 12px;
+  font-size: 1.2rem;
   color: #333;
+  margin-right: 10px; /* Alinea el texto a la derecha */
 }
