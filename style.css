@@ -74,7 +74,7 @@ body, html {
   display: flex;
   justify-content: left;
   align-items: left;
-  padding: 0px 20px;
+  padding: 0px 20px !important;
 }
 .index-container-abajo {
   background-color: white;
@@ -83,7 +83,7 @@ body, html {
   display: flex;
   justify-content: right;
   align-items: right;
-  padding: 0px 20px;
+  padding: 0px 20px !important;
 }
 
 /* Contenedor del cuadrado dividido en 5 */
