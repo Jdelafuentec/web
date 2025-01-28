@@ -69,6 +69,7 @@ body, html {
 .index-container-arriba {
   background-color: white;
   width: 80%;
+  margin: 0 auto !important;
   /* Alineamos el título a la izquierda */
   padding: 0;
   align: center;
@@ -77,6 +78,7 @@ body, html {
 .index-container-abajo {
   background-color: white;
   width: 80%;
+  margin: 0 auto !important;
  /* Alineamos el texto a la derecha */
   padding: 0;
   margin-top: 0px; /* Espacio entre la imagen y el texto */
