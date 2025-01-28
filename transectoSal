@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Imagen de Fondo</title>
+  <link rel="stylesheet" href="https://jdelafuentec.github.io/web/style.css">
+</head>
+<body class="bg-3"> <!-- Aquí se asigna la clase bg-1, pero puedes cambiarla a bg-2 o bg-3 según el caso -->
+  <div class="content">
+    <!-- Aquí va el contenido de la página -->
+  </div>
+</body>
+</html>
