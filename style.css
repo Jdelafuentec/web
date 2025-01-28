@@ -151,6 +151,7 @@ body, html {
   margin: 0;
   padding-left: 0px; /* Añadir espacio a la izquierda */
   padding-top: 10%;
+  line-height: 1; 
 }
 
 .titulo p {
@@ -167,10 +168,12 @@ body, html {
   text-align: right;
   margin-top: 0px !important;
   padding-top: 0px !important;
+  line-height: 1; 
 }
 
 .bajada h3 {
   font-size: 0.6rem;
   color: #333;
   margin-right: 0px; /* Alinea el texto a la derecha */
+  line-height: 1; 
 }
