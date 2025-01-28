@@ -10,7 +10,7 @@ body, html {
 }
 .content1 {
 
-  height: 7240px; /* Garantiza que no haya altura fija */
+  height: 8000px; /* Garantiza que no haya altura fija */
   margin: 0 !important; /* Sin márgenes adicionales */
   padding: 0 !important; /* Sin relleno interno */
   background-color: transparent; /* Esto reemplaza a 'none' */
