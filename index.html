@@ -15,13 +15,14 @@
 
     /* Fondo que sube con el scroll */
     .parallax-background {
-  position: fixed;
+      position: fixed;
       top: 0;
       left: 0;
-     
-      height: 100%; /* Altura de la imagen */
+      width: 100%;
+      height: 27099px; /* Altura de la imagen original */
       background-image: url('https://jdelafuentec.github.io/web/lagunaMirador_Panorama-1paralaxsi.jpg');
-    background-repeat: no-repeat;
+      background-size: cover; /* Aseguramos que la imagen cubra todo */
+      background-repeat: no-repeat;
       background-position: center;
       z-index: -1; /* Fondo detrás del contenido */
     }
@@ -35,7 +36,7 @@
 
     /* Secciones de contenido */
     .section {
-      min-height: 100%; /* Cada sección ocupa el 100% de la altura de la ventana */
+      min-height: 100vh; /* Cada sección ocupa el 100% de la altura de la ventana */
       display: flex;
       flex-direction: column;
       align-items: center;
