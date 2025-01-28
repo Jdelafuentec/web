@@ -54,3 +54,65 @@ body, html {
   min-height: 10500px; /* Altura mínima para que la página sea lo suficientemente larga para probar el desplazamiento */
   background-color: none;
 }
+
+/* Fondo blanco para la sección */
+.index-container {
+  background-color: white;
+  width: 100%;
+  height: 100vh; /* Alcanza toda la altura de la ventana */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Contenedor del cuadrado dividido en 5 */
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 columnas de igual tamaño */
+  grid-gap: 10px; /* Espacio entre las imágenes */
+  width: 80%; /* Tamaño del cuadrado */
+  height: 70%; /* Altura del cuadrado */
+}
+
+/* Cada imagen del cuadrado que actúa como botón */
+.image-item {
+  height: 100%;
+  background-size: cover; /* Ajusta la imagen al tamaño del contenedor */
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: grayscale(100%); /* Poner las imágenes en blanco y negro por defecto */
+  transition: filter 0.3s ease; /* Transición suave para el cambio de color */
+  cursor: pointer; /* Cambia el cursor a un puntero para que parezca un botón */
+}
+
+/* Fondo de la imagen 1 */
+.bg-11 {
+  background-image: url('https://jdelafuentec.github.io/web/lagunaMirador_Panorama-1paralaxsi.jpg');
+}
+
+/* Fondo de la imagen 2 */
+.bg-22 {
+  background-image: url('https://jdelafuentec.github.io/web/laGallina.jpg');
+}
+
+/* Fondo de la imagen 3 */
+.bg-33 {
+  background-image: url('https://jdelafuentec.github.io/web/transectoSal.jpg');
+}
+
+/* Fondo de la imagen 4 */
+.bg-44 {
+  background-image: url('https://jdelafuentec.github.io/web/transecto6_Panorama_part1.jpg');
+}
+
+/* Fondo de la imagen 5 */
+.bg-55 {
+  background-image: url('https://jdelafuentec.github.io/web/bofedalInter.jpg');
+}
+
+/* Efecto al pasar el mouse (se ponen a color) */
+.image-item:hover {
+  filter: grayscale(0%); /* Elimina el filtro de blanco y negro */
+}
+
