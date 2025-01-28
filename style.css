@@ -120,17 +120,17 @@ body, html {
 /* Título principal */
 .titulo h1 {
   text-align: center;
-  font-size: 3em;
+  font-size: 16;
   margin: 20px 0;
 }
 
 /* Sección de bajada (texto debajo del grid de imágenes) */
 .bajada {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 0px;
 }
 
 .bajada h3 {
-  font-size: 1.5em;
+  font-size: 12px;
   color: #333;
 }
