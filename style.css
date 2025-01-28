@@ -62,8 +62,8 @@ body, html {
   background-color: white;
   width: 80%;
   
-  min-height: 100vh; /* Ajusta la altura de la grilla automáticamente */
-  display: flex;
+ height: 100vh; /* Ajusta la altura de la grilla automáticamente */
+
   justify-content: center;
   align-items: center;
   padding: 0; /* Sin padding */
