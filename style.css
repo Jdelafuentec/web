@@ -229,6 +229,8 @@ margin: 0 auto; /* Centra horizontalmente */
 .infoScroll p {
  text-align: center;
   margin: 0 auto !important;
+  font-size: 0.7rem;
+  color: #333;
 }
 
   .white-row {
