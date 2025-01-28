@@ -60,10 +60,11 @@ body, html {
 /* Fondo blanco para la sección */
 .index-container {
   background-color: white;
-  width: 100%;
+  width: 80%;
   height: 100vh; /* Alcanza toda la altura de la ventana */
   
   padding: 0; /* Sin padding */
+  margin: 0 auto !important;
   
 }
 
@@ -91,9 +92,9 @@ body, html {
   display: grid;
   grid-template-columns: repeat(5, 1fr); /* 5 columnas de igual tamaño */
   grid-gap: 10px; /* Espacio entre las imágenes */
-  width: 80%; /* Tamaño del cuadrado */
+
   height: 70%; /* Altura del cuadrado */
-  margin: 0 auto !important;
+  
 }
 
 /* Cada imagen del cuadrado que actúa como botón */
