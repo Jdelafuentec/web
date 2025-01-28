@@ -2,7 +2,7 @@ body, html {
   margin: 0;
   padding: 0;
   width: 100%;
-  min-height: 100%; /* Asegura que el cuerpo ocupe toda la altura visible */
+ height: 100%; /* Asegura que el cuerpo ocupe toda la altura visible */
   overflow-x: hidden; /* Evita desplazamiento horizontal */
 }
 
@@ -19,5 +19,5 @@ body {
 /* Contenido de la página */
 .content {
   min-height: 15500px !important; /* Altura mínima para que la página sea lo suficientemente larga para probar el desplazamiento */
-  background-color: rgba(255, 255, 255, 0.8); /* Para que se vea el contenido sobre el fondo */
+  background-color: none; /* Para que se vea el contenido sobre el fondo */
 }
