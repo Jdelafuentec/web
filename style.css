@@ -8,11 +8,12 @@ body, html {
 
 /* Imagen de fondo */
 body {
-  background-size: auto; /* No escalamos la imagen, la dejamos con su tamaño natural */
-  background-repeat: no-repeat;
-  background-position: top center; /* Centra la imagen en la parte superior */
+  background-size: 100% auto; /* Ajusta la imagen al ancho de la ventana */
+      background-repeat: no-repeat;
+      background-position: top center;
+      height: 100%; /* Altura total de la imagen */
   background-attachment: scroll; /* El fondo se desplazará con el contenido */
-  height: 100%; /* Permite que el fondo ocupe toda la altura del contenido */
+  
 }
 
 /* Contenido de la página */
