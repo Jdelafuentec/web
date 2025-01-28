@@ -217,9 +217,12 @@ margin: 0 auto; /* Centra horizontalmente */
 
 .infoScroll{
   margin: 0 auto !important;
-  height:100px !important;
+  height:50px !important;
+  background-color: white;
+  box-sizing: border-box;
   top: 0;
   position: fixed;
+  z-index: 999;
   
 }
 
