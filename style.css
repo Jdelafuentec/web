@@ -215,32 +215,83 @@ margin: 0 auto; /* Centra horizontalmente */
   font-weight: bold !important;
 }
 
+/* Contenedor de botones */
 .button-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Tres columnas de igual tamaño */
-  gap: 10px; /* Espacio entre los botones */
+  grid-template-columns: repeat(3, 1fr); /* 3 columnas */
+  gap: 10px;
   width: 100%;
- padding: 0 4%;
-  margin: 0 auto !important; 
+  padding: 0 4%;
+  margin: 0 auto !important;
   position: absolute;
-  
   background-color: white;
 }
 
+/* Estilo de los botones */
 .button {
   padding: 15px 30px;
   font-size: 1rem;
-  background-color: #ffff !important; /* Color de fondo */
-  color: black; /* Color de texto */
-  border: none !important;
+  background-color: #ffff;
+  color: black;
+  border: none;
   border-radius: 0px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .button:hover {
-  background-color: lightgrey; /* Cambia de color al pasar el ratón */
+  background-color: black !important;
+  color: white !important;
 }
+
+/* Media Queries para pantallas pequeñas */
+
+/* Móviles */
+@media (max-width: 600px) {
+  .button-container {
+    display: flex;
+    flex-direction: column; /* Los botones en columna */
+    gap: 15px;
+    align-items: center;
+    padding: 10px 4%;
+  }
+
+  .button {
+    width: 80%; /* Los botones ocupan el 80% del ancho */
+    padding: 15px;
+    font-size: 1rem;
+  }
+}
+
+/* Tabletas */
+@media (max-width: 1024px) {
+  .button-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas */
+    gap: 10px;
+  }
+
+  .button {
+    width: 100%; /* Los botones ocupan todo el ancho */
+    padding: 12px 24px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Escritorios grandes */
+@media (min-width: 1200px) {
+  .button-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas */
+    gap: 10px;
+  }
+
+  .button {
+    padding: 15px 30px;
+    font-size: 1rem;
+  }
+}
+
 
 .infoScroll{
   width:100%;
