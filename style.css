@@ -32,6 +32,22 @@ body, html {
   background-position: top center;
   background-attachment: scroll;
 }
+/* Imagen de fondo 3 */
+.bg-4 {
+  background-image: url('https://jdelafuentec.github.io/web/transecto6_Panorama_part1.jpg'); /* Cambia esta URL */
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-attachment: scroll;
+}
+/* Imagen de fondo 3 */
+.bg-5 {
+  background-image: url('https://jdelafuentec.github.io/web/transecto6_Panorama_part1.jpg'); /* Cambia esta URL */
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-attachment: scroll;
+}
 
 /* Contenido de la página */
 .content {
