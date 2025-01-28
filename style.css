@@ -1,9 +1,10 @@
+/* Common styles */
 body, html {
   margin: 0;
   padding: 0;
   
   height: 100%;
-  background-size: 100% auto;
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: top center;
   overflow-y: scroll;
@@ -12,20 +13,20 @@ body, html {
 /* Mobile */
 @media (max-width: 480px) {
   body {
-    height: 7750px; /* Ajustar según el tamaño de la imagen */
+    height: calc(100vw * 2.5); /* Adjust dynamically for tall images */
   }
 }
 
 /* Tablet */
 @media (min-width: 481px) and (max-width: 1024px) {
   body {
-    height: 11500px;
+    height: calc(100vw * 1.5);
   }
 }
 
 /* Desktop */
 @media (min-width: 1025px) {
   body {
-    height: 15500px;
+    height: calc(100vw * 1.1); /* Based on your large screens */
   }
 }
