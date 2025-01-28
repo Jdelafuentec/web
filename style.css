@@ -63,7 +63,7 @@ body, html {
   height: 100vh; /* Alcanza toda la altura de la ventana */
   
   padding: 0; /* Sin padding */
-  margin: 0; /* Sin márgenes */
+  margin: 0 auto !important;
 }
 
 .index-container-arriba {
