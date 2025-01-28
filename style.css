@@ -217,13 +217,13 @@ margin: 0 auto; /* Centra horizontalmente */
 
 .infoScroll{
   margin: 0 auto !important;
-  height:50px !important;
-  background-color: white;
+  height: 40px !important;
+  background-color: white !important;
   box-sizing: border-box;
   top: 0;
   position: fixed;
   z-index: 999;
-  
+
 }
 
 .infoScroll p {
