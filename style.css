@@ -217,6 +217,20 @@ margin: 0 auto; /* Centra horizontalmente */
 
 /* Contenedor de botones */
 /* Contenedor de botones */
+
+.white-row {
+    bottom: 0; /* Stick to the bottom */
+ background-color: white; /* White background */
+    height:75px !important;
+  width: 100%; /* Full width */
+  padding: 20px; /* Space inside the row */
+  box-sizing: border-box; /* Ensure padding is included in the width */
+  text-align: center; /* Center the text */
+  position: fixed; /* Fix the footer to the bottom of the page */
+  bottom: 0; /* Align to the bottom */
+  left: 0; /* Ensure it spans the full width */
+  z-index: 999; /* Make sure the footer stays on top of other content */
+}
 /* Contenedor de botones */
 .button-container {
   display: grid;
@@ -341,19 +355,7 @@ margin: 0 auto; /* Centra horizontalmente */
   padding: 1% !important;
 }
 
-  .white-row {
-    bottom: 0; /* Stick to the bottom */
- background-color: white; /* White background */
-    height:75px !important;
-  width: 100%; /* Full width */
-  padding: 20px; /* Space inside the row */
-  box-sizing: border-box; /* Ensure padding is included in the width */
-  text-align: center; /* Center the text */
-  position: fixed; /* Fix the footer to the bottom of the page */
-  bottom: 0; /* Align to the bottom */
-  left: 0; /* Ensure it spans the full width */
-  z-index: 999; /* Make sure the footer stays on top of other content */
-}
+  
 
 h3, h4, bajada {
   display: inline;
