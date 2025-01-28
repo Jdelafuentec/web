@@ -72,7 +72,7 @@ body, html {
   margin: 0 auto !important;
   /* Alineamos el título a la izquierda */
   padding: 0;
-  align: center;
+  
 }
 
 .index-container-abajo {
@@ -81,8 +81,8 @@ body, html {
   margin: 0 auto !important;
  /* Alineamos el texto a la derecha */
   padding: 0;
-  margin-top: 0px; /* Espacio entre la imagen y el texto */
-   align: center;
+  
+   
 }
 
 /* Contenedor del cuadrado dividido en 5 */
@@ -146,11 +146,12 @@ body, html {
 /* Sección de bajada (texto debajo del grid de imágenes) */
 .bajada {
   text-align: right;
-  margin-top: 0;
+  margin-top: none !important;
+  padding-top: none !important;
 }
 
 .bajada h3 {
-  font-size: 1.2rem;
+  font-size: 0.5rem;
   color: #333;
-  margin-right: 10px; /* Alinea el texto a la derecha */
+  margin-right: 0px; /* Alinea el texto a la derecha */
 }
