@@ -54,8 +54,9 @@ body, html {
 
 /* Contenido de la página */
 .content {
-  min-height: 100%; 
+  height: 100%; 
   background-color: none;
+  bottom:0 !important;
 }
 
 /* Fondo blanco para la sección */
