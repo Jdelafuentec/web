@@ -116,7 +116,7 @@ body, html {
   }
   .content2 {
     height: auto; /* Mantiene el contenido visible */
-    min-height: 4300px; /* Respeta la altura inicial de la imagen */
+    min-height: 4000px; /* Respeta la altura inicial de la imagen */
   }
 }
 
