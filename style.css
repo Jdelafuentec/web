@@ -54,7 +54,7 @@ body, html {
 
 .content {
 
-  height: 15000px; /* Garantiza que no haya altura fija */
+  height: 14000px; /* Garantiza que no haya altura fija */
   margin: 0 !important; /* Sin márgenes adicionales */
   padding: 0 !important; /* Sin relleno interno */
   background-color: transparent; /* Esto reemplaza a 'none' */
@@ -193,8 +193,8 @@ margin: 0 auto; /* Centra horizontalmente */
   grid-template-columns: repeat(3, 1fr); /* Tres columnas de igual tamaño */
   gap: 10px; /* Espacio entre los botones */
   width: 100%;
-  max-width: 600px; /* Puedes ajustar el ancho máximo si lo deseas */
-  margin: 0 auto; /* Centra el contenedor */
+  
+  margin: 0 auto !important; /* Centra el contenedor */
 }
 
 .button {
@@ -202,7 +202,7 @@ margin: 0 auto; /* Centra horizontalmente */
   font-size: 1rem;
   background-color: #4CAF50; /* Color de fondo */
   color: white; /* Color de texto */
-  border: none;
+  border: none !important;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
