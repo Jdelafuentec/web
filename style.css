@@ -139,6 +139,10 @@ body, html {
 }
 
 /* Título principal */
+.titulo{
+  width:100% !important!;
+}
+
 .titulo h1 {
   width:20% !important;
   text-align: left;
