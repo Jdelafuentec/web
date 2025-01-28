@@ -8,6 +8,13 @@ body, html {
   overflow-x: hidden; /* Evita desplazamiento horizontal */
   box-sizing: border-box;
 }
+.content1 {
+
+  height: 7000px; /* Garantiza que no haya altura fija */
+  margin: 0 !important; /* Sin márgenes adicionales */
+  padding: 0 !important; /* Sin relleno interno */
+  background-color: transparent; /* Esto reemplaza a 'none' */
+}
 
 /* Imagen de fondo 1 */
 .bg-1 {
