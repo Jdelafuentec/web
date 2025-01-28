@@ -3,98 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Parallax Long Background</title>
+  <title>Imagen de Fondo Scroll</title>
   <style>
     body, html {
       margin: 0;
       padding: 0;
-      font-family: Arial, sans-serif;
       height: 100%;
-      overflow-x: hidden;
     }
 
-    /* Fondo largo y fijo */
-    .parallax-background {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 300%; /* Asegura que la imagen sea lo suficientemente larga para moverse */
+    /* Imagen de fondo */
+    .background {
       background-image: url('https://jdelafuentec.github.io/web/lagunaMirador_Panorama-1paralaxsi.jpg');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      z-index: -1; /* Fondo detrás del contenido */
+      background-size: 100% auto; /* Imagen se ajusta al 100% del ancho */
+      background-position: top center; /* La imagen comienza desde la parte superior y se centra */
+      width: 100%;
+      height: 100%;
+      position: absolute;
     }
 
-    /* Contenido */
-    .content {
-      position: relative;
-      z-index: 1;
-      color: white;
-      text-align: center;
-      padding: 20px;
+    /* Asegurando que el body sea lo suficientemente largo para scroll */
+    .scrollable {
+      height: 27099px; /* La altura de la imagen original */
+      width: 100%;
     }
 
-    /* Secciones de contenido */
-    .section {
-      min-height: 100vh; /* Cada sección ocupa el 100% de la altura de la ventana */
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
-      padding: 50px;
-      margin-bottom: 50px; /* Añadir espacio entre secciones */
-    }
-
-    .section h1 {
-      font-size: 3rem;
-    }
-
-    .section p {
-      font-size: 1.2rem;
-      max-width: 500px;
-      line-height: 1.6;
-    }
   </style>
 </head>
 <body>
 
-  <!-- Fondo largo (imagen que se mueve) -->
-  <div class="parallax-background" id="parallax"></div>
-
-  <!-- Contenido principal -->
-  <div class="content">
-    <div class="section">
-      <h1>Bienvenido</h1>
-      <p>Disfruta de un fondo espectacular que se mueve con el scroll. ¡Explora el parallax!</p>
-    </div>
-    <div class="section">
-      <h1>Efecto Parallax</h1>
-      <p>La imagen de fondo se mueve de manera independiente, creando una sensación de profundidad mientras navegas.</p>
-    </div>
-    <div class="section">
-      <h1>Explora el Diseño</h1>
-      <p>Este es un ejemplo de cómo usar una imagen larga para crear un parallax dinámico que se desplaza cuando haces scroll.</p>
-    </div>
-    <div class="section">
-      <h1>Gracias por Visitar</h1>
-      <p>¡Esperamos que este efecto sea útil para tu proyecto!</p>
-    </div>
-  </div>
-
-  <script>
-    // Movimiento del fondo: El fondo sube mientras haces scroll
-    window.addEventListener('scroll', function() {
-      const parallax = document.getElementById('parallax');
-      const scrollPosition = window.scrollY;
-
-      // Mover el fondo con la velocidad ajustable
-      parallax.style.transform = `translateY(${scrollPosition * 0.3}px)`; // Cambiar 0.3 para ajustar la velocidad
-    });
-  </script>
+  <!-- Imagen de fondo -->
+  <div class="background"></div>
+  
+  <!-- Area de scroll -->
+  <div class="scrollable"></div>
 
 </body>
 </html>
