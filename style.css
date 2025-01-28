@@ -217,11 +217,13 @@ margin: 0 auto; /* Centra horizontalmente */
 
 .infoScroll{
   margin: 0 auto !important;
+  height:100px !important;
+}
 
   .white-row {
     bottom: 0; /* Stick to the bottom */
  background-color: white; /* White background */
-    height:200px;
+    height:100px !important;
   width: 100%; /* Full width */
   padding: 20px; /* Space inside the row */
   box-sizing: border-box; /* Ensure padding is included in the width */
