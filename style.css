@@ -54,7 +54,7 @@ body, html {
 
 .content {
 
-  height: 12000px; /* Garantiza que no haya altura fija */
+  height: 15000px; /* Garantiza que no haya altura fija */
   margin: 0 !important; /* Sin márgenes adicionales */
   padding: 0 !important; /* Sin relleno interno */
   background-color: transparent; /* Esto reemplaza a 'none' */
