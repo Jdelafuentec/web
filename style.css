@@ -216,6 +216,7 @@ margin: 0 auto; /* Centra horizontalmente */
 }
 
 .infoScroll{
+  width:100%;
   margin: 0 auto !important;
   height: 40px !important;
   background-color: white !important;
