@@ -140,7 +140,7 @@ body, html {
 
 /* Título principal */
 .titulo h1 {
-  width:20%;
+  width:20% !important;
   text-align: left;
   font-size: 2rem; /* Ajusta el tamaño del título */
   margin: 0;
@@ -149,7 +149,7 @@ body, html {
 }
 
 .titulo p {
-  width:80%;
+  width:80% !important;
   text-align: left;
   font-size: 0.8rem; /* Ajusta el tamaño del título */
   margin: 0;
