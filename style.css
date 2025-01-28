@@ -193,17 +193,20 @@ margin: 0 auto; /* Centra horizontalmente */
   grid-template-columns: repeat(3, 1fr); /* Tres columnas de igual tamaño */
   gap: 10px; /* Espacio entre los botones */
   width: 100%;
-  
-  margin: 0 auto !important; /* Centra el contenedor */
+
+  margin: 0 auto !important; 
+  position: absolute;
+  bottom: 0; /* Stick to the bottom */
+  background-color: white;
 }
 
 .button {
   padding: 15px 30px;
   font-size: 1rem;
-  background-color: #4CAF50; /* Color de fondo */
-  color: white; /* Color de texto */
+  background-color: #ffff; /* Color de fondo */
+  color: #0000; /* Color de texto */
   border: none !important;
-  border-radius: 5px;
+  border-radius: 0px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
@@ -211,3 +214,6 @@ margin: 0 auto; /* Centra horizontalmente */
 .button:hover {
   background-color: #45a049; /* Cambia de color al pasar el ratón */
 }
+
+.infoScroll{
+  margin: 0 auto !important;
