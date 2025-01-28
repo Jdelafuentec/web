@@ -5,13 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Parallax Long Background</title>
   <style>
-    /* Reset some default styles */
     body, html {
       margin: 0;
       padding: 0;
-      height: 100%;
       font-family: Arial, sans-serif;
       overflow-x: hidden;
+      height: 100%;
     }
 
     /* Fondo que se mueve con el scroll */
@@ -25,7 +24,7 @@
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      z-index: -1; /* Mantiene el fondo detrás del contenido */
+      z-index: -1; /* Fondo detrás del contenido */
     }
 
     /* Contenido */
@@ -92,8 +91,8 @@
       const parallax = document.getElementById('parallax');
       const scrollPosition = window.scrollY;
 
-      // Ajusta la velocidad de movimiento del fondo (puedes cambiar 0.5 para modificar la velocidad del fondo)
-      parallax.style.transform = `translateY(${scrollPosition * 1.3}px)`; // Cambiar 0.3 para ajustar la velocidad
+      // Ajusta la velocidad de movimiento del fondo (puedes cambiar 2.5 para modificar la velocidad)
+      parallax.style.transform = `translateY(${scrollPosition * 0.5}px)`; // Cambiar 0.5 para ajustar la velocidad del fondo
     });
   </script>
 
