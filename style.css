@@ -437,15 +437,16 @@ h3, h4, bajada {
 
 #descriptionModal .modal-content {
   background-color: white;
-  padding: 5px;
+  padding: 14px;
   width: 80%;
   max-width: 900px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 5px;
+  gap: 0px;
   position: relative;
-  border-radius: 10px;
+  border-radius: 2px;
+
 }
 
 /* Botón de cerrar */
@@ -552,15 +553,15 @@ h3, h4, bajada {
 
 #compositionModal .modal-content {
   background-color: white;
-  padding: 20px;
+  padding: 14px;
   width: 80%;
   max-width: 900px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 5px;
+  gap: 0px;
   position: relative;
-  border-radius: 10px;
+  border-radius: 2px;
 }
 
 /* Botón de cerrar */
