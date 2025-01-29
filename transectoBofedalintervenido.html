@@ -46,11 +46,42 @@
 <!-- Modal de UBICACIÓN -->
 <div id="locationModal" class="modal">
   <div class="modal-content">
-    <button class="close-btn closeDescriptionModal" id="closeLocationModal">X</button>
+    <button class="close-btn" id="closeLocationModal">X</button>
     <h2>Transectos del sector y otros datos</h2>
-    <iframe src="https://ee-javidelafountain.projects.earthengine.app/view/transectoslaguatita"></iframe>
+    
+    <!-- Contenedor de pestañas -->
+    <div id="locationModal" class="modal">
+  <div class="modal-content">
+    <button class="close-btn" id="closeLocationModal">X</button>
+    <h2>Transectos del sector y otros datos</h2>
+    
+    <!-- Contenedor de pestañas -->
+    <div class="tabs">
+      <button class="tab-button active" onclick="openTab(event, 'transectos')">Transectos</button>
+      <button class="tab-button" onclick="openTab(event, 'ndvi')">NDVI</button>
+      <button class="tab-button" onclick="openTab(event, 'ndwi')">NDWI</button>
+      <button class="tab-button" onclick="openTab(event, 'landcover')">Landcover</button>
+    </div>
+
+    <!-- Contenido de pestañas con iframes -->
+    <div class="tab-content" id="transectos">
+      <iframe src="https://ee-javidelafountain.projects.earthengine.app/view/transectoslaguatita"></iframe>
+    </div>
+    
+    <div class="tab-content" id="ndvi" style="display: none;">
+      <iframe src="https://ee-javidelafountain.projects.earthengine.app/view/ndvi"></iframe>
+    </div>
+    
+    <div class="tab-content" id="ndwi" style="display: none;">
+      <iframe src="https://ee-javidelafountain.projects.earthengine.app/view/ndwi"></iframe>
+    </div>
+
+    <div class="tab-content" id="landcover" style="display: none;">
+      <iframe src="https://ee-javidelafountain.projects.earthengine.app/view/landcover"></iframe>
+    </div>
   </div>
 </div>
+
 
 <!-- Modal de COMPOSICIÓN -->
 <div id="compositionModal" class="modal">
