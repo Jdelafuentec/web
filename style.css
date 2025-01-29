@@ -446,7 +446,9 @@ h3, h4, bajada {
   gap: 0px;
   position: relative;
   border-radius: 2px;
-
+top: 10%; /* Ajusta este valor según lo que necesites */
+  left: 50%;
+  transform: translate(-50%, -10%);
 }
 
 /* Botón de cerrar */
@@ -610,3 +612,5 @@ h3, h4, bajada {
     flex-direction: column;
   }
 }
+
+
