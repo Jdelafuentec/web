@@ -45,7 +45,7 @@ body, html {
 }
 /* Imagen de fondo 3 */
 .bg-5 {
-  background-image: url('https://jdelafuentec.github.io/web/bofedalInter.jpg'); /* Cambia esta URL */
+  background-image: url('https://jdelafuentec.github.io/web/guatita2.jpg'); /* Cambia esta URL */
   background-size: 100% auto;
   background-repeat: no-repeat;
   background-position: top center;
@@ -203,7 +203,7 @@ margin: 0 auto; /* Centra horizontalmente */
 
 /* Fondo de la imagen 5 */
 .bg-55 {
-  background-image: url('https://jdelafuentec.github.io/web/bofedalInter.jpg');
+  background-image: url('https://jdelafuentec.github.io/web/guatita2.jpg');
 }
 
 /* Efecto al pasar el mouse (se ponen a color) */
