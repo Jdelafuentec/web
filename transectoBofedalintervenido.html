@@ -68,61 +68,34 @@
 
 
   <script>
-    // Obtener elementos
-    const descriptionButton = document.getElementById('descriptionButton');
-    const locationButton = document.getElementById('locationButton');
-    const compositionButton = document.getElementById('compositionButton');
+   document.addEventListener("DOMContentLoaded", function () {
+  function setupModal(buttonId, modalId, closeId) {
+    const button = document.getElementById(buttonId);
+    const modal = document.getElementById(modalId);
+    const close = document.getElementById(closeId);
 
-    const descriptionModal = document.getElementById('descriptionModal');
-    const locationModal = document.getElementById('locationModal');
-    const compositionModal = document.getElementById('compositionModal');
+    if (button && modal && close) {
+      button.addEventListener("click", function () {
+        modal.style.display = "block";
+      });
 
-    const closeDescriptionModal = document.getElementById('closeDescriptionModal');
-    const closeLocationModal = document.getElementById('closeLocationModal');
-    const closeCompositionModal = document.getElementById('closeCompositionModal');
+      close.addEventListener("click", function () {
+        modal.style.display = "none";
+      });
 
-    // Mostrar el modal de DESCRIPCIÓN
-    descriptionButton.addEventListener('click', function() {
-      descriptionModal.style.display = 'block';
-    });
+      window.addEventListener("click", function (event) {
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      });
+    }
+  }
 
-    // Mostrar el modal de UBICACIÓN
-    locationButton.addEventListener('click', function() {
-      locationModal.style.display = 'block';
-    });
+  setupModal("descriptionButton", "descriptionModal", "closeDescriptionModal");
+  setupModal("locationButton", "locationModal", "closeLocationModal");
+  setupModal("compositionButton", "compositionModal", "closeCompositionModal");
+});
 
-    // Mostrar el modal de COMPOSICIÓN
-    compositionButton.addEventListener('click', function() {
-      compositionModal.style.display = 'block';
-    });
-
-    // Cerrar el modal de DESCRIPCIÓN
-    closeDescriptionModal.addEventListener('click', function() {
-      descriptionModal.style.display = 'none';
-    });
-
-    // Cerrar el modal de UBICACIÓN
-    closeLocationModal.addEventListener('click', function() {
-      locationModal.style.display = 'none';
-    });
-
-    // Cerrar el modal de COMPOSICIÓN
-    closeCompositionModal.addEventListener('click', function() {
-      compositionModal.style.display = 'none';
-    });
-
-    // Cerrar el modal si se hace clic fuera del modal
-    window.addEventListener('click', function(event) {
-      if (event.target === descriptionModal) {
-        descriptionModal.style.display = 'none';
-      }
-      if (event.target === locationModal) {
-        locationModal.style.display = 'none';
-      }
-      if (event.target === compositionModal) {
-        compositionModal.style.display = 'none';
-      }
-    });
 
   </script>
 </body>
