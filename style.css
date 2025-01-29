@@ -418,9 +418,9 @@ h3, h4, bajada {
 }
 
 /* Estilo del modal */
-/* Modal General */
-.modal {
-  display: none; /* Ocultar por defecto */
+/* Modal de DESCRIPCIÓN */
+#descriptionModal {
+  display: none;
   position: fixed;
   z-index: 1000;
   left: 0;
@@ -428,27 +428,26 @@ h3, h4, bajada {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
-  overflow: auto;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* Contenedor del modal */
-.modal-content {
+#descriptionModal .modal-content {
   background-color: white;
   padding: 20px;
   width: 80%;
   max-width: 900px;
   display: flex;
-  flex-direction: row; /* Asegura que las columnas estén una al lado de la otra */
+  flex-direction: row;
   align-items: center;
-  gap: 20px; /* Espacio entre columnas */
+  gap: 20px;
   position: relative;
+  border-radius: 10px;
 }
 
-/* Botón de cierre */
-.close-btn {
+/* Botón de cerrar */
+#descriptionModal .close-btn {
   position: absolute;
   top: 10px;
   right: 20px;
@@ -459,21 +458,152 @@ h3, h4, bajada {
   cursor: pointer;
 }
 
-/* Columnas dentro del modal */
-.modal-column {
-  flex: 1; /* Que ambas columnas ocupen la misma cantidad de espacio */
+/* Columnas del modal */
+#descriptionModal .modal-column {
+  flex: 1;
 }
 
-/* Imagen dentro de la columna */
-.modal-column img {
+/* Imagen */
+#descriptionModal .modal-column img {
   width: 100%;
   height: auto;
   display: block;
 }
 
-/* Responsive para móviles */
+/* Responsive */
 @media (max-width: 768px) {
-  .modal-content {
-    flex-direction: column; /* En móviles, apila en lugar de alinear en fila */
+  #descriptionModal .modal-content {
+    flex-direction: column;
+  }
+}
+
+/* Modal de UBICACIÓN */
+#locationModal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#locationModal .modal-content {
+  background-color: white;
+  padding: 20px;
+  width: 90%;
+  max-width: 1000px;
+  position: relative;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Botón de cerrar */
+#locationModal .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Iframe */
+#locationModal iframe {
+  width: 100%;
+  height: 600px;
+  border: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  #locationModal .modal-content {
+    width: 95%;
+  }
+  #locationModal iframe {
+    height: 400px;
+  }
+}
+
+/* Modal de COMPOSICIÓN */
+#compositionModal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#compositionModal .modal-content {
+  background-color: white;
+  padding: 20px;
+  width: 80%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  border-radius: 10px;
+}
+
+/* Botón de cerrar */
+#compositionModal .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Columnas */
+#compositionModal .modal-column {
+  flex: 1;
+}
+
+/* Botones dentro del modal */
+#compositionModal .modal-column .button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#compositionModal .modal-column .button-group button {
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+#compositionModal .modal-column img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  #compositionModal .modal-content {
+    flex-direction: column;
   }
 }
