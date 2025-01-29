@@ -35,41 +35,35 @@
     </div>
     <div class="modal-column">
       <h2>Título de Ejemplo</h2>
-      <p>
-        Aquí va el texto que describe algo importante. Puede ser un texto largo que ocupe el 50% del modal.
-        Puedes incluir cualquier descripción que desees.
-      </p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris volutpat, augue at tincidunt tincidunt, arcu elit interdum nunc, vel convallis elit odio at est. Sed eu erat nec odio fermentum scelerisque sit amet eget lorem.</p>
-      <p>Nullam suscipit velit nec urna sodales, id varius libero dictum. Ut ac orci ac purus tincidunt tempor. In euismod libero vitae ex tincidunt, at faucibus eros feugiat. Suspendisse scelerisque odio id bibendum aliquet.</p>
+      <p>Aquí va el texto que describe algo importante...</p>
     </div>
   </div>
 </div>
-  <!-- Modal de UBICACIÓN (con iframe) -->
-  <div id="locationModal" class="modal">
-    <div class="modal-content">
-      <button class="close-btn" id="closeLocationModal">X</button>
-      <iframe src="https://ee-javidelafountain.projects.earthengine.app/view/transectoslaguatita" 
-              width="100%" height="100%" frameborder="0" style="border: none;">
-      </iframe>
-    </div>
-  </div>
 
-  <!-- Modal de COMPOSICIÓN -->
-  <div id="compositionModal" class="modal">
-    <div class="modal-content">
-      <button class="close-btn" id="closeCompositionModal">X</button>
-      <div class="modal-column">
-        <div class="button-container">
-          <button class="button">Botón 1</button>
-          <button class="button">Botón 2</button>
-          <button class="button">Botón 3</button>
-        </div>
-      </div>
-      <div class="modal-column">
-        <img src="https://jdelafuentec.github.io/web/laguatitafoto2.jpeg" alt="Composición" width="100%" />
+<!-- Modal de UBICACIÓN -->
+<div id="locationModal" class="modal">
+  <div class="modal-content">
+    <button class="close-btn" id="closeLocationModal">X</button>
+    <iframe src="https://ee-javidelafountain.projects.earthengine.app/view/transectoslaguatita"></iframe>
+  </div>
+</div>
+
+<!-- Modal de COMPOSICIÓN -->
+<div id="compositionModal" class="modal">
+  <div class="modal-content">
+    <button class="close-btn" id="closeCompositionModal">X</button>
+    <div class="modal-column">
+      <div class="button-group">
+        <button>Botón 1</button>
+        <button>Botón 2</button>
+        <button>Botón 3</button>
       </div>
     </div>
+    <div class="modal-column">
+      <img src="https://via.placeholder.com/300" alt="Composición" />
+    </div>
   </div>
+</div>
 
 
   <script>
