@@ -418,30 +418,28 @@ h3, h4, bajada {
 }
 
 /* Estilo del modal */
-/* Estilo del modal */
+/* Estilos generales para todos los modales */
 .modal {
-  display: none; /* Para que esté oculto por defecto */
+  display: none; /* Ocultar modal por defecto */
   position: fixed;
-  z-index: 1;
+  z-index: 1000; /* Asegura que el modal esté por encima de otros elementos */
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  overflow: auto;
-  background-color: rgb(0,0,0); /* Fondo semi-transparente */
-  background-color: rgba(0, 0, 0, 0.4); /* Fondo transparente */
+  background-color: rgba(0, 0, 0, 0.4); /* Fondo oscuro transparente */
+  overflow: auto; /* Permite desplazamiento si es necesario */
 }
 
-/* Contenido del modal */
+/* Estilo de cada modal individual */
 .modal-content {
   position: relative;
   background-color: #fff;
   margin: 5% auto;
   padding: 20px;
-  border: 1px solid #888;
   width: 80%;
-  max-width: 900px;
-  box-sizing: border-box; /* Asegura que el padding no cambie el tamaño total */
+  max-width: 1000px; /* Ajuste para tamaños grandes */
+  box-sizing: border-box;
 }
 
 /* Botón de cierre */
@@ -456,37 +454,75 @@ h3, h4, bajada {
   cursor: pointer;
 }
 
-/* Estilo de las columnas dentro del modal */
-.modal-body {
+/* Modal de DESCRIPCIÓN */
+#descriptionModal .modal-content {
+  width: 80%;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
-  gap: 20px; /* Espacio entre las columnas */
 }
 
-/* Columna que contiene la imagen */
-.modal-column img {
+#descriptionModal .modal-column {
+  width: 48%; /* Cada columna ocupa el 48% del modal */
+}
+
+#descriptionModal iframe {
   max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 0 auto;
+  max-height: 100%;
 }
 
-/* Columna que contiene el texto */
-.modal-column {
-  flex: 1;
-  padding: 10px;
-  max-width: 45%;
-  box-sizing: border-box;
+/* Modal de IFRAME (ubicación) */
+#iframeModal .modal-content {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Hacer el modal responsive */
+#iframeModal iframe {
+  width: 100%;
+  height: 500px;
+  border: none;
+}
+
+/* Modal de COMPOSICIÓN */
+#compositionModal .modal-content {
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#compositionModal .modal-column {
+  width: 48%; /* Coloca botones y columnas de imagen */
+}
+
+#compositionModal iframe {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* Hacer los modales responsive */
 @media (max-width: 768px) {
-  .modal-body {
-    flex-direction: column;
+  .modal-content {
+    width: 95%; /* Ajustar el tamaño en pantallas pequeñas */
+    max-width: 100%;
+  }
+
+  iframe {
+    height: 400px; /* Reducir altura en dispositivos móviles */
   }
 
   .modal-column {
-    max-width: 100%;
-    margin-bottom: 20px; /* Separación entre las columnas apiladas */
+    width: 100%; /* Las columnas ocupan el 100% del modal en pantallas pequeñas */
+  }
+
+  #descriptionModal .modal-content {
+    flex-direction: column;
+  }
+
+  #compositionModal .modal-content {
+    flex-direction: column;
   }
 }
