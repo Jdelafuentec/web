@@ -610,6 +610,9 @@ top: -4%; /* Ajusta este valor según lo que necesites */
   height: auto;
   display: block;
 }
+#compositionModal .modal-column h2 {
+padding-bottom: 5%;
+}
 
 /* Responsive */
 @media (max-width: 768px) {
