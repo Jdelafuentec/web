@@ -51,45 +51,112 @@
 
   <div class="content"></div>
 
-  <!-- Botones -->
+ <!-- Botones -->
   <div class="white-row">
     <div class="button-container">
-      <button class="button">DESCRIPCIÓN</button>
+      <button class="button" id="descriptionButton">DESCRIPCIÓN</button>
       <button class="button" id="locationButton">UBICACIÓN</button>
-      <button class="button">COMPOSICIÓN</button>
+      <button class="button" id="compositionButton">COMPOSICIÓN</button>
     </div>
   </div>
 
-  <!-- Modal para el mapa -->
+  <!-- Modal de DESCRIPCIÓN -->
+  <div id="descriptionModal" class="modal">
+    <div class="modal-content">
+      <button class="close-btn" id="closeDescriptionModal">X</button>
+      <div class="modal-column">
+        <img src="https://via.placeholder.com/300" alt="Descripción" width="100%" />
+      </div>
+      <div class="modal-column">
+        <p>
+          Aquí va el texto que describe algo importante. Puede ser un texto largo que ocupe el 50% del modal.
+          Puedes incluir cualquier descripción que desees.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de UBICACIÓN (con iframe) -->
   <div id="locationModal" class="modal">
     <div class="modal-content">
-      <button class="close-btn" id="closeModal">X</button>
+      <button class="close-btn" id="closeLocationModal">X</button>
       <iframe src="https://ee-javidelafountain.projects.earthengine.app/view/transectoslaguatita" 
               width="100%" height="100%" frameborder="0" style="border: none;">
       </iframe>
     </div>
   </div>
 
+  <!-- Modal de COMPOSICIÓN -->
+  <div id="compositionModal" class="modal">
+    <div class="modal-content">
+      <button class="close-btn" id="closeCompositionModal">X</button>
+      <div class="modal-column">
+        <div class="button-container">
+          <button class="button">Botón 1</button>
+          <button class="button">Botón 2</button>
+          <button class="button">Botón 3</button>
+        </div>
+      </div>
+      <div class="modal-column">
+        <img src="https://via.placeholder.com/300" alt="Composición" width="100%" />
+      </div>
+    </div>
+  </div>
+
   <script>
     // Obtener elementos
+    const descriptionButton = document.getElementById('descriptionButton');
     const locationButton = document.getElementById('locationButton');
-    const locationModal = document.getElementById('locationModal');
-    const closeModal = document.getElementById('closeModal');
+    const compositionButton = document.getElementById('compositionButton');
 
-    // Mostrar el modal al hacer clic en el botón "UBICACIÓN"
+    const descriptionModal = document.getElementById('descriptionModal');
+    const locationModal = document.getElementById('locationModal');
+    const compositionModal = document.getElementById('compositionModal');
+
+    const closeDescriptionModal = document.getElementById('closeDescriptionModal');
+    const closeLocationModal = document.getElementById('closeLocationModal');
+    const closeCompositionModal = document.getElementById('closeCompositionModal');
+
+    // Mostrar el modal de DESCRIPCIÓN
+    descriptionButton.addEventListener('click', function() {
+      descriptionModal.style.display = 'block';
+    });
+
+    // Mostrar el modal de UBICACIÓN
     locationButton.addEventListener('click', function() {
       locationModal.style.display = 'block';
     });
 
-    // Cerrar el modal al hacer clic en el botón "X"
-    closeModal.addEventListener('click', function() {
+    // Mostrar el modal de COMPOSICIÓN
+    compositionButton.addEventListener('click', function() {
+      compositionModal.style.display = 'block';
+    });
+
+    // Cerrar el modal de DESCRIPCIÓN
+    closeDescriptionModal.addEventListener('click', function() {
+      descriptionModal.style.display = 'none';
+    });
+
+    // Cerrar el modal de UBICACIÓN
+    closeLocationModal.addEventListener('click', function() {
       locationModal.style.display = 'none';
     });
 
-    // Cerrar el modal si el usuario hace clic fuera del modal
+    // Cerrar el modal de COMPOSICIÓN
+    closeCompositionModal.addEventListener('click', function() {
+      compositionModal.style.display = 'none';
+    });
+
+    // Cerrar el modal si se hace clic fuera del modal
     window.addEventListener('click', function(event) {
+      if (event.target === descriptionModal) {
+        descriptionModal.style.display = 'none';
+      }
       if (event.target === locationModal) {
         locationModal.style.display = 'none';
+      }
+      if (event.target === compositionModal) {
+        compositionModal.style.display = 'none';
       }
     });
   </script>
