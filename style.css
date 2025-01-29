@@ -620,6 +620,7 @@ top: -4%; /* Ajusta este valor según lo que necesites */
   width: 85%;
   height: auto;
   display: block;
+  margin-left: auto;
 }
 #compositionModal .modal-column h2 {
 padding-bottom: 5%;
