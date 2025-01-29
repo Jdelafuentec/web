@@ -437,13 +437,13 @@ h3, h4, bajada {
 
 #descriptionModal .modal-content {
   background-color: white;
-  padding: 20px;
+  padding: 5px;
   width: 80%;
   max-width: 900px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
   position: relative;
   border-radius: 10px;
 }
@@ -467,7 +467,7 @@ h3, h4, bajada {
 
 /* Imagen */
 #descriptionModal .modal-column img {
-  width: 100%;
+  width: 85%;
   height: auto;
   display: block;
 }
@@ -584,15 +584,15 @@ h3, h4, bajada {
 #compositionModal .modal-column .button-group {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 30px;
 }
 
 #compositionModal .modal-column .button-group button {
   padding: 10px;
   border: none;
   cursor: pointer;
-  background-color: #007bff;
-  color: white;
+  background-color: #ffff;
+  color: black;
   font-size: 16px;
   border-radius: 5px;
 }
