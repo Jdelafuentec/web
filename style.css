@@ -422,7 +422,7 @@ h3, h4, bajada {
 
 
 #descriptionModal {
-  display: none !important;
+  display: none ;
   position: fixed;
   z-index: 1000;
   left: 0;
@@ -481,7 +481,7 @@ h3, h4, bajada {
 
 /* Modal de UBICACIÓN */
 #locationModal {
-  display: none !important;
+  display: none;
   position: fixed;
   z-index: 1000;
   left: 0;
@@ -537,7 +537,7 @@ h3, h4, bajada {
 
 /* Modal de COMPOSICIÓN */
 #compositionModal {
-  display: none !important;
+  display: none;
   position: fixed;
   z-index: 1000;
   left: 0;
