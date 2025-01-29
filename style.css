@@ -420,7 +420,7 @@ h3, h4, bajada {
 /* Estilo del modal */
 /* Modal de DESCRIPCIÓN */
 .modal {
-  display: none; /* Oculta los modales por defecto */
+  display: none !important; /* Oculta los modales por defecto */
   position: fixed;
   z-index: 1000;
   left: 0;
@@ -434,7 +434,7 @@ h3, h4, bajada {
 }
 
 #descriptionModal {
-  display: none;
+  display: none !important;
   position: fixed;
   z-index: 1000;
   left: 0;
@@ -493,7 +493,7 @@ h3, h4, bajada {
 
 /* Modal de UBICACIÓN */
 #locationModal {
-  display: none;
+  display: none !important;
   position: fixed;
   z-index: 1000;
   left: 0;
@@ -549,7 +549,7 @@ h3, h4, bajada {
 
 /* Modal de COMPOSICIÓN */
 #compositionModal {
-  display: none;
+  display: none !important;
   position: fixed;
   z-index: 1000;
   left: 0;
