@@ -290,11 +290,11 @@ margin: 0 auto; /* Centra horizontalmente */
 /* Contenedor de botones */
 .button-container {
   display: grid;
-  height:70px;
+  
   grid-template-columns: repeat(3, 1fr); /* Por defecto, 3 botones en una fila */
   gap: 10px;
   width: 100%;
-  padding: 0 4%;
+  padding: 0 ;
   margin: 0 auto !important;
   position: relative;
   background-color: white;
