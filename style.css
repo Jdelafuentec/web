@@ -579,6 +579,8 @@ top: -4%; /* Ajusta este valor según lo que necesites */
   border-radius: 2px;
   top: -4%; /* Ajusta este valor según lo que necesites */
   left: 0%;
+  align-items: center;
+    justify-content: space-between;
 }
 }
 
@@ -597,6 +599,9 @@ top: -4%; /* Ajusta este valor según lo que necesites */
 /* Columnas */
 #compositionModal .modal-column {
   flex: 1;
+  flex-direction: column;
+    justify-content: center; /* Centra el contenido verticalmente */
+    align-items: center; /* Centra el contenido horizontalmente */
 }
 
 /* Botones dentro del modal */
@@ -622,9 +627,11 @@ top: -4%; /* Ajusta este valor según lo que necesites */
   display: block;
   margin-left: auto;
 }
-#compositionModal .modal-column h2 {
+#compositionModal h2 {
 padding-bottom: 5%;
 }
+
+
 
 /* Responsive */
 @media (max-width: 768px) {
