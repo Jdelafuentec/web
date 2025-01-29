@@ -443,7 +443,7 @@ h3, h4, bajada {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
   position: relative;
   border-radius: 10px;
 }
@@ -455,7 +455,7 @@ h3, h4, bajada {
   right: 20px;
   background-color: transparent;
   border: none;
-  font-size: 20px;
+  font-size: 14px;
   font-weight: bold;
   cursor: pointer;
 }
@@ -497,7 +497,7 @@ h3, h4, bajada {
 #locationModal .modal-content {
   background-color: white;
   padding: 20px;
-  width: 90%;
+  width: 80%;
   max-width: 1000px;
   position: relative;
   border-radius: 10px;
@@ -513,7 +513,7 @@ h3, h4, bajada {
   right: 20px;
   background-color: transparent;
   border: none;
-  font-size: 20px;
+  font-size: 14px;
   font-weight: bold;
   cursor: pointer;
 }
@@ -558,7 +558,7 @@ h3, h4, bajada {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 20px;
+  gap: 5px;
   position: relative;
   border-radius: 10px;
 }
@@ -570,7 +570,7 @@ h3, h4, bajada {
   right: 20px;
   background-color: transparent;
   border: none;
-  font-size: 20px;
+  font-size: 14px;
   font-weight: bold;
   cursor: pointer;
 }
@@ -584,7 +584,7 @@ h3, h4, bajada {
 #compositionModal .modal-column .button-group {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 50px;
 }
 
 #compositionModal .modal-column .button-group button {
@@ -598,7 +598,7 @@ h3, h4, bajada {
 }
 
 #compositionModal .modal-column img {
-  width: 100%;
+  width: 850%;
   height: auto;
   display: block;
 }
