@@ -69,58 +69,60 @@
 
   <script>
     // Obtener elementos
-    document.addEventListener("DOMContentLoaded", function () {
-  // Obtener los modales
-  var descriptionModal = document.getElementById("descriptionModal");
-  var compositionModal = document.getElementById("compositionModal");
-  var locationModal = document.getElementById("locationModal");
+    const descriptionButton = document.getElementById('descriptionButton');
+    const locationButton = document.getElementById('locationButton');
+    const compositionButton = document.getElementById('compositionButton');
 
-  // Obtener los botones
-  var descriptionButton = document.querySelector(".button-description");
-  var compositionButton = document.querySelector(".button-composition");
-  var locationButton = document.querySelector(".button-location");
+    const descriptionModal = document.getElementById('descriptionModal');
+    const locationModal = document.getElementById('locationModal');
+    const compositionModal = document.getElementById('compositionModal');
 
-  // Obtener los botones de cerrar
-  var closeButtons = document.querySelectorAll(".close-btn");
+    const closeDescriptionModal = document.getElementById('closeDescriptionModal');
+    const closeLocationModal = document.getElementById('closeLocationModal');
+    const closeCompositionModal = document.getElementById('closeCompositionModal');
 
-  // Función para abrir el modal
-  function openModal(modal) {
-    modal.style.display = "flex";
-  }
-
-  // Función para cerrar el modal
-  function closeModal(modal) {
-    modal.style.display = "none";
-  }
-
-  // Eventos para abrir los modales
-  descriptionButton.addEventListener("click", function () {
-    openModal(descriptionModal);
-  });
-
-  compositionButton.addEventListener("click", function () {
-    openModal(compositionModal);
-  });
-
-  locationButton.addEventListener("click", function () {
-    openModal(locationModal);
-  });
-
-  // Eventos para cerrar los modales
-  closeButtons.forEach(function (button) {
-    button.addEventListener("click", function () {
-      var modal = button.parentElement.parentElement;
-      closeModal(modal);
+    // Mostrar el modal de DESCRIPCIÓN
+    descriptionButton.addEventListener('click', function() {
+      descriptionModal.style.display = 'block';
     });
-  });
 
-  // Cerrar el modal si se hace clic fuera del contenido
-  window.addEventListener("click", function (event) {
-    if (event.target.classList.contains("modal")) {
-      closeModal(event.target);
-    }
-  });
-});
+    // Mostrar el modal de UBICACIÓN
+    locationButton.addEventListener('click', function() {
+      locationModal.style.display = 'block';
+    });
+
+    // Mostrar el modal de COMPOSICIÓN
+    compositionButton.addEventListener('click', function() {
+      compositionModal.style.display = 'block';
+    });
+
+    // Cerrar el modal de DESCRIPCIÓN
+    closeDescriptionModal.addEventListener('click', function() {
+      descriptionModal.style.display = 'none';
+    });
+
+    // Cerrar el modal de UBICACIÓN
+    closeLocationModal.addEventListener('click', function() {
+      locationModal.style.display = 'none';
+    });
+
+    // Cerrar el modal de COMPOSICIÓN
+    closeCompositionModal.addEventListener('click', function() {
+      compositionModal.style.display = 'none';
+    });
+
+    // Cerrar el modal si se hace clic fuera del modal
+    window.addEventListener('click', function(event) {
+      if (event.target === descriptionModal) {
+        descriptionModal.style.display = 'none';
+      }
+      if (event.target === locationModal) {
+        locationModal.style.display = 'none';
+      }
+      if (event.target === compositionModal) {
+        compositionModal.style.display = 'none';
+      }
+    });
 
   </script>
 </body>
