@@ -277,9 +277,9 @@ margin: 0 auto; /* Centra horizontalmente */
 .white-row {
     bottom: 0; /* Stick to the bottom */
  background-color: white; /* White background */
-    height:10% !important;
+    height:9% !important;
   width: 100%; /* Full width */
-  padding: 20px; /* Space inside the row */
+  
   box-sizing: border-box; /* Ensure padding is included in the width */
   text-align: center; /* Center the text */
   position: fixed; /* Fix the footer to the bottom of the page */
@@ -302,7 +302,7 @@ margin: 0 auto; /* Centra horizontalmente */
 
 /* Estilo de los botones */
 .button {
-  padding: 15px 30px;
+  padding: 25px 30px;
   font-size: 1rem;
   background-color: #ffff;
   color: black;
