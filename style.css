@@ -378,7 +378,7 @@ margin: 0 auto; /* Centra horizontalmente */
 @media (min-width: 1200px) {
   .button-container {
     grid-template-columns: repeat(3, 1fr); /* En pantallas grandes, 3 botones en una fila */
-    gap: 20px;
+    gap: 0px;
     padding: 0;
   }
 
