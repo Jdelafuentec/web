@@ -613,13 +613,20 @@ display: flex;
 }
 
 #compositionModal .modal-column .button-group button {
-  padding: 10px;
+  margin: 10px;
   border: none;
   cursor: pointer;
   background-color: #ffff;
   color: black;
   font-size: 16px;
   border-radius: 5px;
+}
+
+#compositionModal .modal-column .button-group button:hover {
+
+  background-color: lightgrey;
+  color: black;
+
 }
 
 #compositionModal .modal-column img {
