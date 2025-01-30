@@ -603,6 +603,7 @@ display: flex;
   flex-direction: column;
   justify-content: space-between; /* Distribuye los elementos */
   height: 100%;
+  margin:2%;
 }
 
 /* Botones dentro del modal */
@@ -613,13 +614,13 @@ display: flex;
 }
 
 #compositionModal .modal-column .button-group button {
-  margin: 10px;
-  border: none;
-  cursor: pointer;
-  background-color: #ffff;
-  color: black;
-  font-size: 16px;
-  border-radius: 5px;
+    padding: 30px;
+    border: none;
+    cursor: pointer;
+    background-color: #ffff;
+    color: black;
+    font-size: 16px;
+    border-radius: 0;
 }
 
 #compositionModal .modal-column .button-group button:hover {
@@ -636,7 +637,8 @@ display: flex;
   margin-left: auto;
 }
 #compositionModal h2 {
-padding-bottom: 5%;
+    padding-bottom: 15%;
+    margin: 0 auto;
 }
 
 
