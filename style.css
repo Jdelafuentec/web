@@ -384,7 +384,7 @@ margin: 0 auto; /* Centra horizontalmente */
 
   .button {
     width: 100%; /* Los botones ocupan todo el ancho de su celda */
-    padding: 15px 30px;
+    padding: 29px 30px;
     font-size: 1rem;
   }
 }
