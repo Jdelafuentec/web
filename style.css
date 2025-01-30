@@ -406,7 +406,7 @@ margin: 0 auto; /* Centra horizontalmente */
 .infoScroll p {
  text-align: center;
   margin: 0 auto !important;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   color: #333;
   padding: 1% !important;
 }
