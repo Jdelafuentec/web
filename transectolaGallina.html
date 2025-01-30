@@ -68,5 +68,48 @@
     </div>
   </div>
 </div>
+  <script>
+   document.addEventListener("DOMContentLoaded", function () {
+  // Función para abrir y cerrar los modales
+  function setupModal(buttonId, modalId, closeId) {
+    const button = document.getElementById(buttonId);
+    const modal = document.getElementById(modalId);
+    const close = document.getElementById(closeId);
+
+    if (button && modal && close) {
+      // Al hacer clic en el botón, mostrar el modal
+      button.addEventListener("click", function () {
+        modal.style.display = "flex"; // Asegura que se muestre bien
+      });
+
+      // Al hacer clic en la "X", ocultar el modal
+      close.addEventListener("click", function () {
+        modal.style.display = "none";
+      });
+
+      // Al hacer clic fuera del modal, también se cierra
+      window.addEventListener("click", function (event) {
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      });
+    }
+  }
+
+  // Configurar los modales
+  setupModal("descriptionButton", "descriptionModal", "closeDescriptionModal");
+  setupModal("locationButton", "locationModal", "closeLocationModal");
+  setupModal("compositionButton", "compositionModal", "closeCompositionModal");
+
+  // Asegurar que los modales inicien ocultos al cargar la página
+  document.querySelectorAll(".modal").forEach((modal) => {
+    modal.style.display = "none";
+  });
+});
+
+
+ 
+  }
+</script>
 </body>
 </html>
