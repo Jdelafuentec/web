@@ -684,8 +684,8 @@ display: flex;
 }
 
 .texto h2 {
-    padding: 5% 10%;
-    font-style: normal;
-    font-size: small;
+    padding: 5% 10% !important;
+    font-style: normal !important;
+    font-size: small !important;
 }
 
