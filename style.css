@@ -685,7 +685,10 @@ display: flex;
 
 .texto h2 {
     padding: 5% 10% !important;
-    font-style: normal !important;
-    font-size: small !important;
+    font-weight: normal !important;
+    font-size: 0.8rem !important;
+    color: #333;
 }
+
+
 
