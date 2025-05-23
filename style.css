@@ -690,5 +690,8 @@ display: flex;
     color: #333;
 }
 
+.negrita {
+font-weight: bold !important;
+}
 
 
