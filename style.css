@@ -2,17 +2,11 @@ body, html {
   font-family: 'Lato', sans-serif;
   background-color:white;
   margin: 0;
- 
+  padding: 0;
   width: 100%;
   height: auto; /* Permite que la imagen de fondo se desplace con el contenido */
   overflow-x: hidden; /* Evita desplazamiento horizontal */
   box-sizing: border-box;
-
-  padding: 0 10%;
-
- 
-
-
 }
 
 /* Imagen de fondo 1 */
