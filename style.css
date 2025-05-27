@@ -705,3 +705,6 @@ font-weight: bold !important;
   display: block;
 }
 
+.imagen-padding{
+  padding: 5% 10% !important;
+}
