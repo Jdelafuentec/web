@@ -708,3 +708,28 @@ font-weight: bold !important;
 .imagen-padding{
   padding: 5% 15% !important;
 }
+
+.contenedor-botones {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 5% 10%;
+  justify-items: center;
+}
+
+.boton-mapa {
+  width: 35%;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #444; /* gris oscuro */
+  color: white;
+  border: none; /* sin borde exterior */
+  border-radius: 0; /* borde cuadrado */
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.boton-mapa:hover {
+  background-color: #222; /* más oscuro al pasar el mouse */
+}
+
