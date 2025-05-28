@@ -732,6 +732,25 @@ font-weight: bold !important;
 .boton-mapa:hover {
   background-color: #222; /* más oscuro al pasar el mouse */
 }
+.titulo1 h1 {
+  font-size: 1.25rem;  /* equivalente a 20px si el root es 16px */
+  font-weight: bold;
+  text-align: center;
+  margin: 1.25rem 0;
+}
 
+/* Responsivo: para pantallas pequeñas */
+@media (max-width: 600px) {
+  .titulo1 h1 {
+    font-size: 1.1rem;
+  }
+}
+
+/* Para pantallas grandes */
+@media (min-width: 1200px) {
+  .titulo1 h1 {
+    font-size: 1.5rem;
+  }
+}
 
 }
