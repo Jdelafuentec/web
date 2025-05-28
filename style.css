@@ -1,6 +1,6 @@
 body, html {
   font-family: 'Lato', sans-serif;
-  background-color: #F7F6F2;
+  background-color: white;
   color: #323B4E;
   margin: 0;
   padding: 0;
@@ -147,7 +147,7 @@ margin: 0 auto; /* Centra horizontalmente */
 
 
 .index-container-abajo {
-  background-color: #F7F6F2;
+  background-color: white;
   width: 100%;
   margin: 0 auto !important;
   padding: 0 !important ;
@@ -275,9 +275,9 @@ margin: 0 auto; /* Centra horizontalmente */
 /* Contenedor de botones */
 /* Contenedor de botones */
 
-.#F7F6F2-row {
+.white-row {
     bottom: 0; /* Stick to the bottom */
- background-color: #F7F6F2; /* #F7F6F2 background */
+ background-color: white; /* white background */
     height:9% !important;
   width: 100%; /* Full width */
   
@@ -298,14 +298,14 @@ margin: 0 auto; /* Centra horizontalmente */
   padding: 0 ;
   margin: 0 auto !important;
   position: relative;
-  background-color: #F7F6F2;
+  background-color: white;
 }
 
 /* Estilo de los botones */
 .button {
   padding: 25px 30px;
   font-size: 1rem;
-  background-color: #F7F6F2;
+  background-color: white;
   color: black;
   border: none;
   border-radius: none;
@@ -327,9 +327,9 @@ margin: 0 auto; /* Centra horizontalmente */
     gap: 10px;
     padding: 0px;
   }
-.#F7F6F2-row {
+.white-row {
     bottom: 0;
-    background-color: #F7F6F2;
+    background-color: white;
     height: 15% !important;
     width: 100%;
     padding: 20px;
@@ -360,9 +360,9 @@ margin: 0 auto; /* Centra horizontalmente */
     padding: 0px;
     font-size: 1rem;
   }
-  .#F7F6F2-row {
+  .white-row {
     bottom: 0;
-    background-color: #F7F6F2;
+    background-color: white;
     height: 15% !important;
     width: 100%;
     padding: 20px;
@@ -396,7 +396,7 @@ margin: 0 auto; /* Centra horizontalmente */
   width:100%;
   margin: 0 auto !important;
   height: 30px !important;
-  background-color: #F7F6F2 !important;
+  background-color: white !important;
   box-sizing: border-box;
   top: 0;
   position: fixed;
@@ -437,7 +437,7 @@ h3, h4, bajada {
 }
 
 #descriptionModal .modal-content {
-  background-color: #F7F6F2;
+  background-color: white;
   padding: 14px;
   width: 80%;
   max-width: 900px;
@@ -509,7 +509,7 @@ top: -4%; /* Ajusta este valor según lo que necesites */
 }
 
 #locationModal .modal-content {
-  background-color: #F7F6F2;
+  background-color: white;
   padding: 20px;
   width: 80%;
   max-width: 1000px;
@@ -568,7 +568,7 @@ top: -4%; /* Ajusta este valor según lo que necesites */
 }
 
 #compositionModal .modal-content {
-  background-color: #F7F6F2;
+  background-color: white;
   padding: 14px;
   width: 80%;
   max-width: 900px;
@@ -618,7 +618,7 @@ display: flex;
     padding: 30px;
     border: none;
     cursor: pointer;
-    background-color: #F7F6F2;
+    background-color: white;
     color: black;
     font-size: 16px;
     border-radius: 0;
@@ -671,7 +671,7 @@ display: flex;
 
 .tab-button.active {
   background: #666;
-  color: #F7F6F2;
+  color: white;
 }
 
 .tab-content {
@@ -723,7 +723,7 @@ font-weight: bold !important;
   padding: 10px;
   font-size: 16px;
   background-color: #444; /* gris oscuro */
-  color: #F7F6F2;
+  color: white;
   border: none; /* sin borde exterior */
   border-radius: 0; /* borde cuadrado */
   cursor: pointer;
@@ -814,7 +814,7 @@ font-weight: bold !important;
   padding: 10px;
   font-size: 16px;
   background-color: #444; /* gris oscuro */
-  color: #F7F6F2;
+  color: white;
   border: none;
   border-radius: 0; /* borde cuadrado */
   cursor: pointer;
@@ -825,7 +825,7 @@ font-weight: bold !important;
   background-color: #222;
 }
 .footer {
-  background-color: #F7F6F2;
+  background-color: white;
   color:#323B4E;
   text-align: center;
   padding: 30px 10%;
