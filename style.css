@@ -851,5 +851,8 @@ font-weight: bold !important;
   max-height: 40px;
   opacity: 0.8; /* UDD un poco más tenue para darle prioridad visual a ANID */
 }
-
+.row {
+  padding-bottom: 3%;
+}
+}
 }
