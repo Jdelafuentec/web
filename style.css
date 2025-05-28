@@ -855,24 +855,33 @@ font-weight: bold !important;
   padding-bottom: 4%;
 }
 
+.botones-tematicos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: nowrap; /* fuerza una sola fila */
+  padding: 5% 10%;
+  overflow-x: auto; /* permite scroll si no cabe en pantallas pequeñas */
+}
+
 .boton-tema {
   width: 300px;
   height: 300px;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: bold;
   color: white;
   background: none;
   border: none;
   cursor: pointer;
-  transition: all 0.3s ease;
   background-color: gray; /* fallback */
   background-size: cover;
   background-position: center;
-  position: relative;
-  z-index: 1;
+  transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
 }
 
 /* Colores base */
@@ -886,21 +895,18 @@ font-weight: bold !important;
   background-color: #AA8744;
 }
 
-/* Hover con imagen como fondo */
+/* Hover con imagen */
 .boton-tema.eco:hover {
   background: url('https://jdelafuentec.github.io/web/botonEco.png') center/cover no-repeat;
   color: transparent;
 }
-
 .boton-tema.micro:hover {
   background: url('https://jdelafuentec.github.io/web/boton_mocoSal.jpg') center/cover no-repeat;
   color: transparent;
 }
-
 .boton-tema.geo:hover {
   background: url('https://jdelafuentec.github.io/web/piedrasGeo.jpg') center/cover no-repeat;
   color: transparent;
 }
-
 
 }
