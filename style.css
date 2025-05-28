@@ -823,7 +823,14 @@ font-weight: bold !important;
 .boton-mapa:hover {
   background-color: #222;
 }
-
+.footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 20px 10%;
+  font-size: 0.9rem;
+  margin-top: 50px;
+}
 
 
 }
