@@ -752,5 +752,11 @@ font-weight: bold !important;
     font-size: 1.5rem;
   }
 }
+#indicebody{
+  padding: 0 10%;
+  margin: 0;
+  box-sizing: border-box;
+
+}
 
 }
