@@ -735,7 +735,7 @@ font-weight: bold !important;
 .titulo1 h1 {
   font-size: 1.25rem;  /* equivalente a 20px si el root es 16px */
   font-weight: bold;
-  text-align: left;
+  text-align: left !important;
   margin: 1.25rem 0;
 }
 
