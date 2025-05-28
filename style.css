@@ -147,7 +147,7 @@ margin: 0 auto; /* Centra horizontalmente */
 
 
 .index-container-abajo {
-  background-color: white;
+  background-color: #F7F6F2;
   width: 100%;
   margin: 0 auto !important;
   padding: 0 !important ;
@@ -241,7 +241,7 @@ margin: 0 auto; /* Centra horizontalmente */
 
 .titulo h3 {
   font-size: 0.8rem !important;
-  color: #333;
+  color: #323B4E;
   margin-right: 0px; /* Alinea el texto a la derecha */
   line-height: 1; 
   font-weight: lighter !important;
@@ -258,7 +258,7 @@ margin: 0 auto; /* Centra horizontalmente */
 
 .bajada h3 {
   font-size: 0.7rem;
-  color: #333;
+  color: #323B4E;
   margin-right: 0px; /* Alinea el texto a la derecha */
   line-height: 1; 
   font-weight: lighter !important;
@@ -266,7 +266,7 @@ margin: 0 auto; /* Centra horizontalmente */
 
 .bajada h4 {
   font-size: 0.7rem;
-  color: #333;
+  color: #323B4E;
   margin-right: 0px; /* Alinea el texto a la derecha */
   line-height: 1; 
   font-weight: bold !important;
@@ -275,9 +275,9 @@ margin: 0 auto; /* Centra horizontalmente */
 /* Contenedor de botones */
 /* Contenedor de botones */
 
-.white-row {
+.#F7F6F2-row {
     bottom: 0; /* Stick to the bottom */
- background-color: white; /* White background */
+ background-color: #F7F6F2; /* #F7F6F2 background */
     height:9% !important;
   width: 100%; /* Full width */
   
@@ -298,14 +298,14 @@ margin: 0 auto; /* Centra horizontalmente */
   padding: 0 ;
   margin: 0 auto !important;
   position: relative;
-  background-color: white;
+  background-color: #F7F6F2;
 }
 
 /* Estilo de los botones */
 .button {
   padding: 25px 30px;
   font-size: 1rem;
-  background-color: #ffff;
+  background-color: #F7F6F2;
   color: black;
   border: none;
   border-radius: none;
@@ -327,9 +327,9 @@ margin: 0 auto; /* Centra horizontalmente */
     gap: 10px;
     padding: 0px;
   }
-.white-row {
+.#F7F6F2-row {
     bottom: 0;
-    background-color: white;
+    background-color: #F7F6F2;
     height: 15% !important;
     width: 100%;
     padding: 20px;
@@ -360,9 +360,9 @@ margin: 0 auto; /* Centra horizontalmente */
     padding: 0px;
     font-size: 1rem;
   }
-  .white-row {
+  .#F7F6F2-row {
     bottom: 0;
-    background-color: white;
+    background-color: #F7F6F2;
     height: 15% !important;
     width: 100%;
     padding: 20px;
@@ -396,7 +396,7 @@ margin: 0 auto; /* Centra horizontalmente */
   width:100%;
   margin: 0 auto !important;
   height: 30px !important;
-  background-color: white !important;
+  background-color: #F7F6F2 !important;
   box-sizing: border-box;
   top: 0;
   position: fixed;
@@ -408,7 +408,7 @@ margin: 0 auto; /* Centra horizontalmente */
  text-align: center;
   margin: 0 auto !important;
   font-size: 0.8rem;
-  color: #333;
+  color: #323B4E;
   padding: 1% !important;
 }
 
@@ -437,7 +437,7 @@ h3, h4, bajada {
 }
 
 #descriptionModal .modal-content {
-  background-color: white;
+  background-color: #F7F6F2;
   padding: 14px;
   width: 80%;
   max-width: 900px;
@@ -509,7 +509,7 @@ top: -4%; /* Ajusta este valor según lo que necesites */
 }
 
 #locationModal .modal-content {
-  background-color: white;
+  background-color: #F7F6F2;
   padding: 20px;
   width: 80%;
   max-width: 1000px;
@@ -568,7 +568,7 @@ top: -4%; /* Ajusta este valor según lo que necesites */
 }
 
 #compositionModal .modal-content {
-  background-color: white;
+  background-color: #F7F6F2;
   padding: 14px;
   width: 80%;
   max-width: 900px;
@@ -618,7 +618,7 @@ display: flex;
     padding: 30px;
     border: none;
     cursor: pointer;
-    background-color: #ffff;
+    background-color: #F7F6F2;
     color: black;
     font-size: 16px;
     border-radius: 0;
@@ -627,7 +627,7 @@ display: flex;
 #compositionModal .modal-column .button-group button:hover {
 
   background-color: lightgrey;
-  color: black;
+  color: #323B4E;
 
 }
 
@@ -671,7 +671,7 @@ display: flex;
 
 .tab-button.active {
   background: #666;
-  color: white;
+  color: #F7F6F2;
 }
 
 .tab-content {
@@ -688,7 +688,7 @@ display: flex;
     width:100%;
     font-weight: normal !important;
     font-size: 0.8rem !important;
-    color: #333;
+    color: #323B4E;
 }
 
 .negrita {
@@ -723,7 +723,7 @@ font-weight: bold !important;
   padding: 10px;
   font-size: 16px;
   background-color: #444; /* gris oscuro */
-  color: white;
+  color: #F7F6F2;
   border: none; /* sin borde exterior */
   border-radius: 0; /* borde cuadrado */
   cursor: pointer;
@@ -781,7 +781,7 @@ font-weight: bold !important;
 
 .tabla-indices th,
 .tabla-indices td {
-  border: 1px solid #999;
+  border: 1px solid #323B4E;
   padding: 10px;
 }
 
@@ -814,7 +814,7 @@ font-weight: bold !important;
   padding: 10px;
   font-size: 16px;
   background-color: #444; /* gris oscuro */
-  color: white;
+  color: #F7F6F2;
   border: none;
   border-radius: 0; /* borde cuadrado */
   cursor: pointer;
@@ -825,12 +825,12 @@ font-weight: bold !important;
   background-color: #222;
 }
 .footer {
-  background-color: white;
-  color: #000;
+  background-color: #F7F6F2;
+  color:#323B4E;
   text-align: center;
   padding: 30px 10%;
   font-size: 0.9rem;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid #323B4E;
 }
 
 .footer-logos {
