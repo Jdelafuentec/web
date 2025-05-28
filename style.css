@@ -824,13 +824,31 @@ font-weight: bold !important;
   background-color: #222;
 }
 .footer {
-  background-color: #333;
-  color: white;
+  background-color: white;
+  color: #000;
   text-align: center;
-  padding: 20px 10%;
+  padding: 30px 10%;
   font-size: 0.9rem;
-  margin-top: 50px;
+  border-top: 1px solid #ccc;
 }
 
+.footer-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.footer-logo {
+  max-height: 50px;
+  height: auto;
+}
+
+.footer-logo.secundaria {
+  max-height: 40px;
+  opacity: 0.8; /* UDD un poco más tenue para darle prioridad visual a ANID */
+}
 
 }
