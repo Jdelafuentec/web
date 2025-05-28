@@ -126,7 +126,7 @@ body, html {
 /* Fondo blanco para la sección */
 .index-container {
  background-color: transparent !important;
-  width: 80%; 
+  width: 100%; 
  height: 100vh; /* Ajusta la altura de la grilla automáticamente */
 margin: 0 auto; /* Centra horizontalmente */
   padding: 0; /* Sin relleno interno */
@@ -136,7 +136,7 @@ margin: 0 auto; /* Centra horizontalmente */
 
 .index-container-arriba {
   background-color: transparent;
-  width: 80%;
+  width: 100%;
   margin: 0 auto !important;
   /* Alineamos el título a la izquierda */
   padding: 0 !important;
@@ -147,7 +147,7 @@ margin: 0 auto; /* Centra horizontalmente */
 
 .index-container-abajo {
   background-color: white;
-  width: 80%;
+  width: 100%;
   margin: 0 auto !important;
   padding: 0 !important ;
   margin-top: 0 !important; /* Asegura que no haya margen adicional en la parte inferior */
