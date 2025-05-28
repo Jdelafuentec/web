@@ -758,84 +758,58 @@ font-weight: bold !important;
   box-sizing: border-box;
 
 }
+
 .tabla-indices {
   padding: 5% 10%;
   font-family: sans-serif;
+  text-align: center;
 }
 
 .tabla-indices h2 {
   font-size: 1.5rem;
   font-weight: bold;
-  text-align: center;
   margin-bottom: 1.5rem;
 }
 
 .tabla-indices table {
   width: 100%;
   border-collapse: collapse;
+  margin: 0 auto;
+  font-size: 1rem;
 }
 
 .tabla-indices th,
 .tabla-indices td {
-  border: 1px solid #ccc;
-  padding: 12px;
-  text-align: left;
-  vertical-align: top;
+  border: 1px solid #999;
+  padding: 10px;
 }
 
 .tabla-indices th {
-  background-color: #f2f2f2;
   font-weight: bold;
+  background-color: #eee;
 }
 
 .tabla-indices tr:nth-child(even) {
-  background-color: #fafafa;
+  background-color: #f9f9f9;
 }
 
 @media (max-width: 768px) {
-  .tabla-indices table,
-  .tabla-indices thead,
-  .tabla-indices tbody,
-  .tabla-indices th,
-  .tabla-indices td,
-  .tabla-indices tr {
-    display: block;
+  .tabla-indices table {
+    font-size: 0.9rem;
   }
-
-  .tabla-indices tr {
-    margin-bottom: 1.5rem;
-  }
-
-  .tabla-indices td {
-    border: none;
-    position: relative;
-    padding-left: 50%;
-  }
-
-  .tabla-indices td::before {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    width: 45%;
-    font-weight: bold;
-    white-space: nowrap;
-  }
-
-  .tabla-indices td:nth-of-type(1)::before { content: "Índice"; }
-  .tabla-indices td:nth-of-type(2)::before { content: "Nombre"; }
-  .tabla-indices td:nth-of-type(3)::before { content: "¿Para qué sirve?"; }
-  .tabla-indices td:nth-of-type(4)::before { content: "Fórmula"; }
 }
+
 .contenedor-botones2 {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: 20px;
   padding: 5% 10%;
-  justify-items: center;
+  text-align: center;
 }
 
-.contenedor-botones2 .boton-mapa {
-  width: 80%;
+.boton-mapa {
+  width: 120px;
   padding: 10px;
   font-size: 16px;
   background-color: #444; /* gris oscuro */
@@ -843,18 +817,13 @@ font-weight: bold !important;
   border: none;
   border-radius: 0; /* borde cuadrado */
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.2s;
 }
 
-.contenedor-botones2 .boton-mapa:hover {
+.boton-mapa:hover {
   background-color: #222;
 }
 
-@media (max-width: 768px) {
-  .contenedor-botones2 {
-    grid-template-columns: repeat(2, 1fr); /* 2 columnas en móvil */
-  }
-}
 
 
 }
