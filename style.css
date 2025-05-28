@@ -684,7 +684,7 @@ display: flex;
 }
 
 .texto h2 {
-    padding: 5% 10% !important;
+    width:100%;
     font-weight: normal !important;
     font-size: 0.8rem !important;
     color: #333;
@@ -695,7 +695,7 @@ font-weight: bold !important;
 }
 
 .iframe-container {
-  padding: 5% 10% 1% 10%;
+  width:100%;
 }
 
 .iframe-container iframe {
@@ -706,7 +706,7 @@ font-weight: bold !important;
 }
 
 .imagen-padding{
-  padding: 5% 15% !important;
+  padding: 0 !important;
 }
 
 .contenedor-botones {
@@ -735,7 +735,7 @@ font-weight: bold !important;
 .titulo1 h1 {
   font-size: 1.25rem;  /* equivalente a 20px si el root es 16px */
   font-weight: bold;
-  text-align: center;
+  text-align: left;
   margin: 1.25rem 0;
 }
 
@@ -753,7 +753,7 @@ font-weight: bold !important;
   }
 }
 #indicebody{
-  padding: 0 10%;
+  padding: 0 12%;
   margin: 0;
   box-sizing: border-box;
 
