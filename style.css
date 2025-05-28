@@ -835,7 +835,7 @@ font-weight: bold !important;
 }
 
 .contenedor-botones2 .boton-mapa {
-  width: 35%;
+  width: 80%;
   padding: 10px;
   font-size: 16px;
   background-color: #444; /* gris oscuro */
@@ -847,7 +847,7 @@ font-weight: bold !important;
 }
 
 .contenedor-botones2 .boton-mapa:hover {
-  background-color: #222; /* más oscuro al pasar el mouse */
+  background-color: #222;
 }
 
 @media (max-width: 768px) {
@@ -855,5 +855,6 @@ font-weight: bold !important;
     grid-template-columns: repeat(2, 1fr); /* 2 columnas en móvil */
   }
 }
+
 
 }
