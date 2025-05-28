@@ -857,12 +857,13 @@ font-weight: bold !important;
 
 .botones-tematicos {
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 10px;
-  
+  gap: 30px;
   padding: 5% 10%;
-  overflow-x: auto; /* permite scroll si no cabe en pantallas pequeñas */
+  flex-wrap: nowrap;
+  overflow-x: auto;
 }
 
 .boton-tema {
@@ -870,43 +871,51 @@ font-weight: bold !important;
   height: 300px;
   font-size: 1.2rem;
   font-weight: bold;
-  color: white;
-  background: none;
+  color: transparent;
   border: none;
   cursor: pointer;
-  background-color: gray; /* fallback */
   background-size: cover;
   background-position: center;
+  position: relative;
   transition: all 0.3s ease;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
 }
 
-/* Colores base */
+/* Fondo inicial: imagen */
 .boton-tema.eco {
-  background-color: #01A99D;
-}
-.boton-tema.micro {
-  background-color: #F288A4;
-}
-.boton-tema.geo {
-  background-color: #AA8744;
+  background-image: url('https://jdelafuentec.github.io/web/botonEco.png');
 }
 
-/* Hover con imagen */
+.boton-tema.micro {
+  background-image: url('https://jdelafuentec.github.io/web/boton_mocoSal.jpg');
+}
+
+.boton-tema.geo {
+  background-image: url('https://jdelafuentec.github.io/web/piedrasGeo.jpg');
+}
+
+/* Hover: color de fondo + texto visible */
 .boton-tema.eco:hover {
-  background: url('https://jdelafuentec.github.io/web/botonEco.png') center/cover no-repeat;
-  color: transparent;
+  background-color: #01A99D;
+  background-image: none;
+  color: white;
 }
+
 .boton-tema.micro:hover {
-  background: url('https://jdelafuentec.github.io/web/boton_mocoSal.jpg') center/cover no-repeat;
-  color: transparent;
+  background-color: #F288A4;
+  background-image: none;
+  color: white;
 }
+
 .boton-tema.geo:hover {
-  background: url('https://jdelafuentec.github.io/web/piedrasGeo.jpg') center/cover no-repeat;
-  color: transparent;
+  background-color: #AA8744;
+  background-image: none;
+  color: white;
 }
+
 
 }
