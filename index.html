@@ -73,11 +73,13 @@ Desde la geología, microbiología, ecología y ciencias sociales, el proyecto b
       <h1>Indices monitoreo</h1>
     </div>
     <div class="iframe-container">
-    <iframe 
-      src="https://ee-javidelafountain.projects.earthengine.app/view/nwdiramsarnegrofcostarosa" 
-      frameborder="0"
-      allowfullscreen>
-    </iframe>
+   <iframe 
+  id="iframe-mapa"
+  src="https://ee-javidelafountain.projects.earthengine.app/view/nwdiramsarnegrofcostarosa" 
+  frameborder="0"
+  allowfullscreen>
+</iframe>
+
   </div>
       <div class="contenedor-botones2">
   <button class="boton-mapa" id="boton-ndwi">NDWI</button>
@@ -142,11 +144,9 @@ Desde la geología, microbiología, ecología y ciencias sociales, el proyecto b
 
 
 </div>  
-  <script>
-  // Obtenemos el iframe
-  const iframe = document.querySelector('.iframe-container iframe');
+ <script>
+  const iframe = document.getElementById('iframe-mapa');
 
-  // Asignamos funciones a cada botón
   document.getElementById('boton-ndwi').addEventListener('click', function() {
     iframe.src = "https://ee-javidelafountain.projects.earthengine.app/view/nwdiramsarnegrofcostarosa";
   });
@@ -156,15 +156,14 @@ Desde la geología, microbiología, ecología y ciencias sociales, el proyecto b
   });
 
   document.getElementById('boton-ndsi').addEventListener('click', function() {
-    // Reemplaza este URL cuando tengas el link del NDSI
-    iframe.src = "#";
+    iframe.src = "#"; // pendiente
   });
 
   document.getElementById('boton-si').addEventListener('click', function() {
-    // Reemplaza este URL cuando tengas el link del SI
-    iframe.src = "#";
+    iframe.src = "#"; // pendiente
   });
 </script>
+
 
 </body>
 </html>
