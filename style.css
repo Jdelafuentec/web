@@ -709,7 +709,12 @@ font-weight: bold !important;
 .imagen-padding{
   padding: 0 !important;
 }
-
+.imagen-padding img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
 .contenedor-botones {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
