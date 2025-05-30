@@ -706,15 +706,12 @@ font-weight: bold !important;
   display: block;
 }
 
-.imagen-padding{
-  padding: 0 !important;
-}
 .imagen-padding img {
-  max-width: 100%;
+  width: 100%;
   height: auto;
   display: block;
-  margin: 0 auto;
 }
+
 .contenedor-botones {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
