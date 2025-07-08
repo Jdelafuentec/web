@@ -538,7 +538,7 @@ top: -4%; /* Ajusta este valor según lo que necesites */
 /* Iframe */
 #locationModal iframe {
   width: 100%;
-  height: 600px;
+  height: 720px;
   border: none;
 }
 
