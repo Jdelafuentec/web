@@ -216,6 +216,7 @@ margin: 0 auto; /* Centra horizontalmente */
 .titulo{
   width:40% !important!;
   padding-bottom:2px;
+  padding-top: 4%;
 }
 
 .titulo img {
