@@ -218,6 +218,10 @@ margin: 0 auto; /* Centra horizontalmente */
   padding-bottom:2px;
 }
 
+.titulo img {
+width:20% !important;
+}
+
 .titulo h1 {
   width:20% !important;
   text-align: left;
