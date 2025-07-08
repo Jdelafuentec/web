@@ -924,6 +924,12 @@ font-weight: bold !important;
   color: white;
 }
 
+#main-header #logo.appLogo img {
+    display: none !important;
+}
 
+#main-header {
+  display: none !important;
+}
 
 }
