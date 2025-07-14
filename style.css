@@ -1021,7 +1021,7 @@ font-weight: bold !important;
 }
 
 .logo-oasis img {
-  max-height: 100px;
+  max-height: 80px !important;
   height: auto;
   width: auto;
 }
