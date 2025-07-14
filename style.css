@@ -938,62 +938,72 @@ font-weight: bold !important;
     text-align: center;
   }
 
+ .footer-oasis {
+    background-color: #ffffff;
+    padding: 30px 0;
+    font-family: sans-serif;
+    text-align: center;
+  }
+
   .footer-oasis .footer-text {
     background-color: #343b4d;
     color: white;
-    padding: 6px 12px;
+    padding: 8px 16px;
+    font-size: 16px;
+    border-radius: 6px;
     display: inline-block;
-    font-size: 14px;
-    border-radius: 4px;
     margin-bottom: 30px;
   }
 
-  .footer-oasis .footer-layout {
+  .footer-oasis .footer-columns {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start;
-    gap: 40px;
-    max-width: 1200px;
+    flex-wrap: wrap;
+    gap: 60px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 0 20px;
   }
 
-  .footer-oasis .logo-group {
-    flex: 1 1 600px;
+  .footer-oasis .logos-left {
+    flex: 1 1 70%;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
     gap: 30px;
   }
 
-  .footer-oasis .logo-group img {
-    height: 60px;
-    max-width: 160px;
+  .footer-oasis .logo-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 40px 60px;
+  }
+
+  .footer-oasis .logo-row img {
+    max-height: 60px;
     object-fit: contain;
   }
 
   .footer-oasis .logo-anid {
-    flex: 0 1 150px;
+    flex: 0 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
   .footer-oasis .logo-anid img {
-    max-height: 120px;
-    max-width: 100%;
+    max-height: 140px;
     object-fit: contain;
   }
 
   @media (max-width: 768px) {
-    .footer-oasis .footer-layout {
+    .footer-oasis .footer-columns {
       flex-direction: column;
-      align-items: center;
+      gap: 30px;
     }
 
-    .footer-oasis .logo-anid {
-      margin-top: 20px;
+    .footer-oasis .logo-row {
+      justify-content: center;
+      gap: 30px;
     }
-
-
