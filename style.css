@@ -1011,6 +1011,6 @@ font-weight: bold !important;
     width: 50% !important;
 }
     .logos-smi img {
-  transform: scale(0.5);
+  transform: scale(0.5) !important;
   transform-origin: center;
 }
