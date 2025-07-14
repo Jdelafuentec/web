@@ -931,5 +931,69 @@ font-weight: bold !important;
 #main-header {
   display: none !important;
 }
+  .footer-oasis {
+    background-color: #ffffff;
+    padding: 20px 0 40px;
+    font-family: sans-serif;
+    text-align: center;
+  }
+
+  .footer-oasis .footer-text {
+    background-color: #343b4d;
+    color: white;
+    padding: 6px 12px;
+    display: inline-block;
+    font-size: 14px;
+    border-radius: 4px;
+    margin-bottom: 30px;
+  }
+
+  .footer-oasis .footer-layout {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .footer-oasis .logo-group {
+    flex: 1 1 600px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+  }
+
+  .footer-oasis .logo-group img {
+    height: 60px;
+    max-width: 160px;
+    object-fit: contain;
+  }
+
+  .footer-oasis .logo-anid {
+    flex: 0 1 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .footer-oasis .logo-anid img {
+    max-height: 120px;
+    max-width: 100%;
+    object-fit: contain;
+  }
+
+  @media (max-width: 768px) {
+    .footer-oasis .footer-layout {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .footer-oasis .logo-anid {
+      margin-top: 20px;
+    }
 
 
