@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Oasis </title>
+  <title>Índice de la Página</title>
   <link rel="stylesheet" href="https://jdelafuentec.github.io/web/style.css">
 </head>
 <body>
@@ -12,8 +12,7 @@
  <div class="row">
  <div class="index-container-arriba">
     <div class="titulo"> 
-
-  <img src="https://jdelafuentec.github.io/web/OA_Recurso48.png" alt="Recurso 48" style="max-width: 100%; height: auto;">
+      <h1>OASIS</h1><h3>Observatory	of	Andean	Salt	flats	through	Interdisciplinary	Studies</h3>
     </div>
   </div>
 
@@ -40,12 +39,11 @@
       <h1>Lugares de estudio</h1>
     </div>
     <div class="iframe-container">
-   <iframe 
-  id="iframe-mapa"
-  src="https://proyectooasis-464321.projects.earthengine.app/view/nwdizonas" 
-  frameborder="0"
-  allowfullscreen>
-</iframe>
+    <iframe 
+      src="https://ee-javidelafountain.projects.earthengine.app/view/oasiszonasarea" 
+      frameborder="0"
+      allowfullscreen>
+    </iframe>
   </div>
 <div class="texto">
   <h2>Proyecto de investigación interdisciplinaria que estudia los salares altoandinos del norte de Chile. Su objetivo es comprender los ciclos geoquímicos, biogeoquímicos y ecológicos de estos ecosistemas, así como los impactos sociales y ambientales asociados a la minería del litio.
@@ -77,7 +75,7 @@ Desde la geología, microbiología, ecología y ciencias sociales, el proyecto b
     <div class="iframe-container">
    <iframe 
   id="iframe-mapa"
-  src="https://proyectooasis-464321.projects.earthengine.app/view/nwdizonas" 
+  src="https://ee-javidelafountain.projects.earthengine.app/view/nwdiramsarnegrofcostarosa" 
   frameborder="0"
   allowfullscreen>
 </iframe>
@@ -150,7 +148,7 @@ Desde la geología, microbiología, ecología y ciencias sociales, el proyecto b
   const iframe = document.getElementById('iframe-mapa');
 
   document.getElementById('boton-ndwi').addEventListener('click', function() {
-    iframe.src = "https://proyectooasis-464321.projects.earthengine.app/view/nwdizonas";
+    iframe.src = "https://ee-javidelafountain.projects.earthengine.app/view/nwdiramsarnegrofcostarosa";
   });
 
   document.getElementById('boton-ndvi').addEventListener('click', function() {
