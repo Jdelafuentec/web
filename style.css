@@ -1014,3 +1014,14 @@ font-weight: bold !important;
   transform: scale(0.5) !important;
   transform-origin: center;
 }
+
+    .logo-oasis {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.logo-oasis img {
+  max-height: 100px;
+  height: auto;
+  width: auto;
+}
