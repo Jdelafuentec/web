@@ -90,41 +90,42 @@ Desde la geología, microbiología, ecología y ciencias sociales, el proyecto b
   
      <div class="tabla-indices">
   <table>
-    <thead>
-      <tr>
-        <th>Índice</th>
-        <th>Nombre</th>
-        <th>¿Para qué sirve?</th>
-        <th>Fórmula</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><strong>NDWI</strong></td>
-        <td>Índice Normalizado de Agua</td>
-        <td>Detecta lagunas, humedales temporales y humedad superficial en vegas</td>
-        <td>(Green − NIR) / (Green + NIR)</td>
-      </tr>
-      <tr>
-        <td><strong>NDSI</strong></td>
-        <td>Índice Normalizado de Salinidad</td>
-        <td>Estima áreas con alta reflectancia asociada a costras salinas</td>
-        <td>(SWIR − NIR) / (SWIR + NIR)</td>
-      </tr>
-      <tr>
-        <td><strong>NDVI</strong></td>
-        <td>Índice de Vegetación</td>
-        <td>Localiza vegas, bofedales y parches de vegetación en zonas húmedas</td>
-        <td>(NIR − Red) / (NIR + Red)</td>
-      </tr>
-      <tr>
-        <td><strong>SI</strong></td>
-        <td>Índice de Suelo Expuesto</td>
-        <td>Delimita zonas sin vegetación, suelos desnudos o costras salinas activas</td>
-        <td>(Red − SWIR) / (Red + SWIR)</td>
-      </tr>
-    </tbody>
-  </table>
+  <thead>
+    <tr>
+      <th>Índice</th>
+      <th>Nombre</th>
+      <th>¿Para qué sirve?</th>
+      <th>Fórmula</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>NDWI</td>
+      <td>Índice Normalizado de Agua</td>
+      <td>Detecta lagunas, humedales temporales y humedad superficial en vegas</td>
+      <td>(Green − NIR) / (Green + NIR)</td>
+    </tr>
+    <tr>
+      <td>NDVI</td>
+      <td>Índice de Vegetación</td>
+      <td>Localiza vegas, bofedales y parches de vegetación en zonas húmedas</td>
+      <td>(NIR − Red) / (NIR + Red)</td>
+    </tr>
+    <tr>
+      <td>SMI</td>
+      <td>Índice de Humedad del Suelo</td>
+      <td>Estima la humedad superficial del suelo con base en OPTRAM usando Sentinel-2</td>
+      <td>(NDVI − NDVI<sub>dry</sub>) / (NDVI<sub>wet</sub> − NDVI<sub>dry</sub>)</td>
+    </tr>
+    <tr>
+      <td>STI</td>
+      <td>Índice de Temperatura Superficial</td>
+      <td>Evalúa la temperatura de la superficie terrestre a partir de Landsat 8 (LST)</td>
+      <td>LST (Kelvin) − 273.15</td>
+    </tr>
+  </tbody>
+</table>
+
 </div>
   </div>
 <div class="row">
