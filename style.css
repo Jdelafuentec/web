@@ -978,6 +978,12 @@ font-weight: bold !important;
     object-fit: contain;
   }
 
+  .footer-oasis .logo-placeholder {
+    width: 150px;
+    height: 50px;
+    opacity: 0;
+  }
+
   .footer-oasis .logo-anid {
     flex: 0 0 auto;
     display: flex;
