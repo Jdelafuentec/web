@@ -706,7 +706,7 @@ font-weight: bold !important;
 
 .iframe-container iframe {
   width: 100%;
-  height: 600px;
+  height: 7240px !important;
   border: none;
   display: block;
 }
