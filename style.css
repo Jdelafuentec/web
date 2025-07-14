@@ -1007,3 +1007,6 @@ font-weight: bold !important;
       justify-content: center;
       gap: 20px;
     }
+    a.logos-smi img {
+    width: 50% !important;
+}
