@@ -1010,3 +1010,7 @@ font-weight: bold !important;
     a.logos-smi img {
     width: 50% !important;
 }
+    .logos-smi img {
+  transform: scale(0.5);
+  transform-origin: center;
+}
