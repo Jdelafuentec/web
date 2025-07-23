@@ -10,27 +10,25 @@
       background-color: #f8f8f8;
     }
 
-    /* bloque centrado */
+    /* contenedor centrado */
     #container {
-      width: 1030px; /* 630 canvas + 400 sidebar */
+      width: 1345px; /* 945 canvas + 400 sidebar */
       margin: 0 auto;
       display: flex;
-      align-items: flex-start;
     }
 
-    /* canvas holder (p5 inyecta el <canvas> aquí) */
+    /* canvas holder */
     #sketch-holder {
-      width: 630px;
-      flex: 0 0 630px;
+      width: 945px;
+      flex: 0 0 945px;
     }
 
-    /* consola fija dentro del flujo centrado usando sticky */
+    /* consola sticky a la derecha */
     #sidebar {
       position: sticky;
-      top: 0;              /* siempre visible al hacer scroll */
+      top: 0;
       width: 400px;
-      height: max-content; /* crece según contenido */
-      margin-left: 0;      /* ya está junto al canvas por el flex */
+      height: max-content;
       background-color: white;
       padding: 20px;
       box-sizing: border-box;
