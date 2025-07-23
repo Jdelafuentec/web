@@ -1,60 +1,56 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Transecto Interactivo</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f8f8f8;
-    }
+let bgImage;
 
-    /* bloque centrado */
-    #container {
-      width: 1030px; /* 630 canvas + 400 sidebar */
-      margin: 0 auto;
-      display: flex;
-      align-items: flex-start;
-    }
+// Dimensiones del canvas
+const CANVAS_W = 630;   // 1/3 más ancho que 472
+const CANVAS_H = 5086;  // igual que antes
 
-    /* canvas holder (p5 inyecta el <canvas> aquí) */
-    #sketch-holder {
-      width: 630px;
-      flex: 0 0 630px;
-    }
+function preload() {
+  bgImage = loadImage('https://jdelafuentec.github.io/web/transectoSal.jpg');
+}
 
-    /* consola fija dentro del flujo centrado usando sticky */
-    #sidebar {
-      position: sticky;
-      top: 0;              /* siempre visible al hacer scroll */
-      width: 400px;
-      height: max-content; /* crece según contenido */
-      margin-left: 0;      /* ya está junto al canvas por el flex */
-      background-color: white;
-      padding: 20px;
-      box-sizing: border-box;
-      box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-    }
+function setup() {
+  const canvas = createCanvas(CANVAS_W, CANVAS_H);
+  canvas.parent("sketch-holder");
+  textFont('Arial');
+  textStyle(BOLD);
+  textSize(12);
+}
 
-    #sidebar img {
-      width: 370px;
-      height: 208px;
-      margin-top: 10px;
-      display: block;
-    }
-  </style>
-</head>
-<body>
-  <div id="container">
-    <div id="sketch-holder"></div>
-    <div id="sidebar">
-      <h2 style="font-size: 18px; margin-top: 0;">Scroll hacia abajo y buscar el moco</h2>
-      <img src="https://jdelafuentec.github.io/web/mocoSal.jpg" alt="Moco de sal">
-    </div>
-  </div>
+function draw() {
+  background(255);
+  // Escalo la imagen al nuevo ancho; altura igual
+  image(bgImage, 0, 0, width, height);
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
-  <script src="https://jdelafuentec.github.io/web/sketch.js"></script>
-</body>
-</html>
+  // ---- Zona 1 (antes x=125 en 472 => frac ~0.265; y=100 igual) ----
+  const x1 = width * 0.265;  // equivale a ~125 cuando width=472
+  const y1 = 100;
+  const r1 = 60;
+
+  if (dist(mouseX, mouseY, x1, y1) < r1) {
+    noFill();
+    stroke(0);
+    strokeWeight(2);
+    ellipse(x1, y1, r1 * 2);
+
+    noStroke();
+    fill(0);
+    // Texto: antes en (80,80) sobre 472 => frac 80/472=0.169
+    text("Costra de Sal", width * 0.169, 80);
+  }
+
+  // ---- Zona 2 (antes width/1.1, height/2.55; radio 60) ----
+  const x2 = width / 1.1;     // ~0.909 * width
+  const y2 = height / 2.55;   // mismo que antes
+  const r2 = 60;
+
+  if (dist(mouseX, mouseY, x2, y2) < r2) {
+    noFill();
+    stroke(0);
+    strokeWeight(2);
+    ellipse(x2, y2, r2 * 2);
+
+    noStroke();
+    fill(0);
+    text("El Moco", x2 - 30, y2 - 15);
+  }
+}
