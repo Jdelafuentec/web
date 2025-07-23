@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Transecto Interactivo</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      overflow-x: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    /* contenedor principal */
+    #container {
+      display: flex;
+    }
+
+    /* consola lateral fija */
+    #sidebar {
+      position: fixed;
+      right: 0;
+      top: 0;
+      width: 400px;
+      height: 100vh;
+      background-color: white;
+      padding: 20px;
+      box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+      box-sizing: border-box;
+    }
+
+    #sidebar img {
+      width: 370px;
+      height: 208px;
+      margin-top: 10px;
+    }
+
+    /* espacio para el canvas */
+    #sketch-holder {
+      width: 472px;
+      margin-right: 400px; /* para que no se tape con sidebar */
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div id="sketch-holder"></div>
+    <div id="sidebar">
+      <h2 style="font-size: 18px;">Scroll hacia abajo y buscar el moco</h2>
+      <img src="https://jdelafuentec.github.io/web/mocoSal.jpg" alt="Moco de sal">
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <script src="sketch.js"></script>
+</body>
+</html>
