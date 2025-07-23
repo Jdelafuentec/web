@@ -10,27 +10,27 @@
       background-color: #f8f8f8;
     }
 
-    /* Envoltorio total centrado manualmente */
-    #canvas-container {
-      width: 872px; /* 472 canvas + 400 consola */
+    /* bloque centrado */
+    #container {
+      width: 1030px; /* 630 canvas + 400 sidebar */
       margin: 0 auto;
-      position: relative;
+      display: flex;
+      align-items: flex-start;
     }
 
-    /* contenedor canvas con margen derecho */
+    /* canvas holder (p5 inyecta el <canvas> aquí) */
     #sketch-holder {
-      width: 472px;
-      float: left;
+      width: 630px;
+      flex: 0 0 630px;
     }
 
-    /* consola fija, pero relativa al contenedor centrado */
+    /* consola fija dentro del flujo centrado usando sticky */
     #sidebar {
-      position: fixed;
-      left: 50%;
-      margin-left: 236px; /* 872/2 - 400 = mitad canvas */
-      top: 0;
+      position: sticky;
+      top: 0;              /* siempre visible al hacer scroll */
       width: 400px;
-      height: 100vh;
+      height: max-content; /* crece según contenido */
+      margin-left: 0;      /* ya está junto al canvas por el flex */
       background-color: white;
       padding: 20px;
       box-sizing: border-box;
@@ -41,20 +41,17 @@
       width: 370px;
       height: 208px;
       margin-top: 10px;
+      display: block;
     }
   </style>
 </head>
 <body>
-
-  <div id="canvas-container">
+  <div id="container">
     <div id="sketch-holder"></div>
-  </div>
-
-  <div id="sidebar">
-    <h2 style="font-size: 18px;">Scroll hacia abajo</h2>
-
-    <h2 style="font-size: 14px;">Luego busca el moco</h2>
-    <img src="https://jdelafuentec.github.io/web/mocoSal.jpg" alt="Moco de sal">
+    <div id="sidebar">
+      <h2 style="font-size: 18px; margin-top: 0;">Scroll hacia abajo y buscar el moco</h2>
+      <img src="https://jdelafuentec.github.io/web/mocoSal.jpg" alt="Moco de sal">
+    </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
