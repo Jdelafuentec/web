@@ -7,52 +7,103 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #f8f8f8;
+      overflow-x: hidden;
     }
 
-    /* contenedor centrado */
-    #container {
-      width: 872px; /* 472 canvas + 400 sidebar */
-      margin: 0 auto;
+    #wrapper {
       display: flex;
+      max-width: 1345px;
+      margin: 0 auto;
     }
 
-    /* espacio para el canvas */
-    #sketch-holder {
-      width: 472px;
-      flex: 0 0 472px;
+    /* imagen scrollable con canvas encima */
+    #image-container {
+      position: relative;
+      width: 945px;
+      overflow-y: auto;
     }
 
-    /* consola sticky a la derecha */
-    #sidebar {
+    #transecto {
+      display: block;
+      width: 945px;
+      height: auto;
+    }
+
+    #overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none; /* para no bloquear el scroll */
+    }
+
+    /* consola fija a la derecha */
+    aside {
       position: sticky;
       top: 0;
       width: 400px;
       height: max-content;
-      background-color: white;
+      background: white;
       padding: 20px;
+      box-shadow: -2px 0 5px rgba(0,0,0,0.1);
       box-sizing: border-box;
-      box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
     }
 
-    #sidebar img {
+    aside img {
       width: 370px;
       height: 208px;
       margin-top: 10px;
-      display: block;
     }
   </style>
 </head>
 <body>
-  <div id="container">
-    <div id="sketch-holder"></div>
-    <div id="sidebar">
-      <h2 style="font-size: 18px; margin-top: 0;">Scroll hacia abajo y buscar el moco</h2>
-      <img src="https://jdelafuentec.github.io/web/mocoSal.jpg" alt="Moco de sal">
-    </div>
+
+<div id="wrapper">
+  <div id="image-container">
+    <img id="transecto" src="https://jdelafuentec.github.io/web/transectoSal.jpg" alt="Transecto">
+
+    <canvas id="overlay" width="945" height="10173"></canvas>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
-  <script src="https://jdelafuentec.github.io/web/sketch.js"></script>
+  <aside>
+    <h2 style="font-size: 18px;">Scroll hacia abajo y buscar el moco</h2>
+    <img src="https://jdelafuentec.github.io/web/mocoSal.jpg" alt="Moco de sal">
+  </aside>
+</div>
+
+<script>
+  const canvas = document.getElementById('overlay');
+  const ctx = canvas.getContext('2d');
+  const container = document.getElementById('image-container');
+
+  // zonas interactivas
+  const zonas = [
+    { x: 250, y: 100, r: 60, texto: 'Costra de Sal' },
+    { x: 860, y: 10173 / 2.55, r: 60, texto: 'El Moco' }
+  ];
+
+  container.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top + container.scrollTop;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    zonas.forEach(z => {
+      const d = Math.hypot(x - z.x, y - z.y);
+      if (d < z.r) {
+        ctx.beginPath();
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 2;
+        ctx.arc(z.x, z.y, z.r, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.font = 'bold 14px Arial';
+        ctx.fillStyle = 'black';
+        ctx.fillText(z.texto, z.x - 50, z.y - 20);
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
