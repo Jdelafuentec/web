@@ -10,18 +10,25 @@
       background-color: #f8f8f8;
     }
 
-    /* contenedor centrado */
-    #container {
-      width: 872px; /* 472 + 400 */
+    /* Envoltorio total centrado manualmente */
+    #canvas-container {
+      width: 872px; /* 472 canvas + 400 consola */
       margin: 0 auto;
-      display: flex;
+      position: relative;
     }
 
-    /* sidebar fija pero dentro del contenedor */
+    /* contenedor canvas con margen derecho */
+    #sketch-holder {
+      width: 472px;
+      float: left;
+    }
+
+    /* consola fija, pero relativa al contenedor centrado */
     #sidebar {
       position: fixed;
       left: 50%;
-      margin-left: 236px; /* mitad del ancho total menos mitad del sidebar */
+      margin-left: 236px; /* 872/2 - 400 = mitad canvas */
+      top: 0;
       width: 400px;
       height: 100vh;
       background-color: white;
@@ -35,21 +42,17 @@
       height: 208px;
       margin-top: 10px;
     }
-
-    /* espacio para el canvas */
-    #sketch-holder {
-      width: 472px;
-      z-index: 1;
-    }
   </style>
 </head>
 <body>
-  <div id="container">
+
+  <div id="canvas-container">
     <div id="sketch-holder"></div>
-    <div id="sidebar">
-      <h2 style="font-size: 18px;">Scroll hacia abajo y buscar el moco</h2>
-      <img src="https://jdelafuentec.github.io/web/mocoSal.jpg" alt="Moco de sal">
-    </div>
+  </div>
+
+  <div id="sidebar">
+    <h2 style="font-size: 18px;">Scroll hacia abajo y buscar el moco</h2>
+    <img src="https://jdelafuentec.github.io/web/mocoSal.jpg" alt="Moco de sal">
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
