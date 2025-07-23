@@ -1,15 +1,11 @@
 let bgImage;
 
-// Dimensiones del canvas
-const CANVAS_W = 630;   // 1/3 más ancho que 472
-const CANVAS_H = 5086;  // igual que antes
-
 function preload() {
   bgImage = loadImage('https://jdelafuentec.github.io/web/transectoSal.jpg');
 }
 
 function setup() {
-  const canvas = createCanvas(CANVAS_W, CANVAS_H);
+  const canvas = createCanvas(945, 10173); // tamaño original de la imagen
   canvas.parent("sketch-holder");
   textFont('Arial');
   textStyle(BOLD);
@@ -18,11 +14,10 @@ function setup() {
 
 function draw() {
   background(255);
-  // Escalo la imagen al nuevo ancho; altura igual
-  image(bgImage, 0, 0, width, height);
+  image(bgImage, 0, 0); // sin escalado
 
-  // ---- Zona 1 (antes x=125 en 472 => frac ~0.265; y=100 igual) ----
-  const x1 = width * 0.265;  // equivale a ~125 cuando width=472
+  // Zona 1: Costra de Sal
+  const x1 = 250;
   const y1 = 100;
   const r1 = 60;
 
@@ -34,13 +29,12 @@ function draw() {
 
     noStroke();
     fill(0);
-    // Texto: antes en (80,80) sobre 472 => frac 80/472=0.169
-    text("Costra de Sal", width * 0.169, 80);
+    text("Costra de Sal", x1 - 50, y1 - 25);
   }
 
-  // ---- Zona 2 (antes width/1.1, height/2.55; radio 60) ----
-  const x2 = width / 1.1;     // ~0.909 * width
-  const y2 = height / 2.55;   // mismo que antes
+  // Zona 2: El Moco
+  const x2 = 860; // aprox. 945 / 1.1
+  const y2 = 10173 / 2.55;
   const r2 = 60;
 
   if (dist(mouseX, mouseY, x2, y2) < r2) {
