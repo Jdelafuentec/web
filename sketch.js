@@ -1,46 +1,60 @@
-let bgImage;
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Transecto Interactivo</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
+    }
 
-function preload() {
-  bgImage = loadImage('https://jdelafuentec.github.io/web/transectoSal.jpg');
-}
+    /* bloque centrado */
+    #container {
+      width: 1030px; /* 630 canvas + 400 sidebar */
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-start;
+    }
 
-function setup() {
-  let canvas = createCanvas(472, 5086);
-  canvas.parent("sketch-holder");
-  textFont('Arial');
-  textStyle(BOLD);
-  textSize(12);
-}
+    /* canvas holder (p5 inyecta el <canvas> aquí) */
+    #sketch-holder {
+      width: 630px;
+      flex: 0 0 630px;
+    }
 
-function draw() {
-  background(255);
-  image(bgImage, 0, 0, width, height);
+    /* consola fija dentro del flujo centrado usando sticky */
+    #sidebar {
+      position: sticky;
+      top: 0;              /* siempre visible al hacer scroll */
+      width: 400px;
+      height: max-content; /* crece según contenido */
+      margin-left: 0;      /* ya está junto al canvas por el flex */
+      background-color: white;
+      padding: 20px;
+      box-sizing: border-box;
+      box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    }
 
-  // Zona 1
-  let x1 = 125;
-  let y1 = 100;
-  if (dist(mouseX, mouseY, x1, y1) < 60) {
-    noFill();
-    stroke(0);
-    strokeWeight(2);
-    ellipse(x1, y1, 120);
+    #sidebar img {
+      width: 370px;
+      height: 208px;
+      margin-top: 10px;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div id="sketch-holder"></div>
+    <div id="sidebar">
+      <h2 style="font-size: 18px; margin-top: 0;">Scroll hacia abajo y buscar el moco</h2>
+      <img src="https://jdelafuentec.github.io/web/mocoSal.jpg" alt="Moco de sal">
+    </div>
+  </div>
 
-    noStroke();
-    fill(0);
-    text("Costra de Sal", 80, 80);
-  }
-
-  // Zona 2
-  let x2 = width / 1.1;
-  let y2 = height / 2.55;
-  if (dist(mouseX, mouseY, x2, y2) < 60) {
-    noFill();
-    stroke(0);
-    strokeWeight(2);
-    ellipse(x2, y2, 120);
-
-    noStroke();
-    fill(0);
-    text("El Moco", x2 - 30, y2 - 15);
-  }
-}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <script src="https://jdelafuentec.github.io/web/sketch.js"></script>
+</body>
+</html>
