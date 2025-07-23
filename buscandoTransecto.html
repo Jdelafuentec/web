@@ -6,25 +6,28 @@
   <style>
     body {
       margin: 0;
-      display: flex;
-      overflow-x: hidden;
       font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
     }
 
+    /* contenedor centrado */
     #container {
+      width: 872px; /* 472 + 400 */
+      margin: 0 auto;
       display: flex;
     }
 
+    /* sidebar fija pero dentro del contenedor */
     #sidebar {
       position: fixed;
-      right: 0;
-      top: 0;
+      left: 50%;
+      margin-left: 236px; /* mitad del ancho total menos mitad del sidebar */
       width: 400px;
       height: 100vh;
       background-color: white;
       padding: 20px;
-      box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
       box-sizing: border-box;
+      box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
     }
 
     #sidebar img {
@@ -33,9 +36,10 @@
       margin-top: 10px;
     }
 
+    /* espacio para el canvas */
     #sketch-holder {
       width: 472px;
-      margin-right: 400px;
+      z-index: 1;
     }
   </style>
 </head>
