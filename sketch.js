@@ -7,7 +7,7 @@ function preload() {
 }
 
 function setup() {
-  const canvas = createCanvas(472, 5086); // altura reducida proporcional
+  const canvas = createCanvas(472, 5086); // tamaño proporcional a original
   canvas.parent("sketch-holder");
   textFont('Arial');
   textStyle(BOLD);
@@ -18,7 +18,7 @@ function draw() {
   background(255);
   image(bgImage, 0, 0, width, height); // adapta imagen al canvas
 
-  // Zona 1
+  // Zona 1: Costra de Sal
   const x1 = 472 * (250 / 945);
   const y1 = 100 * (5086 / 10173);
   const r1 = 30;
@@ -28,6 +28,7 @@ function draw() {
       foundCostra = true;
       document.getElementById('check-costra').innerText = "✅ Costra de Sal";
     }
+
     noFill();
     stroke(0);
     strokeWeight(2);
@@ -37,7 +38,7 @@ function draw() {
     text("Costra de Sal", x1 - 50, y1 - 25);
   }
 
-  // Zona 2
+  // Zona 2: El Moco
   const x2 = 472 * (860 / 945);
   const y2 = 5086 / 2.55;
   const r2 = 30;
@@ -47,6 +48,7 @@ function draw() {
       foundMoco = true;
       document.getElementById('check-moco').innerText = "✅ El Moco";
     }
+
     noFill();
     stroke(0);
     strokeWeight(2);
