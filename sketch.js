@@ -1,4 +1,6 @@
 let bgImage;
+let foundCostra = false;
+let foundMoco = false;
 
 function preload() {
   bgImage = loadImage('https://jdelafuentec.github.io/web/transectoSal_med.jpg'); // versión optimizada
@@ -16,12 +18,17 @@ function draw() {
   background(255);
   image(bgImage, 0, 0, width, height); // se adapta al canvas
 
-  // Zona 1 (escalada desde el tamaño original)
-  const x1 = 472 * (250 / 945);      // escala proporcional de 250px original
-  const y1 = 100 * (5086 / 10173);   // escala proporcional de 100px original
+  // Zona 1: Costra de Sal
+  const x1 = 472 * (250 / 945);
+  const y1 = 100 * (5086 / 10173);
   const r1 = 30;
 
   if (dist(mouseX, mouseY, x1, y1) < r1) {
+    if (!foundCostra) {
+      foundCostra = true;
+      document.getElementById('check-costra').innerText = "✅ Costra de Sal";
+    }
+
     noFill();
     stroke(0);
     strokeWeight(2);
@@ -32,12 +39,17 @@ function draw() {
     text("Costra de Sal", x1 - 50, y1 - 25);
   }
 
-  // Zona 2 (escalada desde original)
+  // Zona 2: El Moco
   const x2 = 472 * (860 / 945);
   const y2 = 5086 / 2.55;
   const r2 = 30;
 
   if (dist(mouseX, mouseY, x2, y2) < r2) {
+    if (!foundMoco) {
+      foundMoco = true;
+      document.getElementById('check-moco').innerText = "✅ El Moco";
+    }
+
     noFill();
     stroke(0);
     strokeWeight(2);
