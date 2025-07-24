@@ -16,27 +16,17 @@
       margin: 0 auto;
     }
 
-    /* imagen scrollable con canvas encima */
     #image-container {
       position: relative;
-      width: 945px;
-      overflow-y: auto;
+      width: 472px;
+      height: 5086px;
+      overflow: hidden;
     }
 
-    #transecto {
+    #sketch-holder canvas {
       display: block;
-      width: 945px;
-      height: auto;
     }
 
-    #overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      pointer-events: none; /* para no bloquear el scroll */
-    }
-
-    /* consola fija a la derecha */
     aside {
       position: sticky;
       top: 0;
@@ -53,59 +43,41 @@
       height: 208px;
       margin-top: 10px;
     }
+
+    ul {
+      font-size: 14px;
+      padding-left: 20px;
+      list-style: none;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
   </style>
 </head>
 <body>
 
 <div id="wrapper">
   <div id="image-container">
-    <img id="transecto" src="https://jdelafuentec.github.io/web/transectoSal.jpg" alt="Transecto">
-
-    <canvas id="overlay" width="945" height="10173"></canvas>
+    <div id="sketch-holder"></div>
   </div>
 
   <aside>
     <h2 style="font-size: 18px;">Scroll hacia abajo para recorrer el transecto</h2>
-    <h3 style="font-size: 14px;">Buscar los siguiente elementos</h3>
+    <h3 style="font-size: 14px;">Buscar los siguientes elementos</h3>
+
+    <ul>
+      <li id="check-costra">◻ Costra de Sal</li>
+      <li id="check-moco">◻ El Moco</li>
+    </ul>
+
     <img src="https://jdelafuentec.github.io/web/mocoSal.jpg" alt="Moco de sal">
     <p style="font-size: 12px;">El moco</p>
   </aside>
 </div>
 
-<script>
-  const canvas = document.getElementById('overlay');
-  const ctx = canvas.getContext('2d');
-  const container = document.getElementById('image-container');
-
-  // zonas interactivas
-  const zonas = [
-    { x: 250, y: 100, r: 60, texto: 'Costra de Sal' },
-    { x: 860, y: 10173 / 2.55, r: 60, texto: 'El Moco' }
-  ];
-
-  container.addEventListener('mousemove', (e) => {
-    const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top + container.scrollTop;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    zonas.forEach(z => {
-      const d = Math.hypot(x - z.x, y - z.y);
-      if (d < z.r) {
-        ctx.beginPath();
-        ctx.strokeStyle = 'black';
-        ctx.lineWidth = 2;
-        ctx.arc(z.x, z.y, z.r, 0, Math.PI * 2);
-        ctx.stroke();
-
-        ctx.font = 'bold 14px Arial';
-        ctx.fillStyle = 'black';
-        ctx.fillText(z.texto, z.x - 50, z.y - 20);
-      }
-    });
-  });
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+<script src="sketch.js"></script>
 
 </body>
 </html>
