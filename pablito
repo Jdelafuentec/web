@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mapa: 17 Parques y Senderos</title>
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- MarkerCluster -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+  <!-- Turf.js (para calcular longitud de senderos) -->
+  <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
+
+  <style>
+    html, body { height: 100%; margin: 0; }
+    #map { height: 100vh; width: 100vw; }
+    .search-control { background: white; padding: .5rem; border-radius: .5rem; box-shadow: 0 2px 8px rgba(0,0,0,.15); }
+    .legend { background: white; padding: .5rem .75rem; border-radius: .5rem; box-shadow: 0 2px 8px rgba(0,0,0,.15); line-height: 1.3; }
+    .legend .swatch { display:inline-block; width:12px; height:12px; margin-right:6px; border-radius:2px; vertical-align: middle; }
+    .leaflet-popup-content { font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script>
+    // ==========================
+    // 1) Datos (reemplaza con tus GeoJSON)
+    // ==========================
+    // Parques: 17 puntos. Mantén EPSG:4326 (lng, lat)
+    const parquesGeoJSON = {
+      "type": "FeatureCollection",
+      "features": [
+        // --- EJEMPLOS: reemplazar por tus 17 parques ---
+        { "type": "Feature", "properties": { "name": "Parque 1", "description": "Descripción 1", "photo": "", "url": "" }, "geometry": { "type": "Point", "coordinates": [-73.1, -41.9] } },
+        { "type": "Feature", "properties": { "name": "Parque 2", "description": "Descripción 2", "photo": "", "url": "" }, "geometry": { "type": "Point", "coordinates": [-72.9, -41.75] } }
+        // TODO: agrega aquí el resto hasta completar los 17 parques
+      ]
+    };
+
+    // Senderos: LineString o MultiLineString
+    const senderosGeoJSON = {
+      "type": "FeatureCollection",
+      "features": [
+        // --- EJEMPLOS: reemplazar por tus senderos ---
+        {
+          "type": "Feature",
+          "properties": { "name": "Sendero A", "difficulty": "Fácil", "surface": "Tierra" },
+          "geometry": { "type": "LineString", "coordinates": [[-73.10, -41.90], [-73.08, -41.88], [-73.06, -41.87]] }
+        },
+        {
+          "type": "Feature",
+          "properties": { "name": "Sendero B", "difficulty": "Media", "surface": "Grava" },
+          "geometry": { "type": "LineString", "coordinates": [[-72.90, -41.75], [-72.88, -41.74], [-72.86, -41.73]] }
+        }
+        // TODO: agrega más senderos
+      ]
+    };
+
+    // ==========================
+    // 2) Mapa base
+    // ==========================
+    const map = L.map('map', {
+      center: [-41.8, -73.0],
+      zoom: 7,
+      minZoom: 3,
+      worldCopyJump: true
+    });
+
+    const baseOSM = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contrib.'
+    }).addTo(map);
+
+    const baseCarto = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      maxZoom: 20,
+      attribution: '&copy; OpenStreetMap & CARTO'
+    });
+
+    // ==========================
+    // 3) Estilos
+    // ==========================
+    const trailColor = '#1e90ff';
+    function trailStyle() {
+      return { color: trailColor, weight: 3, opacity: 0.9 };
+    }
+
+    // ==========================
+    // 4) Capa Parques (con clustering)
+    // ==========================
+    const parquesCluster = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 45 });
+
+    const parquesLayer = L.geoJSON(parquesGeoJSON, {
+      pointToLayer: (feature, latlng) => L.marker(latlng, { title: feature.properties?.name || 'Parque' }),
+      onEachFeature: (feature, layer) => {
+        const p = feature.properties || {};
+        const photoHTML = p.photo ? `<div style="margin:.5rem 0"><img src="${p.photo}" alt="${p.name}" style="max-width:240px; width:100%; border-radius:8px"/></div>` : '';
+        const urlHTML = p.url ? `<p style="margin:.5rem 0"><a href="${p.url}" target="_blank" rel="noopener">Ver más</a></p>` : '';
+        layer.bindPopup(`
+          <h3 style="margin:.25rem 0 .5rem;font:600 16px system-ui">${p.name || 'Parque'}</h3>
+          <p style="margin:.25rem 0">${p.description || ''}</p>
+          ${photoHTML}
+          ${urlHTML}
+          <p style="margin:.25rem 0;color:#666">Acércate (zoom 12+) para ver senderos.</p>
+        `);
+      }
+    });
+
+    parquesCluster.addLayer(parquesLayer).addTo(map);
+
+    // Al click en un parque, acercar para que aparezcan senderos
+    parquesLayer.eachLayer((marker) => {
+      marker.on('click', (e) => {
+        map.flyTo(e.latlng, Math.max(map.getZoom(), 12), { duration: 0.6 });
+      });
+    });
+
+    // ==========================
+    // 5) Capa Senderos (hover + longitud) con visibilidad por zoom
+    // ==========================
+    const Z_SENDEROS = 12; // umbral de zoom para mostrar senderos
+
+    function kmFromGeoJSON(geom) {
+      try {
+        const length = turf.length(geom, { units: 'kilometers' });
+        return Math.round(length * 100) / 100; // 2 decimales
+      } catch { return null; }
+    }
+
+    const senderosLayer = L.geoJSON(senderosGeoJSON, {
+      style: trailStyle,
+      onEachFeature: (feature, layer) => {
+        const props = feature.properties || {};
+        const km = kmFromGeoJSON(feature.geometry);
+        const kmTxt = (km !== null) ? `${km} km` : '—';
+        layer.bindPopup(`
+          <h3 style="margin:.25rem 0 .5rem;font:600 16px system-ui">${props.name || 'Sendero'}</h3>
+          <p style="margin:.25rem 0"><strong>Longitud:</strong> ${kmTxt}</p>
+          <p style="margin:.25rem 0"><strong>Dificultad:</strong> ${props.difficulty || '—'}</p>
+          <p style="margin:.25rem 0"><strong>Superficie:</strong> ${props.surface || '—'}</p>
+        `);
+        layer.on('mouseover', () => layer.setStyle({ weight: 5, opacity: 1 }));
+        layer.on('mouseout', () => layer.setStyle(trailStyle()));
+      }
+    });
+    // NOTA: No añadimos senderosLayer aún; lo controlamos por zoom
+    let senderosEnMapa = false;
+
+    function actualizarSenderosPorZoom() {
+      const z = map.getZoom();
+      if (z >= Z_SENDEROS) {
+        if (!senderosEnMapa) { senderosLayer.addTo(map); senderosEnMapa = true; }
+      } else {
+        if (senderosEnMapa) { map.removeLayer(senderosLayer); senderosEnMapa = false; }
+      }
+    }
+    map.on('zoomend', actualizarSenderosPorZoom);
+    actualizarSenderosPorZoom();
+
+    // ==========================
+    // 6) Controles (capas, leyenda, búsqueda)
+    // ==========================
+    const baseMaps = { 'OSM': baseOSM, 'Carto Light': baseCarto };
+    const overlayMaps = {
+      'Parques': parquesCluster,
+      'Senderos (aparecen desde zoom ' + Z_SENDEROS + ')': senderosLayer
+    };
+    L.control.layers(baseMaps, overlayMaps, { collapsed: true }).addTo(map);
+
+    // Leyenda simple
+    const legend = L.control({ position: 'bottomleft' });
+    legend.onAdd = function () {
+      const div = L.DomUtil.create('div', 'legend');
+      div.innerHTML = `
+        <div><span class="swatch" style="background:${trailColor}"></span>Senderos</div>
+        <div><span class="swatch" style="background:#3388ff"></span>Parques (marcadores)</div>
+      `;
+      return div;
+    };
+    legend.addTo(map);
+
+    // Búsqueda simple de parques por nombre
+    const SearchControl = L.Control.extend({
+      onAdd: function () {
+        const container = L.DomUtil.create('div', 'search-control');
+        const input = L.DomUtil.create('input', '', container);
+        input.type = 'search';
+        input.placeholder = 'Buscar parque…';
+        input.style.minWidth = '180px';
+        L.DomEvent.disableClickPropagation(container);
+        input.addEventListener('input', function () {
+          const q = this.value.trim().toLowerCase();
+          if (!q) return;
+          let foundLatLng = null, foundFeature = null;
+          parquesLayer.eachLayer(m => {
+            const name = (m.feature?.properties?.name || '').toLowerCase();
+            if (!foundLatLng && name.includes(q)) { foundLatLng = m.getLatLng(); foundFeature = m.feature; }
+          });
+          if (foundLatLng) {
+            map.flyTo(foundLatLng, Math.max(map.getZoom(), Z_SENDEROS), { duration: .6 });
+            parquesLayer.eachLayer(m => { if (m.feature === foundFeature) { m.openPopup(); } });
+          }
+        });
+        return container;
+      },
+      onRemove: function () {}
+    });
+    map.addControl(new SearchControl({ position: 'topleft' }));
+
+    // ==========================
+    // 7) Ajustar vista a la data
+    // ==========================
+    function fitToData() {
+      const bds = L.latLngBounds([]);
+      try { bds.extend(parquesCluster.getBounds()); } catch(e){}
+      try { bds.extend(senderosLayer.getBounds()); } catch(e){}
+      if (bds.isValid()) map.fitBounds(bds.pad(0.15));
+    }
+    fitToData();
+
+    // Revalidar visibilidad tras mover/volar
+    map.on('moveend', actualizarSenderosPorZoom);
+
+    // ==========================
+    // Tips:
+    // - Exporta desde QGIS como GeoJSON (EPSG:4326).
+    // - Si prefieres cargar archivos externos, puedo darte una versión con fetch('parques.geojson') y fetch('senderos.geojson').
+    // - Se puede embeber en WordPress con <iframe> o subir a GitHub Pages.
+    // ==========================
+  </script>
+</body>
+</html>
