@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mapa Parques + Senderos (Mínimo Funcional)</title>
+  <title>Mapa Parques + Senderos (KMZ→GeoJSON)</title>
 
   <!-- Leaflet -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-  <!-- Turf.js (longitudes) -->
+  <!-- Turf.js para longitudes -->
   <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
 
   <style>
-    /* Si lo embeberás, cambia 100vh por una altura fija (ej. 600px) */
+    /* Si lo embeberás en WordPress, puedes usar altura fija (600px) */
     html, body { height: 100%; margin: 0; }
     #map { height: 100vh; width: 100vw; }
 
-    .legend { background: white; padding: .5rem .75rem; border-radius: .5rem; box-shadow: 0 2px 8px rgba(0,0,0,.15); }
+    .legend { background: white; padding: .5rem .75rem; border-radius: .5rem; box-shadow: 0 2px 8px rgba(0,0,0,.15); line-height: 1.3; }
     .legend .swatch { display:inline-block; width:12px; height:12px; margin-right:6px; border-radius:2px; vertical-align: middle; }
   </style>
 </head>
@@ -25,77 +25,47 @@
   <div id="map"></div>
 
   <script>
-    // ---------- DATOS DEMO (reemplaza luego) ----------
-    const parquesGeoJSON = {
-      "type": "FeatureCollection",
-      "features": [
-        { "type": "Feature",
-          "properties": { "name": "Parque Demo", "description": "Un parque de prueba." },
-          "geometry": { "type": "Point", "coordinates": [-73.1, -41.9] }
-        }
-      ]
-    };
+    // ==========================
+    // Parámetros
+    // ==========================
+    const Z_SENDEROS = 12;    // zoom a partir del cual se muestran senderos
+    const Z_CLICK_FLYTO = 12; // zoom al que se acerca al hacer clic en un parque
+    const INITIAL_CENTER = [-41.9, -73.1];
+    const INITIAL_ZOOM   = 6; // menos zoom al partir
 
-    const senderosGeoJSON = {
-      "type": "FeatureCollection",
-      "features": [
-        {
-          "type": "Feature",
-          "properties": { "name": "Sendero Demo", "difficulty": "Fácil", "surface": "Tierra" },
-          "geometry": { "type": "LineString", "coordinates": [
-            [-73.102, -41.902], [-73.095, -41.895], [-73.088, -41.892]
-          ]}
-        }
-      ]
-    };
-
-    // ---------- MAPA ----------
+    // ==========================
+    // Mapa base
+    // ==========================
     const map = L.map('map', {
-      center: [-41.9, -73.1],  // centro inicial visible
-      zoom: 8                 // zoom inicial razonable
+      center: INITIAL_CENTER,
+      zoom: INITIAL_ZOOM,
+      minZoom: 3
     });
 
-    // Base
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; OpenStreetMap contrib.'
     }).addTo(map);
 
-    // Estilos
+    // Estilos para senderos
     const trailColor = '#1e90ff';
     function trailStyle() { return { color: trailColor, weight: 3, opacity: 0.9 }; }
 
-    // Parques (marcadores simples)
-    const parquesLayer = L.geoJSON(parquesGeoJSON, {
-      pointToLayer: (f, latlng) => L.marker(latlng, { title: f.properties?.name || 'Parque' }),
-      onEachFeature: (f, layer) => {
-        const p = f.properties || {};
-        layer.bindPopup(`<strong>${p.name || 'Parque'}</strong><br>${p.description || ''}<br><small>Acércate (zoom 12+) para ver senderos.</small>`);
-        // al hacer clic, acercar para mostrar senderos
-        layer.on('click', (e) => map.flyTo(e.latlng, Math.max(map.getZoom(), 12), { duration: 0.6 }));
-      }
-    }).addTo(map);
+    // Capas (vacías al inicio)
+    let parquesLayer = null;
+    let senderosLayer = null;
+    let senderosEnMapa = false;
 
-    // Senderos (controlados por zoom)
     function kmFromGeoJSON(geom) {
-      try { return Math.round(turf.length(geom, { units: 'kilometers' }) * 100) / 100; }
-      catch { return null; }
+      try {
+        const length = turf.length(geom, { units: 'kilometers' });
+        return Math.round(length * 100) / 100;
+      } catch { return null; }
     }
 
-    const senderosLayer = L.geoJSON(senderosGeoJSON, {
-      style: trailStyle,
-      onEachFeature: (f, layer) => {
-        const props = f.properties || {};
-        const km = kmFromGeoJSON(f.geometry);
-        layer.bindPopup(`<strong>${props.name || 'Sendero'}</strong><br>Longitud: ${km ?? '—'} km<br>Dificultad: ${props.difficulty || '—'}<br>Superficie: ${props.surface || '—'}`);
-        layer.on('mouseover', () => layer.setStyle({ weight: 5, opacity: 1 }));
-        layer.on('mouseout',  () => layer.setStyle(trailStyle()));
-      }
-    });
-    // visibilidad automática
-    const Z_SENDEROS = 12;
-    let senderosEnMapa = false;
+    // Mostrar/ocultar senderos según zoom
     function actualizarSenderosPorZoom() {
+      if (!senderosLayer) return;
       const z = map.getZoom();
       if (z >= Z_SENDEROS) {
         if (!senderosEnMapa) { senderosLayer.addTo(map); senderosEnMapa = true; }
@@ -104,15 +74,6 @@
       }
     }
     map.on('zoomend', actualizarSenderosPorZoom);
-    actualizarSenderosPorZoom();
-
-    // Ajuste de vista
-    try {
-      const b = L.latLngBounds([]);
-      b.extend(parquesLayer.getBounds());
-      b.extend(senderosLayer.getBounds());
-      if (b.isValid()) map.fitBounds(b.pad(0.2));
-    } catch {}
 
     // Leyenda
     const legend = L.control({ position: 'bottomleft' });
@@ -126,8 +87,72 @@
     };
     legend.addTo(map);
 
-    // Por si el contenedor cambia tamaño (iframes, tabs, etc.)
-    setTimeout(() => map.invalidateSize(), 200);
+    // ==========================
+    // Cargar GeoJSONs (exportados del KMZ)
+    // ==========================
+    Promise.all([
+      fetch('parques.geojson').then(r => r.json()),
+      fetch('senderos.geojson').then(r => r.json())
+    ]).then(([parques, senderos]) => {
+      // --- Parques ---
+      parquesLayer = L.geoJSON(parques, {
+        pointToLayer: (feature, latlng) =>
+          L.marker(latlng, { title: feature.properties?.name || 'Parque' }),
+        onEachFeature: (feature, layer) => {
+          const p = feature.properties || {};
+          // Tooltip al pasar el mouse
+          if (p.name) layer.bindTooltip(p.name, {
+            direction: 'top',
+            offset: [0, -6],
+            opacity: 0.95,
+            sticky: true
+          });
+          // Popup opcional
+          const desc = (p.description || '').toString();
+          layer.bindPopup(`<strong>${p.name || 'Parque'}</strong><br>${desc}`);
+
+          // Click: abrir URL si existe, si no, acercar para ver senderos
+          layer.on('click', (e) => {
+            const url = (p.url || '').toString().trim();
+            if (url) {
+              window.open(url, '_blank', 'noopener');
+            } else {
+              map.flyTo(e.latlng, Math.max(map.getZoom(), Z_CLICK_FLYTO), { duration: 0.6 });
+            }
+          });
+        }
+      }).addTo(map);
+
+      // Ajustar vista a todos los parques
+      try {
+        const b = parquesLayer.getBounds();
+        if (b.isValid()) map.fitBounds(b.pad(0.2));
+      } catch {}
+
+      // --- Senderos ---
+      senderosLayer = L.geoJSON(senderos, {
+        style: trailStyle,
+        onEachFeature: (feature, layer) => {
+          const props = feature.properties || {};
+          const km = kmFromGeoJSON(feature.geometry);
+          layer.bindPopup(`
+            <strong>${props.name || 'Sendero'}</strong><br>
+            Longitud: ${km ?? '—'} km<br>
+            Dificultad: ${props.difficulty || '—'}<br>
+            Superficie: ${props.surface || '—'}
+          `);
+          layer.on('mouseover', () => layer.setStyle({ weight: 5, opacity: 1 }));
+          layer.on('mouseout',  () => layer.setStyle(trailStyle()));
+        }
+      });
+
+      // aplicar regla de visibilidad por zoom
+      actualizarSenderosPorZoom();
+      setTimeout(() => map.invalidateSize(), 200);
+    }).catch(err => {
+      console.error('Error cargando GeoJSON:', err);
+      alert('No se pudieron cargar los GeoJSON. Ver consola para detalles.');
+    });
   </script>
 </body>
 </html>
