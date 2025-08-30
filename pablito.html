@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Parques | Lista + Mapa Único</title>
+  <title>Rutas de Bicicleta | Lista + Mapa Único</title>
 
   <!-- Leaflet -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Turf para longitud -->
   <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
 
   <style>
@@ -34,14 +35,9 @@
     }
     .parks button:hover { background: #f0f6ff; border-color: #cfe0ff; transform: translateY(-1px); }
 
-    /* Botón de descarga */
     .download-btn {
-      display: inline-block;
-      margin: 10px 0;
-      padding: 8px 12px;
-      background: #0a3d91; color: #fff;
-      border-radius: 6px; text-decoration: none; font-size: 14px;
-      transition: background .2s ease;
+      display: inline-block; margin: 10px 0; padding: 8px 12px;
+      background: #0a3d91; color: #fff; border-radius: 6px; text-decoration: none; font-size: 14px;
     }
     .download-btn:hover { background: #072c6a; }
 
@@ -50,7 +46,9 @@
       display: none; /* aparece tras click en Parque 1 */
       background: #fff; border: 1px solid #e3e7ef; border-radius: 10px; padding: 8px 10px; margin: 6px 0 14px;
     }
+    details.trails[open] summary { border-bottom: 1px dashed #e5e7eb; padding-bottom: 6px; margin-bottom: 6px; }
     details.trails summary { cursor: pointer; font-weight: 600; color: #0a3d91; outline: none; }
+
     .trail-list { list-style: none; padding: 6px 0 0; margin: 0; display: grid; gap: 6px; }
     .trail-list a {
       display: block; text-decoration: none; color: #0a3d91; background: #f8fafc;
@@ -62,6 +60,13 @@
     /* Columna derecha: mapa único */
     .map-wrap { flex: 1 1 66.666%; position: relative; }
     #map { position: absolute; inset: 0; }
+
+    .legend {
+      position: absolute; left: 12px; bottom: 12px; background: #fff; padding: .5rem .75rem;
+      border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,.08); font-size: 13px; line-height: 1.25;
+    }
+    .legend .sw { display:inline-block; width:12px; height:12px; border-radius:3px; margin-right:6px; vertical-align:-2px; }
+    .legend .row { margin: 2px 0; }
   </style>
 </head>
 <body>
@@ -74,17 +79,15 @@
       <ul class="parks">
         <li><button type="button" id="btnParque1">Parque 1</button></li>
       </ul>
-
-      <!-- Botón de descarga KMZ -->
       <a href="#" class="download-btn" id="downloadKmz">⬇️ Descargar KMZ del Parque 1</a>
 
-      <!-- Senderos -->
+      <!-- Senderos del Parque 1 (se abre cuando presionas Parque 1) -->
       <details class="trails" id="trailsBlock">
-        <summary>Senderos del Parque 1</summary>
+        <summary>Rutas de bicicleta — Parque 1</summary>
         <ul class="trail-list" id="trailList"></ul>
       </details>
 
-      <!-- Resto de parques -->
+      <!-- Otros parques (placeholders, mismo mapa) -->
       <div class="section-title">Otros parques</div>
       <ul class="parks" id="parksRest">
         <li><button type="button" data-index="1">Parque 2</button></li>
@@ -109,28 +112,50 @@
     <!-- DERECHA -->
     <section class="map-wrap">
       <div id="map"></div>
+
+      <!-- Leyenda dificultad -->
+      <div class="legend" id="legend">
+        <div class="row"><span class="sw" style="background:#10b981"></span>Fácil</div>
+        <div class="row"><span class="sw" style="background:#f59e0b"></span>Media</div>
+        <div class="row"><span class="sw" style="background:#ef4444"></span>Difícil</div>
+        <div class="row"><span class="sw" style="background:#3b82f6"></span>Sin dato</div>
+        <div class="row" style="margin-top:6px;"><span class="sw" style="background:#8b5cf6"></span>Ruta seleccionada</div>
+      </div>
     </section>
   </div>
 
   <script>
     const URL_PARQUES  = "https://jdelafuentec.github.io/web/parques.geojson";
     const URL_SENDEROS = "https://jdelafuentec.github.io/web/senderos.geojson";
+
     const INITIAL_CENTER = [-35.0, -72.5];
-    const INITIAL_ZOOM   = 8;
-    const Z_SENDEROS     = 12;
-    const Z_FLYTO        = 13;
+    const INITIAL_ZOOM   = 8;   // parte lejos, no muestra senderos
+    const Z_SENDEROS     = 12;  // umbral para ver rutas
+    const Z_FLYTO        = 13;  // zoom al ir a Parque 1
 
-    const map = L.map('map', { center: INITIAL_CENTER, zoom: INITIAL_ZOOM });
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19, attribution: '&copy; OpenStreetMap'
-    }).addTo(map);
+    const map = L.map('map', { center: INITIAL_CENTER, zoom: INITIAL_ZOOM, minZoom: 3 });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap contrib.' }).addTo(map);
 
-    const defaultStyle   = { color:'#1e90ff', weight:3, opacity:0.9 };
-    const highlightStyle = { color:'#ff4500', weight:5, opacity:1 };
+    // Colores por dificultad
+    const colorByDiff = (d) => {
+      if (!d) return '#3b82f6'; // sin dato → azul
+      const v = String(d).toLowerCase();
+      if (v.includes('easy') || v.includes('fácil') || v === 'facil')   return '#10b981'; // verde
+      if (v.includes('moderate') || v.includes('media'))               return '#f59e0b'; // naranjo
+      if (v.includes('hard') || v.includes('difícil') || v === 'dificil') return '#ef4444'; // rojo
+      return '#3b82f6';
+    };
+
+    const defaultWeight = 3;
+    const selectedStyle = { color: '#8b5cf6', weight: 6, opacity: 1 }; // morado seleccionado
 
     let parquesLayer, senderosLayer, senderosEnMapa = false;
     const parqueArray = [];
     let selectedTrail = null;
+
+    function trailStyleByProps(props){
+      return { color: colorByDiff(props?.difficulty), weight: defaultWeight, opacity: 0.95 };
+    }
 
     function actualizarSenderosPorZoom(){
       if (!senderosLayer) return;
@@ -142,31 +167,57 @@
     }
     map.on('zoomend', actualizarSenderosPorZoom);
 
+    function kmFromGeometry(geom){
+      try { return Math.round(turf.length(geom, { units:'kilometers' }) * 100) / 100; }
+      catch { return null; }
+    }
+
     Promise.all([ fetch(URL_PARQUES).then(r=>r.json()), fetch(URL_SENDEROS).then(r=>r.json()) ])
       .then(([parques, senderos]) => {
+        // Parques
         parquesLayer = L.geoJSON(parques, {
-          pointToLayer: (f, latlng) => L.marker(latlng),
-          onEachFeature: (f, layer) => {
-            layer.bindTooltip("Parque");
+          pointToLayer: (_, latlng) => L.marker(latlng),
+          onEachFeature: (_, layer) => {
+            layer.bindTooltip("Parque", { direction:'top', offset:[0,-6], sticky:true, opacity:.95 });
             layer.bindPopup("<strong>Parque</strong>");
             parqueArray.push(layer);
           }
         }).addTo(map);
 
+        // Rutas bicicleta
         senderosLayer = L.geoJSON(senderos, {
-          style: defaultStyle,
+          style: (f) => trailStyleByProps(f.properties),
           onEachFeature: (f, layer) => {
-            const name = f.properties?.name || "Sendero";
-            layer.bindPopup(`<strong>${name}</strong>`);
+            const name = f.properties?.name || "Ruta de bicicleta";
+            const diff = f.properties?.difficulty || "—";
+            const gain = (f.properties?.elevation_gain != null) ? `${f.properties.elevation_gain} m` : "—";
+            const km   = kmFromGeometry(f.geometry);
+            layer.bindPopup(`
+              <strong>${name}</strong><br>
+              Dificultad: ${diff}<br>
+              Distancia: ${km ?? '—'} km<br>
+              Desnivel: ${gain}
+            `);
             layer.on('click', () => {
-              if (selectedTrail) selectedTrail.setStyle(defaultStyle);
-              layer.setStyle(highlightStyle);
+              if (selectedTrail) {
+                // restaurar estilo anterior según sus props
+                const pPrev = selectedTrail.feature?.properties;
+                selectedTrail.setStyle(trailStyleByProps(pPrev));
+              }
+              layer.setStyle(selectedStyle);
               selectedTrail = layer;
+            });
+            layer.on('mouseover', () => layer.setStyle({ weight: defaultWeight + 1 }));
+            layer.on('mouseout', () => {
+              if (selectedTrail === layer) return; // si está seleccionado, no tocamos
+              const p = layer.feature?.properties;
+              layer.setStyle(trailStyleByProps(p));
             });
           }
         });
-        actualizarSenderosPorZoom();
+        actualizarSenderosPorZoom(); // ocultas al inicio
 
+        // Sidebar: Parque 1 → acercar, mostrar y abrir rutas
         const btnParque1 = document.getElementById('btnParque1');
         const trailsBlock = document.getElementById('trailsBlock');
         const trailList   = document.getElementById('trailList');
@@ -175,7 +226,7 @@
           const marker = parqueArray[0];
           if (marker) {
             const ll = marker.getLatLng();
-            map.flyTo(ll, Z_FLYTO, { duration: .6 });
+            map.flyTo(ll, Math.max(map.getZoom(), Z_FLYTO), { duration: .6 });
             marker.openPopup();
             setTimeout(() => {
               actualizarSenderosPorZoom();
@@ -183,10 +234,12 @@
               trailsBlock.open = true;
               trailsBlock.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }, 650);
+          } else {
+            alert("Aún no hay Parque 1 en parques.geojson.");
           }
         });
 
-        // Llenar lista de senderos
+        // Llenar lista con nombres de rutas (o “Sendero X”) → href "#"
         const layers = senderosLayer.getLayers();
         (senderos.features || []).forEach((feat, i) => {
           const li = document.createElement('li');
@@ -197,18 +250,41 @@
           a.addEventListener('click', (ev) => {
             ev.preventDefault();
             const lyr = layers[i];
-            if (lyr) {
-              map.fitBounds(lyr.getBounds(), { padding: [20,20] });
-              if (selectedTrail) selectedTrail.setStyle(defaultStyle);
-              lyr.setStyle(highlightStyle);
-              selectedTrail = lyr;
-              lyr.openPopup();
+            if (!lyr) return;
+            map.fitBounds(lyr.getBounds(), { padding: [20,20] });
+            // resaltar seleccionado
+            if (selectedTrail) {
+              const pPrev = selectedTrail.feature?.properties;
+              selectedTrail.setStyle(trailStyleByProps(pPrev));
             }
+            lyr.setStyle(selectedStyle);
+            selectedTrail = lyr;
+            lyr.openPopup();
           });
           li.appendChild(a);
           trailList.appendChild(li);
         });
+
+        // Otros parques: sólo enfocan si existen
+        document.getElementById('parksRest').addEventListener('click', (e) => {
+          const btn = e.target.closest('button[data-index]');
+          if (!btn) return;
+          const idx = parseInt(btn.dataset.index, 10);
+          const marker = parqueArray[idx];
+          if (marker) {
+            map.panTo(marker.getLatLng());
+            marker.openPopup();
+          } else {
+            console.info(`${btn.textContent} aún no existe en parques.geojson.`);
+          }
+        });
+      })
+      .catch(err => {
+        console.error('Error cargando GeoJSON:', err);
+        alert('No se pudieron cargar los GeoJSON. Revisa la consola del navegador.');
       });
+
+    setTimeout(()=>map.invalidateSize(), 250);
   </script>
 </body>
 </html>
