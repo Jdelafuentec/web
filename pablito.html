@@ -3,151 +3,265 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Parque 1 + Senderos (Mapa único)</title>
+  <title>Parques | Lista + Mapa Único</title>
 
   <!-- Leaflet -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Turf (opcional: longitudes si las quieres luego) -->
   <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
 
   <style>
-    html, body { height: 100%; margin: 0; font-family: system-ui, sans-serif; }
-    .layout { display: flex; height: 100vh; }
+    html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+    .layout { display: flex; height: 100vh; width: 100vw; }
 
+    /* Columna izquierda */
     .sidebar {
-      flex: 0 0 33%; min-width: 260px; max-width: 420px;
-      border-right: 1px solid #ddd; background: #fafafa;
-      padding: 16px; overflow-y: auto;
+      flex: 0 0 33.333%;
+      min-width: 260px; max-width: 420px;
+      background: #fafafa; border-right: 1px solid #e5e7eb;
+      padding: 16px 14px; overflow: auto;
     }
+    .sidebar h2 { margin: 0 0 10px; font-size: 18px; }
+    .section-title { margin: 12px 0 8px; font-size: 14px; color: #374151; font-weight: 600; }
+
+    .parks { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
     .parks button {
-      display: block; width: 100%; margin-bottom: 12px;
-      background: #fff; border: 1px solid #ccc; border-radius: 6px;
-      padding: 10px; cursor: pointer; text-align: left;
+      width: 100%; text-align: left;
+      background: #fff; border: 1px solid #e3e7ef; color: #0a3d91;
+      border-radius: 10px; padding: 10px 12px; cursor: pointer;
+      transition: background .15s ease, border-color .15s ease, transform .06s ease;
+      font: 14px/1.4 inherit;
     }
-    .parks button:hover { background: #eef; }
+    .parks button:hover { background: #f0f6ff; border-color: #cfe0ff; transform: translateY(-1px); }
 
-    details { margin-top: 1rem; background: #fff; border: 1px solid #ccc; border-radius: 6px; padding: 8px; }
-    details summary { cursor: pointer; font-weight: 600; }
-    .trail-list { list-style: none; margin: 8px 0 0; padding: 0; }
-    .trail-list a { display: block; padding: 6px 8px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 4px; text-decoration: none; color: #0a3d91; }
-    .trail-list a:hover { background: #eef; }
+    /* Senderos desplegable (inicialmente oculto) */
+    details.trails {
+      display: none; /* se mostrará tras click en Parque 1 */
+      background: #fff; border: 1px solid #e3e7ef; border-radius: 10px; padding: 8px 10px; margin: 6px 0 14px;
+    }
+    details.trails[open] summary { border-bottom: 1px dashed #e5e7eb; padding-bottom: 6px; margin-bottom: 6px; }
+    details.trails summary { cursor: pointer; font-weight: 600; color: #0a3d91; outline: none; }
 
-    .map-wrap { flex: 1; position: relative; }
+    .trail-list { list-style: none; padding: 6px 0 0; margin: 0; display: grid; gap: 6px; }
+    .trail-list a {
+      display: block; text-decoration: none; color: #0a3d91; background: #f8fafc;
+      border: 1px solid #e3e7ef; border-radius: 8px; padding: 8px 10px;
+      transition: background .15s ease, border-color .15s ease;
+    }
+    .trail-list a:hover { background: #eef6ff; border-color: #cfe0ff; }
+
+    /* Columna derecha: mapa único */
+    .map-wrap { flex: 1 1 66.666%; position: relative; }
     #map { position: absolute; inset: 0; }
+
+    .legend {
+      position: absolute; left: 12px; bottom: 12px; background: #fff; padding: .5rem .75rem;
+      border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,.08); font-size: 13px; line-height: 1.25;
+    }
+    .legend .sw { display:inline-block; width:12px; height:12px; border-radius:3px; margin-right:6px; vertical-align:-2px; }
   </style>
 </head>
 <body>
   <div class="layout">
+    <!-- IZQUIERDA: lista completa (Parque 1 + Senderos + Parque 2..17) -->
     <aside class="sidebar">
-      <h2>Parque 1</h2>
-      <div class="parks">
-        <button id="btnParque1">Ir al Parque 1</button>
-      </div>
+      <h2>Parques</h2>
 
-      <details>
-        <summary>Senderos</summary>
-        <ul class="trail-list" id="trailList"></ul>
+      <!-- Parque 1 (único activo por ahora) -->
+      <ul class="parks" id="parksTop">
+        <li><button type="button" id="btnParque1">Parque 1</button></li>
+      </ul>
+
+      <!-- Senderos: aparece y se abre cuando aprietas Parque 1 -->
+      <details class="trails" id="trailsBlock">
+        <summary>Senderos del Parque 1</summary>
+        <ul class="trail-list" id="trailList">
+          <!-- Se llenará: Sendero 1..N con href="#" -->
+        </ul>
       </details>
+
+      <!-- Resto de parques -->
+      <div class="section-title">Otros parques</div>
+      <ul class="parks" id="parksRest">
+        <li><button type="button" data-index="1">Parque 2</button></li>
+        <li><button type="button" data-index="2">Parque 3</button></li>
+        <li><button type="button" data-index="3">Parque 4</button></li>
+        <li><button type="button" data-index="4">Parque 5</button></li>
+        <li><button type="button" data-index="5">Parque 6</button></li>
+        <li><button type="button" data-index="6">Parque 7</button></li>
+        <li><button type="button" data-index="7">Parque 8</button></li>
+        <li><button type="button" data-index="8">Parque 9</button></li>
+        <li><button type="button" data-index="9">Parque 10</button></li>
+        <li><button type="button" data-index="10">Parque 11</button></li>
+        <li><button type="button" data-index="11">Parque 12</button></li>
+        <li><button type="button" data-index="12">Parque 13</button></li>
+        <li><button type="button" data-index="13">Parque 14</button></li>
+        <li><button type="button" data-index="14">Parque 15</button></li>
+        <li><button type="button" data-index="15">Parque 16</button></li>
+        <li><button type="button" data-index="16">Parque 17</button></li>
+      </ul>
     </aside>
 
+    <!-- DERECHA: un solo mapa -->
     <section class="map-wrap">
       <div id="map"></div>
+      <div class="legend">
+        <div><span class="sw" style="background:#1e90ff"></span>Senderos (zoom ≥ 12)</div>
+        <div><span class="sw" style="background:#3388ff"></span>Parques</div>
+      </div>
     </section>
   </div>
 
   <script>
+    // Tus fuentes (un solo mapa para todo)
     const URL_PARQUES  = "https://jdelafuentec.github.io/web/parques.geojson";
     const URL_SENDEROS = "https://jdelafuentec.github.io/web/senderos.geojson";
 
+    // Parámetros de mapa
     const INITIAL_CENTER = [-35.0, -72.5];
-    const INITIAL_ZOOM   = 8;
-    const Z_SENDEROS     = 12;
-    const Z_FLYTO        = 13;
+    const INITIAL_ZOOM   = 8;   // parte lejos, sin senderos
+    const Z_SENDEROS     = 12;  // umbral para ver senderos
+    const Z_FLYTO        = 13;  // zoom al ir a Parque 1
 
-    const map = L.map('map', { center: INITIAL_CENTER, zoom: INITIAL_ZOOM });
+    // Crear mapa
+    const map = L.map('map', { center: INITIAL_CENTER, zoom: INITIAL_ZOOM, minZoom: 3 });
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19, attribution: '&copy; OpenStreetMap'
+      maxZoom: 19, attribution: '&copy; OpenStreetMap contrib.'
     }).addTo(map);
 
-    const defaultStyle = { color:'#1e90ff', weight:3, opacity:0.9 };
-    const highlightStyle = { color:'#ff4500', weight:5, opacity:1 }; // estilo al hacer clic
-    let parquesLayer, senderosLayer, senderosEnMapa = false;
-    const parqueArray = [];
-    let selectedTrail = null; // para recordar cuál está resaltado
+    // Estilos de sendero (normal vs seleccionado)
+    const defaultStyle   = { color:'#1e90ff', weight:3, opacity:0.9 };
+    const highlightStyle = { color:'#ff4500', weight:5, opacity:1 };
 
+    let parquesLayer, senderosLayer, senderosEnMapa = false;
+    const parqueArray = [];      // marcadores en orden
+    let selectedTrail = null;    // línea seleccionada (para revertir estilo)
+
+    // Mostrar/ocultar senderos según zoom
     function actualizarSenderosPorZoom(){
       if (!senderosLayer) return;
-      if (map.getZoom() >= Z_SENDEROS) {
-        if (!senderosEnMapa){ senderosLayer.addTo(map); senderosEnMapa = true; }
+      const z = map.getZoom();
+      if (z >= Z_SENDEROS) {
+        if (!senderosEnMapa) { senderosLayer.addTo(map); senderosEnMapa = true; }
       } else {
-        if (senderosEnMapa){ map.removeLayer(senderosLayer); senderosEnMapa = false; }
+        if (senderosEnMapa) { map.removeLayer(senderosLayer); senderosEnMapa = false; }
       }
     }
     map.on('zoomend', actualizarSenderosPorZoom);
 
-    Promise.all([fetch(URL_PARQUES).then(r=>r.json()), fetch(URL_SENDEROS).then(r=>r.json())])
+    // Cargar datos
+    Promise.all([ fetch(URL_PARQUES).then(r=>r.json()), fetch(URL_SENDEROS).then(r=>r.json()) ])
       .then(([parques, senderos]) => {
-        // Parques
+        // --- Parques ---
         parquesLayer = L.geoJSON(parques, {
           pointToLayer: (f, latlng) => L.marker(latlng),
           onEachFeature: (f, layer) => {
-            layer.bindTooltip("Parque");
+            layer.bindTooltip("Parque", { direction:'top', offset:[0,-6], sticky:true, opacity:.95 });
             layer.bindPopup("<strong>Parque</strong>");
             parqueArray.push(layer);
           }
         }).addTo(map);
 
-        // Senderos con nombres y click highlight
+        // --- Senderos ---
         senderosLayer = L.geoJSON(senderos, {
           style: defaultStyle,
           onEachFeature: (f, layer) => {
-            const props = f.properties || {};
-            const name = props.name || "Sendero";
+            const name = f.properties?.name || "Sendero";
             layer.bindPopup(`<strong>${name}</strong>`);
             // Click: resaltar sendero
             layer.on('click', () => {
-              if (selectedTrail) selectedTrail.setStyle(defaultStyle); // restaurar anterior
+              if (selectedTrail) selectedTrail.setStyle(defaultStyle);
               layer.setStyle(highlightStyle);
               selectedTrail = layer;
             });
           }
         });
-        actualizarSenderosPorZoom();
+        actualizarSenderosPorZoom(); // siguen ocultos al inicio
 
-        // Lista de senderos en sidebar
-        const trailList = document.getElementById('trailList');
-        (senderos.features || []).forEach((f,i) => {
-          const name = f.properties?.name || `Sendero ${i+1}`;
-          const li = document.createElement('li');
-          const a  = document.createElement('a');
-          a.href = "#";
-          a.textContent = name;
-          a.addEventListener('click', ev => {
-            ev.preventDefault();
-            const layer = senderosLayer.getLayers()[i];
-            if (layer) {
-              map.fitBounds(layer.getBounds());
-              if (selectedTrail) selectedTrail.setStyle(defaultStyle);
-              layer.setStyle(highlightStyle);
-              selectedTrail = layer;
-              layer.openPopup();
-            }
-          });
-          li.appendChild(a);
-          trailList.appendChild(li);
-        });
+        // ----- Sidebar: Parque 1 -----
+        const btnParque1 = document.getElementById('btnParque1');
+        const trailsBlock = document.getElementById('trailsBlock');
+        const trailList   = document.getElementById('trailList');
 
-        // Botón Parque 1
-        document.getElementById('btnParque1').addEventListener('click', () => {
+        btnParque1.addEventListener('click', () => {
           const marker = parqueArray[0];
           if (marker) {
             const ll = marker.getLatLng();
-            map.flyTo(ll, Z_FLYTO, { duration: .6 });
+            map.flyTo(ll, Math.max(map.getZoom(), Z_FLYTO), { duration: .6 });
             marker.openPopup();
-            setTimeout(actualizarSenderosPorZoom, 650);
+            // Asegurar visibilidad de senderos tras el vuelo y abrir el bloque
+            setTimeout(() => {
+              actualizarSenderosPorZoom();
+              trailsBlock.style.display = 'block';
+              trailsBlock.open = true;
+              trailsBlock.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 650);
+          } else {
+            alert("Aún no hay Parque 1 en parques.geojson.");
           }
         });
+
+        // Llenar lista de senderos como “Sendero 1..N” (href="#")
+        const layers = senderosLayer.getLayers();
+        if (layers.length > 0) {
+          trailsBlock.style.display = 'block'; // si quieres dejar visible de inmediato, comenta esta línea
+          // (pero igual se abrirá automáticamente al tocar Parque 1)
+          (senderos.features || []).forEach((feat, i) => {
+            const li = document.createElement('li');
+            const a  = document.createElement('a');
+            const nombre = feat.properties?.name || `Sendero ${i+1}`;
+            a.href = "#";
+            a.textContent = nombre;
+            a.addEventListener('click', (ev) => {
+              ev.preventDefault();
+              const lyr = layers[i];
+              if (lyr) {
+                map.fitBounds(lyr.getBounds(), { padding: [20,20] });
+                if (selectedTrail) selectedTrail.setStyle(defaultStyle);
+                lyr.setStyle(highlightStyle);
+                selectedTrail = lyr;
+                lyr.openPopup();
+              }
+            });
+            li.appendChild(a);
+            trailList.appendChild(li);
+          });
+        } else {
+          // Si aún no tienes senderos, deja placeholders
+          const count = 5;
+          trailsBlock.style.display = 'block';
+          for (let i=1; i<=count; i++) {
+            const li = document.createElement('li');
+            const a  = document.createElement('a');
+            a.href = "#";
+            a.textContent = `Sendero ${i}`;
+            li.appendChild(a);
+            trailList.appendChild(li);
+          }
+        }
+
+        // ----- Sidebar: otros parques (por ahora solo enfocan si existen) -----
+        document.getElementById('parksRest').addEventListener('click', (e) => {
+          const btn = e.target.closest('button[data-index]');
+          if (!btn) return;
+          const idx = parseInt(btn.dataset.index, 10);
+          const marker = parqueArray[idx];
+          if (marker) {
+            map.panTo(marker.getLatLng());
+            marker.openPopup();
+          } else {
+            console.info(`"${btn.textContent}" aún no existe en parques.geojson.`);
+          }
+        });
+      })
+      .catch(err => {
+        console.error('Error cargando GeoJSON:', err);
+        alert('No se pudieron cargar los GeoJSON. Revisa la consola del navegador.');
       });
+
+    // Ajuste visual
+    setTimeout(()=>map.invalidateSize(), 250);
   </script>
 </body>
 </html>
