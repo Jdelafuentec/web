@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Geo Interactivo – Maricunga</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
+  <style>
+    html, body { margin: 0; padding: 0; background:#fff; font-family: Arial, sans-serif; }
+    main {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center; /* centra el bloque en la pantalla */
+      align-items: flex-start; /* alinea arriba */
+      padding: 20px;
+    }
+
+    .block {
+      display: flex;          /* fila: logo + canvas */
+      align-items: flex-start;
+      gap: 25px;              /* espacio entre logo y canvas */
+    }
+
+    .logo {
+      width: 420px;           /* ajusta tamaño logo */
+      height: auto;
+      display: block;
+    }
+
+    canvas {
+      box-shadow: 0 10px 30px rgba(0,0,0,.08);
+      border-radius: 12px;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="block">
+      <!-- Logo a la izquierda -->
+      <img class="logo" src="https://jdelafuentec.github.io/web/OA_Recurso48.png" alt="OASIS">
+      <!-- Canvas a la derecha -->
+      <div id="canvas-holder"></div>
+    </div>
+  </main>
+
+  <script>
+    let fondoBlanco, fondoMontana;
+    let capas = [];
+    let capaActiva = null;
+
+    let nubeImg, lluviaImg, aguaRioImg;
+    let lluviaActiva = false;
+    let lluviaInicio = 0;
+    let mostrarNarracion1 = false;
+    let mostrarNarracion2 = false;
+
+    let aguaActiva = false;
+    let rioClickable = false;
+    let capasActivas = false;
+    let mostrarCapaTemporal = false;
+
+    let nubeX = 590;
+    let nubeY = 70;
+
+    function preload() {
+      fondoBlanco = loadImage('https://jdelafuentec.github.io/web/geo_interactivo/fondoBlanco.png');
+      fondoMontana = loadImage('https://jdelafuentec.github.io/web/geo_interactivo/montanas.png');
+      nubeImg = loadImage('https://jdelafuentec.github.io/web/geo_interactivo/nube.png');
+      lluviaImg = loadImage('https://jdelafuentec.github.io/web/geo_interactivo/lluvia.png');
+      aguaRioImg = loadImage('https://jdelafuentec.github.io/web/geo_interactivo/aguaRio.png');
+
+      capas.push({ nombre: "Sulphates", descripcion: "Los sulfatos como el yeso...", img: loadImage('https://jdelafuentec.github.io/web/geo_interactivo/sulphates.png'), imagenEjemplo: loadImage('https://picsum.photos/seed/sulphates/80'), x: 192, y: 277 });
+      capas.push({ nombre: "Travertinos", descripcion: "Roca sedimentaria carbonatada...", img: loadImage('https://jdelafuentec.github.io/web/geo_interactivo/travertines.png'), imagenEjemplo: loadImage('https://jdelafuentec.github.io/web/geo_interactivo/travertinoImg.png'), x: 380, y: 189 });
+      capas.push({ nombre: "Halite", descripcion: "La halita es sal común...", img: loadImage('https://jdelafuentec.github.io/web/geo_interactivo/halite.png'), imagenEjemplo: loadImage('https://picsum.photos/seed/halite/80'), x: 149, y: 257 });
+      capas.push({ nombre: "Carbonatos", descripcion: "Los carbonatos como la calcita...", img: loadImage('https://jdelafuentec.github.io/web/geo_interactivo/carbonatos.png'), imagenEjemplo: loadImage('https://jdelafuentec.github.io/web/geo_interactivo/carbonatoImg.png'), x: 117, y: 284 });
+    }
+
+    function setup() {
+      const c = createCanvas(1275, 768);
+      c.parent(document.querySelector('#canvas-holder'));
+      textFont('Arial');
+      textSize(16);
+      noStroke();
+    }
+
+    function draw() {
+      background(255);
+      image(fondoBlanco, 0, 0);
+      image(fondoMontana, 0, 192);
+      mostrarConsola();
+    }
+
+    function mostrarConsola() {
+      const alto = 230;
+      const yBase = height - alto - 530;
+
+      fill(255);
+      stroke(0);
+      rect(10, yBase, 500, alto);
+      noStroke();
+      fill(0);
+
+      text("🛈 Instrucciones:", 20, yBase + 20);
+      text("- Presiona la nube para comenzar.", 20, yBase + 36);
+      text("¿Qué está ocurriendo?:", 20, yBase + 58);
+    }
+  </script>
+</body>
+</html>
