@@ -4,49 +4,40 @@
   <meta charset="utf-8" />
   <title>Geo Interactivo – Maricunga</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <!-- p5.js desde CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
   <style>
-    :root { --gap: 12px; }
     html, body { margin: 0; padding: 0; background:#fff; font-family: Arial, sans-serif; }
-    /* layout con cabecera + contenido centrado */
-    .wrap {
+    main {
       min-height: 100vh;
-      display: grid;
-      grid-template-rows: auto 1fr;
-    }
-    header {
       display: flex;
-      align-items: center;
-      justify-content: flex-start; /* a la izquierda */
-      padding: var(--gap);
+      flex-direction: column;   /* logo encima del canvas */
+      align-items: center;      /* centramos horizontalmente el bloque */
+      padding: 12px;
     }
-    header img {
-      width: 280px;   /* ajusta si quieres más grande/chico */
+    .logo {
+      align-self: flex-start;   /* lo alineamos a la izquierda */
+    }
+    .logo img {
+      width: 500px;             /* ajusta aquí el tamaño del logo */
       height: auto;
       display: block;
-    }
-    main {
-      min-height: 0;
-      display: grid;
-      place-items: center; /* centra el canvas */
-      padding: var(--gap);
+      margin-bottom: 0;         /* sin separación extra con el canvas */
     }
     canvas {
       box-shadow: 0 10px 30px rgba(0,0,0,.08);
       border-radius: 12px;
+      display: block;
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <!-- Logo a la izquierda -->
+  <main>
+    <!-- Logo grande, pegado al canvas -->
+    <div class="logo">
       <img src="https://jdelafuentec.github.io/web/OA_Recurso48.png" alt="Logo">
-    </header>
-
-    <main></main>
-  </div>
+    </div>
+    <!-- Aquí se inserta el canvas de p5.js -->
+  </main>
 
   <script>
     let fondoBlanco, fondoMontana;
@@ -217,10 +208,10 @@
       let yTexto = yBase + 72;
 
       if (mostrarNarracion1) {
-        text("Las altas cumbres de la cordillera alimentan el sistema. A través de la nieve y la lluvia, el agua fluye hacia las zonas bajas, recargando tanto superficial como subterráneamente los cuerpos del Salar de Maricunga y su entorno.", 20, yTexto, 460);
+        text("Las altas cumbres de la cordillera alimentan el sistema...", 20, yTexto, 460);
       }
       if (mostrarNarracion2) {
-        text("A medida que el agua avanza, se transforma químicamente. La evaporación progresiva genera la precipitación secuencial de halita, sulfatos, carbonatos y travertinos. Cada una de estas capas refleja un estado particular del ambiente y su química.", 20, yTexto, 460);
+        text("A medida que el agua avanza, se transforma químicamente...", 20, yTexto, 460);
       }
 
       if (capaActiva) {
