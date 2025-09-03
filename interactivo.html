@@ -4,96 +4,85 @@
   <meta charset="utf-8" />
   <title>Geo Interactivo – Maricunga</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- p5.js desde CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
   <style>
     :root { --gap: 12px; }
-    html, body { margin:0; padding:0; height:100%; background:#fff; font-family: Arial, sans-serif; }
+    html, body { margin: 0; padding: 0; background:#fff; font-family: Arial, sans-serif; }
+    /* layout con cabecera + contenido centrado */
     .wrap {
       min-height: 100vh;
       display: grid;
       grid-template-rows: auto 1fr;
-      gap: var(--gap);
     }
-    header { display:flex; align-items:center; justify-content:center; padding: var(--gap); }
-    header img { max-width: 260px; height: auto; display:block; }
-    main { display:flex; align-items:center; justify-content:center; overflow:auto; padding-bottom: var(--gap); }
-    canvas { box-shadow: 0 10px 30px rgba(0,0,0,.08); border-radius: 12px; display:block; background:#f2f2f2; }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start; /* a la izquierda */
+      padding: var(--gap);
+    }
+    header img {
+      width: 280px;   /* ajusta si quieres más grande/chico */
+      height: auto;
+      display: block;
+    }
+    main {
+      min-height: 0;
+      display: grid;
+      place-items: center; /* centra el canvas */
+      padding: var(--gap);
+    }
+    canvas {
+      box-shadow: 0 10px 30px rgba(0,0,0,.08);
+      border-radius: 12px;
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
     <header>
-      <img src="https://jdelafuentec.github.io/web/OA_Recurso48.png" alt="Logo OASIS" onerror="this.style.display='none'">
+      <!-- Logo a la izquierda -->
+      <img src="https://jdelafuentec.github.io/web/OA_Recurso48.png" alt="Logo">
     </header>
+
     <main></main>
   </div>
 
   <script>
-    // --- Parámetros base + escala 1.5x ---
-    const BASE_W = 1275, BASE_H = 768, SCALE = 1.5;
-
-    // Imágenes (URLs absolutas para evitar problemas de ruta)
-    const BASE = "https://jdelafuentec.github.io/web/";
-    let fondoBlanco, fondoMontana, nubeImg, lluviaImg, aguaRioImg;
-
+    let fondoBlanco, fondoMontana;
     let capas = [];
     let capaActiva = null;
 
-    let lluviaActiva=false, lluviaInicio=0;
-    let mostrarNarracion1=false, mostrarNarracion2=false;
-    let aguaActiva=false, rioClickable=false, capasActivas=false, mostrarCapaTemporal=false;
+    let nubeImg, lluviaImg, aguaRioImg;
+    let lluviaActiva = false;
+    let lluviaInicio = 0;
+    let mostrarNarracion1 = false;
+    let mostrarNarracion2 = false;
 
-    let nubeX = 590, nubeY = 70;
+    let aguaActiva = false;
+    let rioClickable = false;
+    let capasActivas = false;
+    let mostrarCapaTemporal = false;
 
-    function loadSafe(path) {
-      return loadImage(
-        BASE + path,
-        () => console.log("OK:", path),
-        () => console.warn("NO CARGÓ:", BASE + path)
-      );
-    }
+    let nubeX = 590;
+    let nubeY = 70;
 
     function preload() {
-      // Fondos y elementos
-      fondoBlanco = loadSafe("fondoBlanco.png");
-      fondoMontana = loadSafe("montanas.png");
-      nubeImg      = loadSafe("nube.png");
-      lluviaImg    = loadSafe("lluvia.png");
-      aguaRioImg   = loadSafe("aguaRio.png");
+      fondoBlanco = loadImage('https://jdelafuentec.github.io/web/geo_interactivo/fondoBlanco.png');
+      fondoMontana = loadImage('https://jdelafuentec.github.io/web/geo_interactivo/montanas.png');
 
-      // Capas
-      capas.push({
-        nombre:"Sulphates",
-        descripcion:"Los sulfatos como el yeso (CaSO₄·2H₂O) o la epsomita se forman en etapas intermedias de evaporación. Su presencia refleja un ambiente químicamente más concentrado que favorece la precipitación de minerales con azufre.",
-        img: loadSafe("sulphates.png"),
-        imagenEjemplo: loadSafe("travertinoImg.png"),
-        x:192, y:277
-      });
-      capas.push({
-        nombre:"Travertinos",
-        descripcion:"Roca sedimentaria carbonatada, compuesta principalmente de calcita (CaCO₃), que se forma por precipitación química a partir de aguas subterráneas o termales ricas en carbonato de calcio.",
-        img: loadSafe("travertines.png"),
-        imagenEjemplo: loadSafe("travertinoImg.png"),
-        x:380, y:189
-      });
-      capas.push({
-        nombre:"Halite",
-        descripcion:"La halita es sal común (NaCl), que precipita en las etapas finales del proceso de evaporación. Su presencia indica ambientes extremadamente salinos y condiciones de evaporación muy avanzadas.",
-        img: loadSafe("halite.png"),
-        imagenEjemplo: loadSafe("halite.png"),
-        x:149, y:257
-      });
-      capas.push({
-        nombre:"Carbonatos",
-        descripcion:"Los carbonatos como la calcita (CaCO₃) se precipitan cuando hay pérdida de CO₂ en aguas ricas en calcio.",
-        img: loadSafe("carbonatos.png"),
-        imagenEjemplo: loadSafe("carbonatoImg.png"),
-        x:117, y:284
-      });
+      nubeImg = loadImage('https://jdelafuentec.github.io/web/geo_interactivo/nube.png');
+      lluviaImg = loadImage('https://jdelafuentec.github.io/web/geo_interactivo/lluvia.png');
+      aguaRioImg = loadImage('https://jdelafuentec.github.io/web/geo_interactivo/aguaRio.png');
+
+      capas.push({ nombre: "Sulphates", descripcion: "Los sulfatos como el yeso (CaSO₄·2H₂O) o la epsomita se forman en etapas intermedias de evaporación. Su presencia refleja un ambiente químicamente más concentrado que favorece la precipitación de minerales con azufre.", img: loadImage('https://jdelafuentec.github.io/web/geo_interactivo/sulphates.png'), imagenEjemplo: loadImage('https://picsum.photos/seed/sulphates/80'), x: 192, y: 277 });
+      capas.push({ nombre: "Travertinos", descripcion: "Roca sedimentaria carbonatada, compuesta principalmente de calcita (CaCO₃), que se forma por precipitación química a partir de aguas subterráneas o termales ricas en carbonato de calcio.", img: loadImage('https://jdelafuentec.github.io/web/geo_interactivo/travertines.png'), imagenEjemplo: loadImage('https://jdelafuentec.github.io/web/geo_interactivo/travertinoImg.png'), x: 380, y: 189 });
+      capas.push({ nombre: "Halite", descripcion: "La halita es sal común (NaCl), que precipita en las etapas finales del proceso de evaporación. Su presencia indica ambientes extremadamente salinos y condiciones de evaporación muy avanzadas.", img: loadImage('https://jdelafuentec.github.io/web/geo_interactivo/halite.png'), imagenEjemplo: loadImage('https://picsum.photos/seed/halite/80'), x: 149, y: 257 });
+      capas.push({ nombre: "Carbonatos", descripcion: "Los carbonatos como la calcita (CaCO₃) se precipitan cuando hay pérdida de CO₂ en aguas ricas en calcio. Reflejan ambientes donde hay menor salinidad, pero condiciones que favorecen la saturación de carbonato.", img: loadImage('https://jdelafuentec.github.io/web/geo_interactivo/carbonatos.png'), imagenEjemplo: loadImage('https://jdelafuentec.github.io/web/geo_interactivo/carbonatoImg.png'), x: 117, y: 284 });
     }
 
     function setup() {
-      const c = createCanvas(BASE_W * SCALE, BASE_H * SCALE);
+      const c = createCanvas(1275, 768);
       c.parent(document.querySelector('main'));
       textFont('Arial');
       textSize(16);
@@ -101,146 +90,148 @@
     }
 
     function draw() {
-      // Fondo de seguridad para "ver algo" aunque no cargue ninguna imagen
-      background(242); // gris claro
+      background(255);
+      image(fondoBlanco, 0, 0);
+      image(fondoMontana, 0, 192);
 
-      // Coordenadas del mouse en sistema base (por la escala)
-      const mx = mouseX / SCALE;
-      const my = mouseY / SCALE;
-
-      push();
-      scale(SCALE);
-
-      // Dibuja fondo/base (si no cargó, pinta placeholders)
-      if (fondoBlanco) image(fondoBlanco, 0, 0); else placeholder(0,0,BASE_W,BASE_H,"fondoBlanco.png");
-      if (fondoMontana) image(fondoMontana, 0, 192); else placeholder(0,192,800,200,"montanas.png");
-
-      // HOVER de capas (detección por alfa)
       let capaHover = null;
       if (capasActivas) {
         for (let capa of capas) {
-          if (!capa.img) continue;
-          if (mx >= capa.x && mx < capa.x + capa.img.width &&
-              my >= capa.y && my < capa.y + capa.img.height) {
-            const ix = int(mx - capa.x), iy = int(my - capa.y);
-            let px;
-            try { px = capa.img.get(ix, iy); } catch(e) { px = [0,0,0,0]; }
-            if (px[3] > 10) capaHover = capa;
+          if (
+            mouseX >= capa.x && mouseX < capa.x + capa.img.width &&
+            mouseY >= capa.y && mouseY < capa.y + capa.img.height
+          ) {
+            let imgX = int(mouseX - capa.x);
+            let imgY = int(mouseY - capa.y);
+            let c = capa.img.get(imgX, imgY);
+            if (c[3] > 10) {
+              capaHover = capa;
+            }
           }
         }
       }
 
-      // Lluvia
       if (lluviaActiva) {
-        const elapsed = millis() - lluviaInicio;
+        let elapsed = millis() - lluviaInicio;
         if (elapsed < 2000) {
-          const offset = map(elapsed, 0, 2000, 0, 60);
-          if (lluviaImg) {
-            image(lluviaImg, nubeX + 60, nubeY + 60 + offset);
-            push();
-            translate(nubeX + 60, nubeY + 60 + offset * 2 + lluviaImg.height);
-            scale(1, -1);
-            tint(255, 150);
-            image(lluviaImg, 0, 0);
-            pop();
-            noTint();
-          } else {
-            placeholder(nubeX + 60, nubeY + 60 + offset, 60, 60, "lluvia.png");
-          }
+          let offset = map(elapsed, 0, 2000, 0, 60);
+          image(lluviaImg, nubeX + 60, nubeY + 60 + offset);
+          push();
+          translate(nubeX + 60, nubeY + 60 + offset * 2 + lluviaImg.height);
+          scale(1, -1);
+          tint(255, 150);
+          image(lluviaImg, 0, 0);
+          pop();
+          noTint();
         }
       }
 
-      // Río y nube
       if (aguaActiva) {
-        if (aguaRioImg) image(aguaRioImg, 411, 266);
-        else placeholder(411,266,180,80,"aguaRio.png");
+        image(aguaRioImg, 411, 266);
       }
-      if (nubeImg) image(nubeImg, nubeX, nubeY);
-      else placeholder(nubeX, nubeY, 120, 80, "nube.png");
 
-      // Capas visibles
+      image(nubeImg, nubeX, nubeY);
+
       if (capasActivas && mostrarCapaTemporal) {
-        for (let capa of capas) capa.img ? image(capa.img, capa.x, capa.y) : null;
+        for (let capa of capas) {
+          image(capa.img, capa.x, capa.y);
+        }
       } else if (capasActivas && capaHover) {
         image(capaHover.img, capaHover.x, capaHover.y);
       } else if (capasActivas && capaActiva) {
         image(capaActiva.img, capaActiva.x, capaActiva.y);
       }
 
-      // Etiqueta hover
       if (capaHover) {
         fill(0);
-        text(capaHover.nombre, mx + 15, my - 12);
+        noStroke();
+        text(capaHover.nombre, mouseX + 15, mouseY - 12);
       }
 
       mostrarConsola();
-      pop();
-
-      // Info de ayuda si aún no pasa nada
-      fill(60); noStroke();
-      text("Si ves fondo gris, el sketch está corriendo. Revisa la consola (F12) por 'NO CARGÓ: ...'", 12, height - 12);
     }
 
     function mousePressed() {
-      const mx = mouseX / SCALE;
-      const my = mouseY / SCALE;
-
-      if (nubeImg && mx >= nubeX && mx < nubeX + nubeImg.width && my >= nubeY && my < nubeY + nubeImg.height) {
-        lluviaActiva = true; lluviaInicio = millis();
-        mostrarNarracion1 = true; mostrarNarracion2 = false; capaActiva = null;
-        setTimeout(()=>{ aguaActiva = true; rioClickable = true; }, 2000);
+      if (mouseX >= nubeX && mouseX < nubeX + nubeImg.width && mouseY >= nubeY && mouseY < nubeY + nubeImg.height) {
+        lluviaActiva = true;
+        lluviaInicio = millis();
+        mostrarNarracion1 = true;
+        mostrarNarracion2 = false;
+        capaActiva = null;
+        setTimeout(() => {
+          aguaActiva = true;
+          rioClickable = true;
+        }, 2000);
         return;
       }
 
-      if (rioClickable && aguaRioImg &&
-          mx >= 411 && mx < 411 + aguaRioImg.width && my >= 266 && my < 266 + aguaRioImg.height) {
-        capasActivas = true; rioClickable = false;
-        mostrarNarracion1 = false; mostrarNarracion2 = true; capaActiva = null;
-        mostrarCapaTemporal = true; setTimeout(()=>{ mostrarCapaTemporal = false; }, 500);
+      if (rioClickable && mouseX >= 411 && mouseX < 411 + aguaRioImg.width && mouseY >= 266 && mouseY < 266 + aguaRioImg.height) {
+        capasActivas = true;
+        rioClickable = false;
+        mostrarNarracion1 = false;
+        mostrarNarracion2 = true;
+        capaActiva = null;
+        mostrarCapaTemporal = true;
+        setTimeout(() => {
+          mostrarCapaTemporal = false;
+        }, 500);
         return;
       }
 
       if (capasActivas) {
         for (let capa of capas) {
-          if (!capa.img) continue;
-          if (mx >= capa.x && mx < capa.x + capa.img.width && my >= capa.y && my < capa.y + capa.img.height) {
-            const ix = int(mx - capa.x), iy = int(my - capa.y);
-            let px;
-            try { px = capa.img.get(ix, iy); } catch(e) { px = [0,0,0,0]; }
-            if (px[3] > 10) { capaActiva = capa; mostrarNarracion1 = false; mostrarNarracion2 = false; }
+          if (mouseX >= capa.x && mouseX < capa.x + capa.img.width && mouseY >= capa.y && mouseY < capa.y + capa.img.height) {
+            let imgX = int(mouseX - capa.x);
+            let imgY = int(mouseY - capa.y);
+            let c = capa.img.get(imgX, imgY);
+            if (c[3] > 10) {
+              capaActiva = capa;
+              mostrarNarracion1 = false;
+              mostrarNarracion2 = false;
+            }
           }
         }
       }
     }
 
     function mostrarConsola() {
-      const alto = 230, yBase = BASE_H - alto - 530;
-      fill(255); stroke(0); rect(10, yBase, 500, alto); noStroke(); fill(0);
+      const alto = 230;
+      const yBase = height - alto - 530;
+
+      fill(255);
+      stroke(0);
+      rect(10, yBase, 500, alto);
+      noStroke();
+      fill(0);
 
       text("🛈 Instrucciones:", 20, yBase + 20);
-      if (!aguaActiva)        text("- Presiona la nube para comenzar.", 20, yBase + 36);
-      else if (!capasActivas) text("- Presiona el río para continuar.", 20, yBase + 36);
-      else                    text("- Explora los elementos haciendo clic sobre ellos.", 20, yBase + 36);
+      if (!aguaActiva) {
+        text("- Presiona la nube para comenzar.", 20, yBase + 36);
+      } else if (aguaActiva && !capasActivas) {
+        text("- Presiona el río para continuar.", 20, yBase + 36);
+      } else {
+        text("- Explora los elementos haciendo clic sobre ellos.", 20, yBase + 36);
+      }
 
       text("¿Qué está ocurriendo?:", 20, yBase + 58);
-      const yTexto = yBase + 72;
+      let yTexto = yBase + 72;
 
-      if (mostrarNarracion1)
-        text("Las altas cumbres de la cordillera alimentan el sistema...", 20, yTexto, 460);
-      if (mostrarNarracion2)
-        text("A medida que el agua avanza, se transforma químicamente...", 20, yTexto, 460);
+      if (mostrarNarracion1) {
+        text("Las altas cumbres de la cordillera alimentan el sistema. A través de la nieve y la lluvia, el agua fluye hacia las zonas bajas, recargando tanto superficial como subterráneamente los cuerpos del Salar de Maricunga y su entorno.", 20, yTexto, 460);
+      }
+      if (mostrarNarracion2) {
+        text("A medida que el agua avanza, se transforma químicamente. La evaporación progresiva genera la precipitación secuencial de halita, sulfatos, carbonatos y travertinos. Cada una de estas capas refleja un estado particular del ambiente y su química.", 20, yTexto, 460);
+      }
 
       if (capaActiva) {
-        if (capaActiva.imagenEjemplo) image(capaActiva.imagenEjemplo, 25, yTexto + 10, 80, 80);
-        textStyle(BOLD);   text(capaActiva.nombre, 120, yTexto + 30);
-        textStyle(NORMAL); text(capaActiva.descripcion, 120, yTexto + 50, 370);
+        if (capaActiva.imagenEjemplo) {
+          image(capaActiva.imagenEjemplo, 25, yTexto + 10, 80, 80);
+        }
+        textStyle(BOLD);
+        text(capaActiva.nombre, 120, yTexto + 30);
+        textStyle(NORMAL);
+        text(capaActiva.descripcion, 120, yTexto + 50, 370);
       }
-    }
-
-    // Placeholder rojo si falta algo
-    function placeholder(x,y,w,h,label){
-      push(); noFill(); stroke(200,0,0); strokeWeight(2); rect(x,y,w,h);
-      noStroke(); fill(200,0,0); textSize(12); text(label, x+6, y+16); pop();
     }
   </script>
 </body>
