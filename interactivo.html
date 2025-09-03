@@ -4,16 +4,38 @@
   <meta charset="utf-8" />
   <title>Geo Interactivo – Maricunga</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <!-- p5.js desde CDN -->
+  <!-- p5.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
   <style>
-    html, body { margin: 0; padding: 0; background:#fff; font-family: Arial, sans-serif; }
-    main { min-height: 100vh; display: grid; place-items: center; padding: 12px; }
-    canvas { box-shadow: 0 10px 30px rgba(0,0,0,.08); border-radius: 12px; }
+    html, body { margin: 0; padding: 0; height: 100%; background:#fff; font-family: Arial, sans-serif; }
+    /* Contenedor scrollable que centra el canvas y permite desplazar si es más grande que la pantalla */
+    .scroller {
+      width: 100vw;
+      height: 100vh;
+      overflow: auto;
+      background: #fff;
+    }
+    /* Stage fija el tamaño base del lienzo y lo centra horizontalmente */
+    .stage {
+      width: 2550px;   /* = ancho del canvas */
+      height: 1536px;  /* = alto del canvas */
+      margin: 0 auto;  /* centra horizontalmente dentro del scroller */
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    canvas {
+      box-shadow: 0 10px 30px rgba(0,0,0,.08);
+      border-radius: 12px;
+      display: block;
+    }
   </style>
 </head>
 <body>
-  <main></main>
+  <div class="scroller">
+    <div class="stage" id="stage"></div>
+  </div>
 
   <script>
     let fondoBlanco, fondoMontana;
@@ -35,6 +57,7 @@
     let nubeY = 70;
 
     function preload() {
+      // Usando tus URLs absolutas
       fondoBlanco = loadImage('https://jdelafuentec.github.io/web/geo_interactivo/fondoBlanco.png');
       fondoMontana = loadImage('https://jdelafuentec.github.io/web/geo_interactivo/montanas.png');
 
@@ -48,12 +71,32 @@
       capas.push({ nombre: "Carbonatos", descripcion: "Los carbonatos como la calcita (CaCO₃) se precipitan cuando hay pérdida de CO₂ en aguas ricas en calcio. Reflejan ambientes donde hay menor salinidad, pero condiciones que favorecen la saturación de carbonato.", img: loadImage('https://jdelafuentec.github.io/web/geo_interactivo/carbonatos.png'), imagenEjemplo: loadImage('https://jdelafuentec.github.io/web/geo_interactivo/carbonatoImg.png'), x: 117, y: 284 });
     }
 
+    let c; // referencia al canvas
+
     function setup() {
-      const c = createCanvas(2550, 1536);
-      c.parent(document.querySelector('main'));
+      // Canvas grande
+      c = createCanvas(2550, 1536);
+      c.parent(document.getElementById('stage'));
       textFont('Arial');
       textSize(16);
       noStroke();
+
+      // Centrar scroll para que el canvas quede al medio
+      centerScroll();
+    }
+
+    // Recentrar si cambia el tamaño de la ventana
+    function windowResized() {
+      centerScroll();
+    }
+
+    function centerScroll() {
+      const scroller = document.querySelector('.scroller');
+      // Si el canvas es más grande que el viewport, centra el scroll
+      const targetLeft = Math.max(0, (c.width - scroller.clientWidth) / 2);
+      const targetTop  = Math.max(0, (c.height - scroller.clientHeight) / 2);
+      scroller.scrollLeft = targetLeft;
+      scroller.scrollTop  = targetTop;
     }
 
     function draw() {
@@ -70,8 +113,8 @@
           ) {
             let imgX = int(mouseX - capa.x);
             let imgY = int(mouseY - capa.y);
-            let c = capa.img.get(imgX, imgY);
-            if (c[3] > 10) {
+            let col = capa.img.get(imgX, imgY);
+            if (col[3] > 10) {
               capaHover = capa;
             }
           }
@@ -150,8 +193,8 @@
           if (mouseX >= capa.x && mouseX < capa.x + capa.img.width && mouseY >= capa.y && mouseY < capa.y + capa.img.height) {
             let imgX = int(mouseX - capa.x);
             let imgY = int(mouseY - capa.y);
-            let c = capa.img.get(imgX, imgY);
-            if (c[3] > 10) {
+            let col = capa.img.get(imgX, imgY);
+            if (col[3] > 10) {
               capaActiva = capa;
               mostrarNarracion1 = false;
               mostrarNarracion2 = false;
