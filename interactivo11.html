@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Geo Interactivo – Maricunga</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
+  <style>
+    html, body { margin: 0; padding: 0; background:#fff; font-family: Arial, sans-serif; }
+    main { min-height: 100vh; display: grid; place-items: center; padding: 12px; }
+    .block { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+    .logo { width: 520px; height: auto; display: block; }
+    canvas { box-shadow: 0 10px 30px rgba(0,0,0,.08); border-radius: 12px; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="block">
+      <!-- Logo no cambia -->
+      <img class="logo" src="https://jdelafuentec.github.io/web/OA_Recurso48.png" alt="OASIS">
+      <div id="canvas-holder"></div>
+    </div>
+  </main>
+
+  <script>
+    let fondoBlanco, fondoMontana;
+    let capas = [];
+    let capaActiva = null;
+
+    let nubeImg, lluviaImg, aguaRioImg;
+    let lluviaActiva = false;
+    let lluviaInicio = 0;
+    let mostrarNarracion1 = false;
+    let mostrarNarracion2 = false;
+
+    let aguaActiva = false;
+    let rioClickable = false;
+    let capasActivas = false;
+    let mostrarCapaTemporal = false;
+
+    // 🔹 Escalamos posiciones por 1.5
+    let nubeX = 590 * 1.5;
+    let nubeY = 70 * 1.5;
+
+    function preload() {
+      fondoBlanco = loadImage('https://jdelafuentec.github.io/web/geo_interactivo/fondoBlanco.png');
+      fondoMontana = loadImage('https://jdelafuentec.github.io/web/geo_interactivo/montanas.png');
+
+      nubeImg = loadImage('https://jdelafuentec.github.io/web/geo_interactivo/nube.png');
+      lluviaImg = loadImage('https://jdelafuentec.github.io/web/geo_interactivo/lluvia.png');
+      aguaRioImg = loadImage('https://jdelafuentec.github.io/web/geo_interactivo/aguaRio.png');
+
+      capas.push({ 
+        nombre: "Sulphates", 
+        descripcion: "Los sulfatos como el yeso...", 
+        img: loadImage('https://jdelafuentec.github.io/web/geo_interactivo/sulphates.png'), 
+        imagenEjemplo: loadImage('https://picsum.photos/seed/sulphates/80'), 
+        x: 192 * 1.5, y: 277 * 1.5 
+      });
+      capas.push({ 
+        nombre: "Travertinos", 
+        descripcion: "Roca sedimentaria carbonatada...", 
+        img: loadImage('https://jdelafuentec.github.io/web/geo_interactivo/travertines.png'), 
+        imagenEjemplo: loadImage('https://jdelafuentec.github.io/web/geo_interactivo/travertinoImg.png'), 
+        x: 380 * 1.5, y: 189 * 1.5 
+      });
+      capas.push({ 
+        nombre: "Halite", 
+        descripcion: "La halita es sal común...", 
+        img: loadImage('https://jdelafuentec.github.io/web/geo_interactivo/halite.png'), 
+        imagenEjemplo: loadImage('https://picsum.photos/seed/halite/80'), 
+        x: 149 * 1.5, y: 257 * 1.5 
+      });
+      capas.push({ 
+        nombre: "Carbonatos", 
+        descripcion: "Los carbonatos como la calcita...", 
+        img: loadImage('https://jdelafuentec.github.io/web/geo_interactivo/carbonatos.png'), 
+        imagenEjemplo: loadImage('https://jdelafuentec.github.io/web/geo_interactivo/carbonatoImg.png'), 
+        x: 117 * 1.5, y: 284 * 1.5 
+      });
+    }
+
+    function setup() {
+      // 🔹 Canvas escalado 1.5x
+      const c = createCanvas(1275 * 1.5, 768 * 1.5);
+      c.parent(document.querySelector('#canvas-holder'));
+      textFont('Arial');
+      textSize(24); // también más grande
+      noStroke();
+    }
+
+    function draw() {
+      background(255);
+      image(fondoBlanco, 0, 0, fondoBlanco.width * 1.5, fondoBlanco.height * 1.5);
+      image(fondoMontana, 0, 192 * 1.5, fondoMontana.width * 1.5, fondoMontana.height * 1.5);
+
+      let capaHover = null;
+      if (capasActivas) {
+        for (let capa of capas) {
+          if (
+            mouseX >= capa.x && mouseX < capa.x + capa.img.width &&
+            mouseY >= capa.y && mouseY < capa.y + capa.img.height
+          ) {
+            let imgX = int(mouseX - capa.x);
+            let imgY = int(mouseY - capa.y);
+            let c = capa.img.get(imgX, imgY);
+            if (c[3] > 10) {
+              capaHover = capa;
+            }
+          }
+        }
+      }
+
+      if (lluviaActiva) {
+        let elapsed = millis() - lluviaInicio;
+        if (elapsed < 2000) {
+          let offset = map(elapsed, 0, 2000, 0, 90); // más largo
+          image(lluviaImg, nubeX + 90, nubeY + 90 + offset);
+          push();
+          translate(nubeX + 90, nubeY + 90 + offset * 2 + lluviaImg.height);
+          scale(1, -1);
+          tint(255, 150);
+          image(lluviaImg, 0, 0);
+          pop();
+          noTint();
+        }
+      }
+
+      if (aguaActiva) {
+        image(aguaRioImg, 411 * 1.5, 266 * 1.5);
+      }
+
+      image(nubeImg, nubeX, nubeY);
+
+      if (capasActivas && mostrarCapaTemporal) {
+        for (let capa of capas) {
+          image(capa.img, capa.x, capa.y);
+        }
+      } else if (capasActivas && capaHover) {
+        image(capaHover.img, capaHover.x, capaHover.y);
+      } else if (capasActivas && capaActiva) {
+        image(capaActiva.img, capaActiva.x, capaActiva.y);
+      }
+
+      if (capaHover) {
+        fill(0);
+        noStroke();
+        text(capaHover.nombre, mouseX + 15, mouseY - 12);
+      }
+
+      mostrarConsola();
+    }
+
+    function mousePressed() {
+      if (mouseX >= nubeX && mouseX < nubeX + nubeImg.width && mouseY >= nubeY && mouseY < nubeY + nubeImg.height) {
+        lluviaActiva = true;
+        lluviaInicio = millis();
+        mostrarNarracion1 = true;
+        mostrarNarracion2 = false;
+        capaActiva = null;
+        setTimeout(() => {
+          aguaActiva = true;
+          rioClickable = true;
+        }, 2000);
+        return;
+      }
+
+      if (rioClickable && mouseX >= 411 * 1.5 && mouseX < 411 * 1.5 + aguaRioImg.width && mouseY >= 266 * 1.5 && mouseY < 266 * 1.5 + aguaRioImg.height) {
+        capasActivas = true;
+        rioClickable = false;
+        mostrarNarracion1 = false;
+        mostrarNarracion2 = true;
+        capaActiva = null;
+        mostrarCapaTemporal = true;
+        setTimeout(() => {
+          mostrarCapaTemporal = false;
+        }, 500);
+        return;
+      }
+
+      if (capasActivas) {
+        for (let capa of capas) {
+          if (mouseX >= capa.x && mouseX < capa.x + capa.img.width && mouseY >= capa.y && mouseY < capa.y + capa.img.height) {
+            let imgX = int(mouseX - capa.x);
+            let imgY = int(mouseY - capa.y);
+            let c = capa.img.get(imgX, imgY);
+            if (c[3] > 10) {
+              capaActiva = capa;
+              mostrarNarracion1 = false;
+              mostrarNarracion2 = false;
+            }
+          }
+        }
+      }
+    }
+
+    function mostrarConsola() {
+      const alto = 230 * 1.5;
+      const yBase = height - alto - 530 * 1.5;
+
+      fill(255);
+      stroke(0);
+      rect(15, yBase, 500 * 1.5, alto);
+      noStroke();
+      fill(0);
+
+      text("🛈 Instrucciones:", 30, yBase + 30);
+      if (!aguaActiva) {
+        text("- Presiona la nube para comenzar.", 30, yBase + 56);
+      } else if (aguaActiva && !capasActivas) {
+        text("- Presiona el río para continuar.", 30, yBase + 56);
+      } else {
+        text("- Explora los elementos haciendo clic sobre ellos.", 30, yBase + 56);
+      }
+
+      text("¿Qué está ocurriendo?:", 30, yBase + 86);
+      let yTexto = yBase + 106;
+
+      if (mostrarNarracion1) {
+        text("Las altas cumbres de la cordillera alimentan el sistema...", 30, yTexto, 690);
+      }
+      if (mostrarNarracion2) {
+        text("A medida que el agua avanza, se transforma químicamente...", 30, yTexto, 690);
+      }
+
+      if (capaActiva) {
+        if (capaActiva.imagenEjemplo) {
+          image(capaActiva.imagenEjemplo, 40, yTexto + 10, 120, 120);
+        }
+        textStyle(BOLD);
+        text(capaActiva.nombre, 180, yTexto + 40);
+        textStyle(NORMAL);
+        text(capaActiva.descripcion, 180, yTexto + 70, 555);
+      }
+    }
+  </script>
+</body>
+</html>
