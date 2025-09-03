@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Geo Interactivo – Maricunga</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
+  <style>
+    html, body { margin: 0; padding: 0; background:#fff; font-family: Arial, sans-serif; }
+    main { min-height: 100vh; display: grid; place-items: center; padding: 12px; }
+    .block { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+    .logo { width: 520px; height: auto; display: block; }
+    canvas { box-shadow: 0 10px 30px rgba(0,0,0,.08); border-radius: 12px; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="block">
+      <img class="logo" src="https://jdelafuentec.github.io/web/OA_Recurso48.png" alt="OASIS">
+      <div id="canvas-holder"></div>
+    </div>
+  </main>
+
+  <script>
+    // ===== Escala global =====
+    const S = 1.5; // 1.5x
+
+    let fondoBlanco, fondoMontana;
+    let capas = [];
+    let capaActiva = null;
+
+    let nubeImg, lluviaImg, aguaRioImg;
+    let lluviaActiva = false;
+    let lluviaInicio = 0;
+    let mostrarNarracion1 = false;
+    let mostrarNarracion2 = false;
+
+    let aguaActiva = false;
+    let rioClickable = false;
+    let capasActivas = false;
+    let mostrarCapaTemporal = false;
+
+    // Posición base * S
+    let nubeX = 590 * S;
+    let nubeY = 70 * S;
+
+    function preload() {
+      fondoBlanco = loadImage('https://jdelafuentec.github.io/web/geo_interactivo/fondoBlanco.png');
+      fondoMontana = loadImage('https://jdelafuentec.github.io/web/geo_interactivo/montanas.png');
+
+      nubeImg = loadImage('https://jdelafuentec.github.io/web/geo_interactivo/nube.png');
+      lluviaImg = loadImage('https://jdelafuentec.github.io/web/geo_interactivo/lluvia.png');
+      aguaRioImg = loadImage('https://jdelafuentec.github.io/web/geo_interactivo/aguaRio.png');
+
+      capas.push({
+        nombre: "Sulphates",
+        descripcion: "Los sulfatos como el yeso (CaSO₄·2H₂O) o la epsomita se forman en etapas intermedias de evaporación. Su presencia refleja un ambiente químicamente más concentrado que favorece la precipitación de minerales con azufre.",
+        img: loadImage('https://jdelafuentec.github.io/web/geo_interactivo/sulphates.png'),
+        imagenEjemplo: loadImage('https://picsum.photos/seed/sulphates/80'),
+        x: 192 * S, y: 277 * S
+      });
+      capas.push({
+        nombre: "Travertinos",
+        descripcion: "Roca sedimentaria carbonatada, compuesta principalmente de calcita (CaCO₃), que se forma por precipitación química a partir de aguas subterráneas o termales ricas en carbonato de calcio.",
+        img: loadImage('https://jdelafuentec.github.io/web/geo_interactivo/travertines.png'),
+        imagenEjemplo: loadImage('https://jdelafuentec.github.io/web/geo_interactivo/travertinoImg.png'),
+        x: 380 * S, y: 189 * S
+      });
+      capas.push({
+        nombre: "Halite",
+        descripcion: "La halita es sal común (NaCl), que precipita en las etapas finales del proceso de evaporación. Su presencia indica ambientes extremadamente salinos y condiciones de evaporación muy avanzadas.",
+        img: loadImage('https://jdelafuentec.github.io/web/geo_interactivo/halite.png'),
+        imagenEjemplo: loadImage('https://picsum.photos/seed/halite/80'),
+        x: 149 * S, y: 257 * S
+      });
+      capas.push({
+        nombre: "Carbonatos",
+        descripcion: "Los carbonatos como la calcita (CaCO₃) se precipitan cuando hay pérdida de CO₂ en aguas ricas en calcio. Reflejan ambientes donde hay menor salinidad, pero condiciones que favorecen la saturación de carbonato.",
+        img: loadImage('https://jdelafuentec.github.io/web/geo_interactivo/carbonatos.png'),
+        imagenEjemplo: loadImage('https://jdelafuentec.github.io/web/geo_interactivo/carbonatoImg.png'),
+        x: 117 * S, y: 284 * S
+      });
+    }
+
+    function setup() {
+      const c = createCanvas(1275 * S, 768 * S);
+      c.parent(document.querySelector('#canvas-holder'));
+      textFont('Arial');
+      textSize(16 * S); // texto más grande
+      noStroke();
+    }
+
+    function draw() {
+      background(255);
+      // Dibujamos fondos a escala
+      image(fondoBlanco, 0, 0, fondoBlanco.width * S, fondoBlanco.height * S);
+      image(fondoMontana, 0, 192 * S, fondoMontana.width * S, fondoMontana.height * S);
+
+      // Hover por píxel con imágenes escaladas: hay que “desescalar” el mouse al muestrear alpha
+      let capaHover = null;
+      if (capasActivas) {
+        for (let capa of capas) {
+          const wScaled = capa.img.width * S;
+          const hScaled = capa.img.height * S;
+          if (mouseX >= capa.x && mouseX < capa.x + wScaled && mouseY >= capa.y && mouseY < capa.y + hScaled) {
+            const imgX = int((mouseX - capa.x) / S);
+            const imgY = int((mouseY - capa.y) / S);
+            if (imgX >= 0 && imgX < capa.img.width && imgY >= 0 && imgY < capa.img.height) {
+              const c = capa.img.get(imgX, imgY);
+              if (c[3] > 10) capaHover = capa;
+            }
+          }
+        }
+      }
+
+      // Lluvia animada (offset y posiciones a escala)
+      if (lluviaActiva) {
+        let elapsed = millis() - lluviaInicio;
+        if (elapsed < 2000) {
+          let offset = map(elapsed, 0, 2000, 0, 60 * S);
+          image(lluviaImg, nubeX + 60 * S, nubeY + 60 * S + offset, lluviaImg.width * S, lluviaImg.height * S);
+          push();
+          translate(nubeX + 60 * S, nubeY + 60 * S + offset * 2 + lluviaImg.height * S);
+          scale(1, -1);
+          tint(255, 150);
+          image(lluviaImg, 0, 0, lluviaImg.width * S, lluviaImg.height * S);
+          pop();
+          noTint();
+        }
+      }
+
+      if (aguaActiva) {
+        image(aguaRioImg, 411 * S, 266 * S, aguaRioImg.width * S, aguaRioImg.height * S);
+      }
+
+      // Nube a escala (y su hitbox también se escalará abajo)
+      image(nubeImg, nubeX, nubeY, nubeImg.width * S, nubeImg.height * S);
+
+      // Capas a escala
+      if (capasActivas && mostrarCapaTemporal) {
+        for (let capa of capas) image(capa.img, capa.x, capa.y, capa.img.width * S, capa.img.height * S);
+      } else if (capasActivas && capaHover) {
+        image(capaHover.img, capaHover.x, capaHover.y, capaHover.img.width * S, capaHover.img.height * S);
+      } else if (capasActivas && capaActiva) {
+        image(capaActiva.img, capaActiva.x, capaActiva.y, capaActiva.img.width * S, capaActiva.img.height * S);
+      }
+
+      if (capaHover) {
+        fill(0);
+        noStroke();
+        text(capaHover.nombre, mouseX + 15, mouseY - 12);
+      }
+
+      mostrarConsola();
+    }
+
+    function mousePressed() {
+      // Click en la nube (bounds a escala)
+      const nubeW = nubeImg.width * S, nubeH = nubeImg.height * S;
+      if (mouseX >= nubeX && mouseX < nubeX + nubeW && mouseY >= nubeY && mouseY < nubeY + nubeH) {
+        lluviaActiva = true;
+        lluviaInicio = millis();
+        mostrarNarracion1 = true;
+        mostrarNarracion2 = false;
+        capaActiva = null;
+        setTimeout(() => {
+          aguaActiva = true;
+          rioClickable = true;
+        }, 2000);
+        return;
+      }
+
+      // Click en el río (bounds a escala)
+      const rioX = 411 * S, rioY = 266 * S, rioW = aguaRioImg.width * S, rioH = aguaRioImg.height * S;
+      if (rioClickable && mouseX >= rioX && mouseX < rioX + rioW && mouseY >= rioY && mouseY < rioY + rioH) {
+        capasActivas = true;
+        rioClickable = false;
+        mostrarNarracion1 = false;
+        mostrarNarracion2 = true;
+        capaActiva = null;
+        mostrarCapaTemporal = true;
+        setTimeout(() => { mostrarCapaTemporal = false; }, 500);
+        return;
+      }
+
+      // Click en capas (bounds a escala + muestreo por alfa desescalado)
+      if (capasActivas) {
+        for (let capa of capas) {
+          const wScaled = capa.img.width * S, hScaled = capa.img.height * S;
+          if (mouseX >= capa.x && mouseX < capa.x + wScaled && mouseY >= capa.y && mouseY < capa.y + hScaled) {
+            const imgX = int((mouseX - capa.x) / S);
+            const imgY = int((mouseY - capa.y) / S);
+            if (imgX >= 0 && imgX < capa.img.width && imgY >= 0 && imgY < capa.img.height) {
+              const c = capa.img.get(imgX, imgY);
+              if (c[3] > 10) {
+                capaActiva = capa;
+                mostrarNarracion1 = false;
+                mostrarNarracion2 = false;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    function mostrarConsola() {
+      const alto = 230 * S;
+      const yBase = height - alto - 530 * S;
+
+      fill(255);
+      stroke(0);
+      rect(10 * S, yBase, 500 * S, alto);
+      noStroke();
+      fill(0);
+
+      text("🛈 Instrucciones:", 20 * S, yBase + 20 * S);
+      if (!aguaActiva) {
+        text("- Presiona la nube para comenzar.", 20 * S, yBase + 36 * S);
+      } else if (aguaActiva && !capasActivas) {
+        text("- Presiona el río para continuar.", 20 * S, yBase + 36 * S);
+      } else {
+        text("- Explora los elementos haciendo clic sobre ellos.", 20 * S, yBase + 36 * S);
+      }
+
+      text("¿Qué está ocurriendo?:", 20 * S, yBase + 58 * S);
+      let yTexto = yBase + 72 * S;
+
+      if (mostrarNarracion1) {
+        text("Las altas cumbres de la cordillera alimentan el sistema. A través de la nieve y la lluvia, el agua fluye hacia las zonas bajas, recargando tanto superficial como subterráneamente los cuerpos del Salar de Maricunga y su entorno.", 20 * S, yTexto, 460 * S);
+      }
+      if (mostrarNarracion2) {
+        text("A medida que el agua avanza, se transforma químicamente. La evaporación progresiva genera la precipitación secuencial de halita, sulfatos, carbonatos y travertinos. Cada una de estas capas refleja un estado particular del ambiente y su química.", 20 * S, yTexto, 460 * S);
+      }
+
+      if (capaActiva) {
+        if (capaActiva.imagenEjemplo) {
+          image(capaActiva.imagenEjemplo, 25 * S, yTexto + 10 * S, 80 * S, 80 * S);
+        }
+        textStyle(BOLD);
+        text(capaActiva.nombre, 120 * S, yTexto + 30 * S);
+        textStyle(NORMAL);
+        text(capaActiva.descripcion, 120 * S, yTexto + 50 * S, 370 * S);
+      }
+    }
+  </script>
+</body>
+</html>
