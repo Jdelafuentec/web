@@ -6,38 +6,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background: #fff;
-      font-family: Arial, sans-serif;
+    :root { --gap: 12px; }
+    html, body { margin:0; padding:0; height:100%; background:#fff; font-family: Arial, sans-serif; }
+    .wrap {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: var(--gap);
     }
-    main {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      overflow: auto;
-      flex-direction: column;
-      gap: 12px;
-    }
-    canvas {
-      box-shadow: 0 10px 30px rgba(0,0,0,.08);
-      border-radius: 12px;
-      display: block;
-    }
+    header { display:flex; align-items:center; justify-content:center; padding: var(--gap); }
+    header img { max-width: 260px; height: auto; display:block; }
+    main { display:flex; align-items:center; justify-content:center; overflow:auto; padding-bottom: var(--gap); }
+    canvas { box-shadow: 0 10px 30px rgba(0,0,0,.08); border-radius: 12px; display:block; background:#f2f2f2; }
   </style>
 </head>
 <body>
-  <main></main>
+  <div class="wrap">
+    <header>
+      <img src="https://jdelafuentec.github.io/web/OA_Recurso48.png" alt="Logo OASIS" onerror="this.style.display='none'">
+    </header>
+    <main></main>
+  </div>
 
   <script>
-    // === Escala 1.5x ===
+    // --- Parámetros base + escala 1.5x ---
     const BASE_W = 1275, BASE_H = 768, SCALE = 1.5;
 
-    let fondoBlanco, fondoMontana, nubeImg, lluviaImg, aguaRioImg, logoImg;
-    let capas = [], capaActiva = null;
+    // Imágenes (URLs absolutas para evitar problemas de ruta)
+    const BASE = "https://jdelafuentec.github.io/web/";
+    let fondoBlanco, fondoMontana, nubeImg, lluviaImg, aguaRioImg;
+
+    let capas = [];
+    let capaActiva = null;
 
     let lluviaActiva=false, lluviaInicio=0;
     let mostrarNarracion1=false, mostrarNarracion2=false;
@@ -45,25 +45,55 @@
 
     let nubeX = 590, nubeY = 70;
 
+    function loadSafe(path) {
+      return loadImage(
+        BASE + path,
+        () => console.log("OK:", path),
+        () => console.warn("NO CARGÓ:", BASE + path)
+      );
+    }
+
     function preload() {
-      // Logo arriba
-      logoImg = loadImage('https://jdelafuentec.github.io/web/OA_Recurso48.png');
-
       // Fondos y elementos
-      fondoBlanco = loadImage('fondoBlanco.png');
-      fondoMontana = loadImage('montanas.png');
-      nubeImg   = loadImage('nube.png');
-      lluviaImg = loadImage('lluvia.png');
-      aguaRioImg= loadImage('aguaRio.png');
+      fondoBlanco = loadSafe("fondoBlanco.png");
+      fondoMontana = loadSafe("montanas.png");
+      nubeImg      = loadSafe("nube.png");
+      lluviaImg    = loadSafe("lluvia.png");
+      aguaRioImg   = loadSafe("aguaRio.png");
 
-      capas.push({ nombre:"Sulphates", descripcion:"Los sulfatos como el yeso (CaSO₄·2H₂O) o la epsomita se forman en etapas intermedias de evaporación. Su presencia refleja un ambiente químicamente más concentrado que favorece la precipitación de minerales con azufre.", img: loadImage('sulphates.png'), imagenEjemplo: loadImage('travertinoImg.png'), x:192, y:277 });
-      capas.push({ nombre:"Travertinos", descripcion:"Roca sedimentaria carbonatada, compuesta principalmente de calcita (CaCO₃), que se forma por precipitación química a partir de aguas subterráneas o termales ricas en carbonato de calcio.", img: loadImage('travertines.png'), imagenEjemplo: loadImage('travertinoImg.png'), x:380, y:189 });
-      capas.push({ nombre:"Halite", descripcion:"La halita es sal común (NaCl), que precipita en las etapas finales del proceso de evaporación. Su presencia indica ambientes extremadamente salinos y condiciones de evaporación muy avanzadas.", img: loadImage('halite.png'), imagenEjemplo: loadImage('halite.png'), x:149, y:257 });
-      capas.push({ nombre:"Carbonatos", descripcion:"Los carbonatos como la calcita (CaCO₃) se precipitan cuando hay pérdida de CO₂ en aguas ricas en calcio. Reflejan ambientes donde hay menor salinidad, pero condiciones que favorecen la saturación de carbonato.", img: loadImage('carbonatos.png'), imagenEjemplo: loadImage('carbonatoImg.png'), x:117, y:284 });
+      // Capas
+      capas.push({
+        nombre:"Sulphates",
+        descripcion:"Los sulfatos como el yeso (CaSO₄·2H₂O) o la epsomita se forman en etapas intermedias de evaporación. Su presencia refleja un ambiente químicamente más concentrado que favorece la precipitación de minerales con azufre.",
+        img: loadSafe("sulphates.png"),
+        imagenEjemplo: loadSafe("travertinoImg.png"),
+        x:192, y:277
+      });
+      capas.push({
+        nombre:"Travertinos",
+        descripcion:"Roca sedimentaria carbonatada, compuesta principalmente de calcita (CaCO₃), que se forma por precipitación química a partir de aguas subterráneas o termales ricas en carbonato de calcio.",
+        img: loadSafe("travertines.png"),
+        imagenEjemplo: loadSafe("travertinoImg.png"),
+        x:380, y:189
+      });
+      capas.push({
+        nombre:"Halite",
+        descripcion:"La halita es sal común (NaCl), que precipita en las etapas finales del proceso de evaporación. Su presencia indica ambientes extremadamente salinos y condiciones de evaporación muy avanzadas.",
+        img: loadSafe("halite.png"),
+        imagenEjemplo: loadSafe("halite.png"),
+        x:149, y:257
+      });
+      capas.push({
+        nombre:"Carbonatos",
+        descripcion:"Los carbonatos como la calcita (CaCO₃) se precipitan cuando hay pérdida de CO₂ en aguas ricas en calcio.",
+        img: loadSafe("carbonatos.png"),
+        imagenEjemplo: loadSafe("carbonatoImg.png"),
+        x:117, y:284
+      });
     }
 
     function setup() {
-      const c = createCanvas(BASE_W * SCALE, BASE_H * SCALE + 120); // +120 para dejar espacio al logo
+      const c = createCanvas(BASE_W * SCALE, BASE_H * SCALE);
       c.parent(document.querySelector('main'));
       textFont('Arial');
       textSize(16);
@@ -71,66 +101,73 @@
     }
 
     function draw() {
-      background(255);
+      // Fondo de seguridad para "ver algo" aunque no cargue ninguna imagen
+      background(242); // gris claro
 
-      // --- Logo arriba ---
-      if (logoImg) {
-        const logoW = 200; // ancho fijo
-        const logoH = logoImg.height * (logoW / logoImg.width);
-        image(logoImg, width/2 - logoW/2, 20, logoW, logoH);
-      }
+      // Coordenadas del mouse en sistema base (por la escala)
+      const mx = mouseX / SCALE;
+      const my = mouseY / SCALE;
 
       push();
-      translate(0, 100); // dejar espacio para el logo
       scale(SCALE);
 
-      const mx = mouseX / SCALE;
-      const my = (mouseY - 100) / SCALE;
+      // Dibuja fondo/base (si no cargó, pinta placeholders)
+      if (fondoBlanco) image(fondoBlanco, 0, 0); else placeholder(0,0,BASE_W,BASE_H,"fondoBlanco.png");
+      if (fondoMontana) image(fondoMontana, 0, 192); else placeholder(0,192,800,200,"montanas.png");
 
-      // Fondo
-      if (fondoBlanco) image(fondoBlanco, 0, 0);
-      if (fondoMontana) image(fondoMontana, 0, 192);
-
-      // Hover de capas
+      // HOVER de capas (detección por alfa)
       let capaHover = null;
       if (capasActivas) {
         for (let capa of capas) {
+          if (!capa.img) continue;
           if (mx >= capa.x && mx < capa.x + capa.img.width &&
               my >= capa.y && my < capa.y + capa.img.height) {
             const ix = int(mx - capa.x), iy = int(my - capa.y);
-            const px = capa.img.get(ix, iy);
+            let px;
+            try { px = capa.img.get(ix, iy); } catch(e) { px = [0,0,0,0]; }
             if (px[3] > 10) capaHover = capa;
           }
         }
       }
 
-      // Lluvia animada
+      // Lluvia
       if (lluviaActiva) {
         const elapsed = millis() - lluviaInicio;
-        if (elapsed < 2000 && lluviaImg) {
+        if (elapsed < 2000) {
           const offset = map(elapsed, 0, 2000, 0, 60);
-          image(lluviaImg, nubeX + 60, nubeY + 60 + offset);
-          push();
-          translate(nubeX + 60, nubeY + 60 + offset * 2 + lluviaImg.height);
-          scale(1, -1);
-          tint(255, 150);
-          image(lluviaImg, 0, 0);
-          pop();
-          noTint();
+          if (lluviaImg) {
+            image(lluviaImg, nubeX + 60, nubeY + 60 + offset);
+            push();
+            translate(nubeX + 60, nubeY + 60 + offset * 2 + lluviaImg.height);
+            scale(1, -1);
+            tint(255, 150);
+            image(lluviaImg, 0, 0);
+            pop();
+            noTint();
+          } else {
+            placeholder(nubeX + 60, nubeY + 60 + offset, 60, 60, "lluvia.png");
+          }
         }
       }
 
-      if (aguaActiva && aguaRioImg) image(aguaRioImg, 411, 266);
+      // Río y nube
+      if (aguaActiva) {
+        if (aguaRioImg) image(aguaRioImg, 411, 266);
+        else placeholder(411,266,180,80,"aguaRio.png");
+      }
       if (nubeImg) image(nubeImg, nubeX, nubeY);
+      else placeholder(nubeX, nubeY, 120, 80, "nube.png");
 
+      // Capas visibles
       if (capasActivas && mostrarCapaTemporal) {
-        for (let capa of capas) image(capa.img, capa.x, capa.y);
+        for (let capa of capas) capa.img ? image(capa.img, capa.x, capa.y) : null;
       } else if (capasActivas && capaHover) {
         image(capaHover.img, capaHover.x, capaHover.y);
       } else if (capasActivas && capaActiva) {
         image(capaActiva.img, capaActiva.x, capaActiva.y);
       }
 
+      // Etiqueta hover
       if (capaHover) {
         fill(0);
         text(capaHover.nombre, mx + 15, my - 12);
@@ -138,85 +175,72 @@
 
       mostrarConsola();
       pop();
+
+      // Info de ayuda si aún no pasa nada
+      fill(60); noStroke();
+      text("Si ves fondo gris, el sketch está corriendo. Revisa la consola (F12) por 'NO CARGÓ: ...'", 12, height - 12);
     }
 
     function mousePressed() {
       const mx = mouseX / SCALE;
-      const my = (mouseY - 100) / SCALE;
+      const my = mouseY / SCALE;
 
       if (nubeImg && mx >= nubeX && mx < nubeX + nubeImg.width && my >= nubeY && my < nubeY + nubeImg.height) {
-        lluviaActiva = true;
-        lluviaInicio = millis();
-        mostrarNarracion1 = true;
-        mostrarNarracion2 = false;
-        capaActiva = null;
-        setTimeout(() => { aguaActiva = true; rioClickable = true; }, 2000);
+        lluviaActiva = true; lluviaInicio = millis();
+        mostrarNarracion1 = true; mostrarNarracion2 = false; capaActiva = null;
+        setTimeout(()=>{ aguaActiva = true; rioClickable = true; }, 2000);
         return;
       }
 
       if (rioClickable && aguaRioImg &&
           mx >= 411 && mx < 411 + aguaRioImg.width && my >= 266 && my < 266 + aguaRioImg.height) {
-        capasActivas = true;
-        rioClickable = false;
-        mostrarNarracion1 = false;
-        mostrarNarracion2 = true;
-        capaActiva = null;
-        mostrarCapaTemporal = true;
-        setTimeout(() => { mostrarCapaTemporal = false; }, 500);
+        capasActivas = true; rioClickable = false;
+        mostrarNarracion1 = false; mostrarNarracion2 = true; capaActiva = null;
+        mostrarCapaTemporal = true; setTimeout(()=>{ mostrarCapaTemporal = false; }, 500);
         return;
       }
 
       if (capasActivas) {
         for (let capa of capas) {
+          if (!capa.img) continue;
           if (mx >= capa.x && mx < capa.x + capa.img.width && my >= capa.y && my < capa.y + capa.img.height) {
             const ix = int(mx - capa.x), iy = int(my - capa.y);
-            const px = capa.img.get(ix, iy);
-            if (px[3] > 10) {
-              capaActiva = capa;
-              mostrarNarracion1 = false;
-              mostrarNarracion2 = false;
-            }
+            let px;
+            try { px = capa.img.get(ix, iy); } catch(e) { px = [0,0,0,0]; }
+            if (px[3] > 10) { capaActiva = capa; mostrarNarracion1 = false; mostrarNarracion2 = false; }
           }
         }
       }
     }
 
     function mostrarConsola() {
-      const alto = 230;
-      const yBase = BASE_H - alto - 530;
-
-      fill(255);
-      stroke(0);
-      rect(10, yBase, 500, alto);
-      noStroke();
-      fill(0);
+      const alto = 230, yBase = BASE_H - alto - 530;
+      fill(255); stroke(0); rect(10, yBase, 500, alto); noStroke(); fill(0);
 
       text("🛈 Instrucciones:", 20, yBase + 20);
-      if (!aguaActiva) {
-        text("- Presiona la nube para comenzar.", 20, yBase + 36);
-      } else if (aguaActiva && !capasActivas) {
-        text("- Presiona el río para continuar.", 20, yBase + 36);
-      } else {
-        text("- Explora los elementos haciendo clic sobre ellos.", 20, yBase + 36);
-      }
+      if (!aguaActiva)        text("- Presiona la nube para comenzar.", 20, yBase + 36);
+      else if (!capasActivas) text("- Presiona el río para continuar.", 20, yBase + 36);
+      else                    text("- Explora los elementos haciendo clic sobre ellos.", 20, yBase + 36);
 
       text("¿Qué está ocurriendo?:", 20, yBase + 58);
       const yTexto = yBase + 72;
 
-      if (mostrarNarracion1) {
+      if (mostrarNarracion1)
         text("Las altas cumbres de la cordillera alimentan el sistema...", 20, yTexto, 460);
-      }
-      if (mostrarNarracion2) {
+      if (mostrarNarracion2)
         text("A medida que el agua avanza, se transforma químicamente...", 20, yTexto, 460);
-      }
 
       if (capaActiva) {
         if (capaActiva.imagenEjemplo) image(capaActiva.imagenEjemplo, 25, yTexto + 10, 80, 80);
-        textStyle(BOLD);
-        text(capaActiva.nombre, 120, yTexto + 30);
-        textStyle(NORMAL);
-        text(capaActiva.descripcion, 120, yTexto + 50, 370);
+        textStyle(BOLD);   text(capaActiva.nombre, 120, yTexto + 30);
+        textStyle(NORMAL); text(capaActiva.descripcion, 120, yTexto + 50, 370);
       }
+    }
+
+    // Placeholder rojo si falta algo
+    function placeholder(x,y,w,h,label){
+      push(); noFill(); stroke(200,0,0); strokeWeight(2); rect(x,y,w,h);
+      noStroke(); fill(200,0,0); textSize(12); text(label, x+6, y+16); pop();
     }
   </script>
 </body>
