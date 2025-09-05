@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Geo Interactivo – Maricunga (Ajustes tipografía y labels)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
+  <style>
+    html, body { margin: 0; padding: 0; background:#fff; font-family: Arial, sans-serif; }
+    main { min-height: 100vh; display: grid; place-items: center; padding: 16px; }
+    .block { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+    .logo { width: 520px; height: auto; display: block; }
+    canvas { box-shadow: 0 10px 30px rgba(0,0,0,.08); border-radius: 12px; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="block">
+      <img class="logo" src="https://jdelafuentec.github.io/web/OA_Recurso48.png" alt="OASIS">
+      <div id="canvas-holder"></div>
+    </div>
+  </main>
+
+  <script>
+    // ===== Config =====
+    const S = 1.0;               // escala global
+    const W = 1275 * S, H = 768 * S;
+    const BASE = 'https://jdelafuentec.github.io/web/geo_interactivo/';
+
+    // Etapas
+    let etapa = 0;   // 0..7
+    let subVolcan = 1; // 1..3
+
+    // ===== Sprites =====
+    // Fondos
+    let fondoBlanco, montanas;
+
+    // Ciclo del agua
+    let nubeImg, lluviaImg, aguaRioImg;
+    let infiltradaImg;
+    let flechaAgua1, flechaAgua2, flechaAgua3, flechaAgua4;
+    let flechaAgua2_1, flechaAgua2_2, flechaAgua2_3;
+    let flechaRios;
+
+    // Volcanismo
+    let volcanesImg, rocasVolcanicasImg, flechaMagma, flechaMagma2, lavaImg;
+
+    // Entorno
+    let lagunaStaRosaImg, vegetacionImg, gravaImg, solImg;
+
+    // Capas (exploración)
+    let capas = [];     // {nombre, descripcion, img, imagenEjemplo, x, y}
+    let capaActiva = null;
+    let mostrarCapaTemporal = false;
+
+    // Lluvia
+    let lluviaActiva = false;
+    let lluviaInicio = 0;
+
+    // Zona salar
+    const ZONA_SALAR = { x: 520*S, y: 320*S, w: 420*S, h: 220*S };
+
+    // Posiciones
+    const POS = {
+      volcanes:        {x: 642*S, y: 220*S},
+      vegetacion:      {x: 110*S, y: 356*S},   // <- según tu imagen
+      lagunaStaRosa:   {x: 114*S, y: 453*S},
+      rocasVolcanicas: {x: 587*S, y: 245*S},
+      grava:           {x: 337*S, y: 304*S},
+      AguaInfiltrada:  {x: 432*S, y: 255*S},
+      nube:            {x: 528*S, y:  46*S},
+      lluvia:          {x: 579*S, y: 140*S},
+      flechaMagma:     {x: 781*S, y: 356*S},
+      flechaMagma2:    {x: 728*S, y: 281*S},
+      carbonatos:      {x: 138*S, y: 342*S},
+      travertines:     {x: 436*S, y: 269*S},
+      sulphates:       {x: 233*S, y: 330*S},
+      halite:          {x: 251*S, y: 327*S},
+      flechaAgua4:     {x: 594*S, y: 315*S},
+      flechaAgua1:     {x: 568*S, y: 356*S},
+      flechaAgua2:     {x: 670*S, y: 308*S},
+      flechaAgua3:     {x: 638*S, y: 376*S},
+      flechaAgua2_1:   {x: 822*S, y: 273*S},
+      flechaAgua2_3:   {x: 868*S, y: 311*S},
+      flechaAgua2_2:   {x: 865*S, y: 238*S},
+      lava:            {x: 693*S, y: 393*S},
+      aguaRio:         {x: 419*S, y: 265*S},
+      flechaRios:      {x:  25*S, y: 336*S}
+    };
+
+    // Sol arriba-izq de nube
+    let POS_SOL = { x: POS.nube.x - 140, y: POS.nube.y - 60 };
+
+    function preload() {
+      // Fondos
+      fondoBlanco = loadImage(BASE + 'fondoBlanco.png');
+      montanas    = loadImage(BASE + 'montanas.png');
+
+      // Agua
+      nubeImg    = loadImage(BASE + 'nube.png');
+      lluviaImg  = loadImage(BASE + 'lluvia.png');
+      aguaRioImg = loadImage(BASE + 'aguaRio.png');
+
+      infiltradaImg = loadImage(BASE + 'AguaInfiltrada.png');
+      flechaAgua1   = loadImage(BASE + 'flechaAgua1.png');
+      flechaAgua2   = loadImage(BASE + 'flechaAgua2.png');
+      flechaAgua3   = loadImage(BASE + 'flechaAgua3.png');
+      flechaAgua4   = loadImage(BASE + 'flechaAgua4.png');
+      flechaAgua2_1 = loadImage(BASE + 'flechaAgua2_1.png');
+      flechaAgua2_2 = loadImage(BASE + 'flechaAgua2_2.png');
+      flechaAgua2_3 = loadImage(BASE + 'flechaAgua2_3.png');
+      flechaRios    = loadImage(BASE + 'flechaRios.png');
+
+      // Volcanismo
+      volcanesImg        = loadImage(BASE + 'volcanes.png');
+      rocasVolcanicasImg = loadImage(BASE + 'rocasVolcanicas.png');
+      flechaMagma        = loadImage(BASE + 'flechaMagma.png');
+      flechaMagma2       = loadImage(BASE + 'flechaMagma2.png');
+      lavaImg            = loadImage(BASE + 'lava.png');
+
+      // Entorno
+      lagunaStaRosaImg = loadImage(BASE + 'lagunaStaRosa.png');
+      vegetacionImg    = loadImage(BASE + 'vegetacion.png');
+      gravaImg         = loadImage(BASE + 'grava.png');
+      solImg           = loadImage(BASE + 'sol.png');
+
+      // Capas (exploración) — textos actualizados + Vegetación (QR en ficha)
+      capas.push({
+        nombre: "Sulfatos",
+        descripcion: "Los sulfatos como el yeso (CaSO₄·2H₂O) se forman en etapas intermedias de evaporación. Su presencia refleja un ambiente químicamente más concentrado que favorece la precipitación de minerales con azufre.",
+        img: loadImage(BASE + 'sulphates.png'),
+        imagenEjemplo: null,
+        x: POS.sulphates.x, y: POS.sulphates.y
+      });
+      capas.push({
+        nombre: "Travertinos",
+        descripcion: "Roca sedimentaria carbonatada, compuesta principalmente de calcita (CaCO₃), que se forma por precipitación química y orgánica a partir de aguas subterráneas o termales.",
+        img: loadImage(BASE + 'travertines.png'),
+        imagenEjemplo: loadImage(BASE + 'travertinoImg.png'),
+        x: POS.travertines.x, y: POS.travertines.y
+      });
+      capas.push({
+        nombre: "Cloruros",
+        descripcion: "Los cloruros como la halita o sal común (NaCl), precipitan en las etapas finales del proceso de evaporación. Su presencia indica ambientes extremadamente salinos y condiciones de evaporación muy avanzadas. Se concentran en zonas centrales de los salares",
+        img: loadImage(BASE + 'halite.png'),
+        imagenEjemplo: null,
+        x: POS.halite.x, y: POS.halite.y
+      });
+      capas.push({
+        nombre: "Carbonatos",
+        descripcion: "Los carbonatos como la calcita (CaCO₃) se precipitan cuando hay pérdida de CO₂ en aguas ricas en calcio. Reflejan ambientes donde hay menor salinidad, pero condiciones que favorecen la saturación de carbonato. Se concentran en las zonas periféricas de los salares",
+        img: loadImage(BASE + 'carbonatos.png'),
+        imagenEjemplo: loadImage(BASE + 'carbonatoImg.png'),
+        x: POS.carbonatos.x, y: POS.carbonatos.y
+      });
+      // Vegetación (sprite en mapa, QR en ficha)
+      capas.push({
+        nombre: "Vegetación",
+        descripcion: "Cobertura vegetal en bordes y humedales.",
+        img: loadImage(BASE + 'vegetacion.png'),
+        imagenEjemplo: loadImage(BASE + 'qrHerbario.png'),
+        x: POS.vegetacion.x, y: POS.vegetacion.y
+      });
+    }
+
+    function setup() {
+      const c = createCanvas(W, H);
+      c.parent(document.querySelector('#canvas-holder'));
+      textFont('Arial'); textSize(16*S); noStroke();
+    }
+
+    function draw() {
+      background(255);
+
+      // Fondos
+      image(fondoBlanco, 0, 0);
+      image(montanas, 0, 192);
+
+      // Sol
+      image(solImg, POS_SOL.x, POS_SOL.y);
+
+      // Nube SIEMPRE visible (reinicio)
+      image(nubeImg, POS.nube.x, POS.nube.y);
+
+      // Etapas
+      if (etapa === 0 || lluviaActiva) {
+        if (lluviaActiva) {
+          const elapsed = millis() - lluviaInicio;
+          if (elapsed < 2000) {
+            const offset = map(elapsed, 0, 2000, 0, 60*S);
+            image(lluviaImg, POS.lluvia.x, POS.lluvia.y + offset);
+            push(); translate(POS.lluvia.x, POS.lluvia.y + offset*2 + lluviaImg.height);
+            scale(1,-1); tint(255,150); image(lluviaImg,0,0); pop(); noTint();
+          } else { lluviaActiva = false; etapa = 1; }
+        }
+      }
+
+      if (etapa === 1) {
+        image(aguaRioImg, POS.aguaRio.x, POS.aguaRio.y);
+      }
+
+      if (etapa === 2) {
+        image(infiltradaImg, POS.AguaInfiltrada.x, POS.AguaInfiltrada.y);
+        image(flechaAgua1, POS.flechaAgua1.x, POS.flechaAgua1.y);
+        image(flechaAgua2, POS.flechaAgua2.x, POS.flechaAgua2.y);
+        image(flechaAgua3, POS.flechaAgua3.x, POS.flechaAgua3.y);
+        image(flechaAgua4, POS.flechaAgua4.x, POS.flechaAgua4.y);
+        image(flechaAgua2_1, POS.flechaAgua2_1.x, POS.flechaAgua2_1.y);
+        image(flechaAgua2_2, POS.flechaAgua2_2.x, POS.flechaAgua2_2.y);
+        image(flechaAgua2_3, POS.flechaAgua2_3.x, POS.flechaAgua2_3.y);
+      }
+
+      if (etapa === 3) {
+        if (subVolcan >= 1) image(volcanesImg, POS.volcanes.x, POS.volcanes.y);
+        if (subVolcan >= 2) { image(rocasVolcanicasImg, POS.rocasVolcanicas.x, POS.rocasVolcanicas.y); image(lavaImg, POS.lava.x, POS.lava.y); }
+        if (subVolcan >= 3) { image(flechaMagma, POS.flechaMagma.x, POS.flechaMagma.y); image(flechaMagma2, POS.flechaMagma2.x, POS.flechaMagma2.y); }
+      }
+
+      if (etapa === 4) {
+        image(vegetacionImg, POS.vegetacion.x, POS.vegetacion.y);
+        image(gravaImg, POS.grava.x, POS.grava.y);
+        image(flechaRios, POS.flechaRios.x, POS.flechaRios.y);
+        image(lagunaStaRosaImg, POS.lagunaStaRosa.x, POS.lagunaStaRosa.y);
+      }
+
+      if (etapa === 6) {
+        let capaHover = null;
+        for (let capa of capas) {
+          if (mouseX >= capa.x && mouseX < capa.x + capa.img.width &&
+              mouseY >= capa.y && mouseY < capa.y + capa.img.height) {
+            const imgX = int(mouseX - capa.x), imgY = int(mouseY - capa.y);
+            const c = capa.img.get(imgX, imgY);
+            if (c[3] > 10) capaHover = capa;
+          }
+        }
+        if (mostrarCapaTemporal) {
+          for (let capa of capas) image(capa.img, capa.x, capa.y);
+        } else if (capaActiva) {
+          image(capaActiva.img, capaActiva.x, capaActiva.y);
+        } else if (capaHover) {
+          image(capaHover.img, capaHover.x, capaHover.y);
+        }
+        if (capaHover) {
+          fill(0); noStroke(); textSize(17*S);
+          text(capaHover.nombre, mouseX + 15, mouseY - 12);
+        }
+      }
+
+      // Halos
+      if (etapa === 0) haloCenter(POS.nube, nubeImg);
+      if (etapa === 1) halo(POS.aguaRio.x + 60, POS.aguaRio.y + 40);
+      if (etapa === 2) halo(POS.volcanes.x + 40, POS.volcanes.y + 30);
+      if (etapa === 3) halo(POS.volcanes.x + 40, POS.volcanes.y + 30);
+      if (etapa === 4) halo(POS.lagunaStaRosa.x + 40, POS.lagunaStaRosa.y + 25);
+      if (etapa === 5) haloRect(ZONA_SALAR);
+
+      // Labels
+      dibujarLabels();
+
+      // Consola
+      mostrarConsola();
+    }
+
+    function mousePressed() {
+      // La nube SIEMPRE reinicia
+      if (hit(POS.nube, nubeImg)) {
+        etapa = 0; subVolcan = 1; capaActiva = null; mostrarCapaTemporal = false;
+        lluviaActiva = true; lluviaInicio = millis();
+        return;
+      }
+
+      if (etapa === 1 && hit(POS.aguaRio, aguaRioImg)) { etapa = 2; return; }
+      if (etapa === 2 && hit(POS.volcanes, volcanesImg)) { etapa = 3; subVolcan = 1; return; }
+      if (etapa === 3 && hit(POS.volcanes, volcanesImg)) { if (subVolcan < 3) subVolcan++; else etapa = 4; return; }
+      if (etapa === 4 && hit(POS.lagunaStaRosa, lagunaStaRosaImg)) { etapa = 5; return; }
+      if (etapa === 5 && insideRect(mouseX, mouseY, ZONA_SALAR)) {
+        etapa = 6; capaActiva = null; mostrarCapaTemporal = true;
+        setTimeout(()=>{ mostrarCapaTemporal = false; }, 600);
+        return;
+      }
+      if (etapa === 6) {
+        let fijada = false;
+        for (let capa of capas) {
+          if (hitOpaque(capa)) { capaActiva = capa; fijada = true; break; }
+        }
+        if (!fijada && insideRect(mouseX, mouseY, ZONA_SALAR)) { etapa = 7; return; }
+      }
+    }
+
+    // ===== Utils =====
+    function hit(pos, img) {
+      if (!img) return false;
+      return mouseX >= pos.x && mouseX < pos.x + img.width &&
+             mouseY >= pos.y && mouseY < pos.y + img.height;
+    }
+    function hitOpaque(capa) {
+      if (mouseX >= capa.x && mouseX < capa.x + capa.img.width &&
+          mouseY >= capa.y && mouseY < capa.y + capa.img.height) {
+        const ix = int(mouseX - capa.x), iy = int(mouseY - capa.y);
+        return capa.img.get(ix, iy)[3] > 10;
+      }
+      return false;
+    }
+    function insideRect(mx, my, r) {
+      return mx >= r.x && mx <= r.x + r.w && my >= r.y && my <= r.y + r.h;
+    }
+
+    // Halos
+    function halo(cx, cy) {
+      const r = 18 + 6 * sin(millis()/300);
+      noFill(); stroke(0,120,255,160); strokeWeight(3);
+      circle(cx, cy, r*2);
+      stroke(0,120,255,80); circle(cx, cy, r*2 + 12);
+      noStroke();
+    }
+    function haloCenter(pos, img) {
+      if (!img) return;
+      const cx = pos.x + img.width/2, cy = pos.y + img.height/2;
+      halo(cx, cy);
+    }
+    function haloRect(r) {
+      const p = 5 + 2 * sin(millis()/300);
+      noFill(); stroke(0,120,255,140); strokeWeight(3);
+      rect(r.x - p, r.y - p, r.w + 2*p, r.h + 2*p, 8);
+      noStroke();
+    }
+
+    // ===== Labels (+1pt) y desplazamientos =====
+    function dibujarLabels() {
+      textSize(15 * S); fill(0, 170); noStroke();
+
+      const andesX = POS.volcanes.x + 10*S + 80*S;
+      const andesY = POS.volcanes.y - 24*S;
+      text("Cordillera de Los Andes", andesX, andesY);
+
+      const salarX = POS.sulphates.x - 20*S + 80*S;
+      const salarY = POS.sulphates.y - 28*S;
+      text("Salar de Maricunga", salarX, salarY);
+
+      const domeykoX = 200*S;
+      const domeykoY = 210*S;
+      text("Cordillera de Domeyko", domeykoX, domeykoY);
+
+      text("Aguas meteóricas", POS.nube.x + 10*S, POS.nube.y + 18*S);
+      text("Cámara magmática", POS.flechaMagma.x + 10*S, POS.flechaMagma.y + 16*S);
+
+      textSize(13 * S);
+      text("Laguna Verde", andesX + 30*S, andesY + 18*S);
+      text("Laguna Santa Rosa", POS.lagunaStaRosa.x + 80*S, POS.lagunaStaRosa.y + 26*S);
+    }
+
+    // ===== Consola (12pt) =====
+    function mostrarConsola() {
+      const alto = 230*S;
+      const yBase = H - alto - 530*S;
+
+      fill(255); stroke(0);
+      rect(10*S, yBase, 520*S, alto);
+      noStroke(); fill(0);
+
+      const fs = 12 * S;
+      textSize(fs);
+
+      text("El Ciclo del Agua y Elementos Químicos en Ambientes Evaporíticos", 20*S, yBase + 20*S);
+
+      if (etapa === 0 || lluviaActiva) {
+        text("Presiona la nube para comenzar", 20*S, yBase + 38*S);
+        narr("1- La nieve y la lluvia en las altas cumbres de la cordillera dan origen al sistema hídrico de salares altoandinos, donde la nieve se acumula, se derrite, se infiltra en la tierra y fluye hacia las zonas bajas, recargando de agua y elemento químicos lagunas y canales del Salar de Maricunga y su entorno. La recarga es superficial a través de ríos y subterránea a través de flujos intergranulares en los sedimentos.", yBase, fs);
+      } else if (etapa === 1) {
+        text("Presiona el río para continuar", 20*S, yBase + 38*S);
+        narr("2. El agua que hoy corre por el tejido hídrico del entorno cordillerano erosiona y disuelve las rocas que se formaron antiguamente. Entre ellas se encuentran los travertinos, que en un pasado no muy lejano se formaron por precipitación química y orgánica en ambientes de aguas termales, aguas que se infiltraron y calentaron cientos de metros o kilómetros bajo la superficie terrestre, mezcladas también con aguas magmáticas asociadas a la cadena volcánica presente.", yBase, fs);
+      } else if (etapa === 2) {
+        text("Presiona los volcanes para ver el termalismo", 20*S, yBase + 38*S);
+        narr("3- Infiltración y calentamiento de aguas en la tierra", yBase, fs);
+      } else if (etapa === 3) {
+        text("Presiona nuevamente los volcanes para avanzar la secuencia", 20*S, yBase + 38*S);
+        if (subVolcan === 1) narr("4- Surgencias de aguas termales y creación de los travertinos", yBase, fs);
+        if (subVolcan === 2) narr("5- Recarga hídrica de Cuenca de Maricunga, que puede ser superficial a través ríos y subsuperficial por medio del flujo intergranular en acuíferos", yBase, fs);
+        if (subVolcan === 3) narr("6- Altas tasas de evaporación en el salar y lagunas, formación de costras minerales de carbonatos (calcita), sulfatos (yeso) y cloruros (halita).", yBase, fs);
+      } else if (etapa === 4) {
+        text("Presiona la Laguna Sta. Rosa para continuar", 20*S, yBase + 38*S);
+        narr("La recarga hídrica superficial en la cuenca (humedales y lagunas).", yBase, fs);
+      } else if (etapa === 5) {
+        text("Presiona dentro del salar para ver evaporación y capas", 20*S, yBase + 38*S);
+        narr("La evaporación concentra sales y favorece la precipitación mineral.", yBase, fs);
+      } else if (etapa === 6) {
+        text("Explora los elementos haciendo clic sobre ellos. Clic en el salar para cierre.", 20*S, yBase + 38*S);
+
+        const yTexto = yBase + 64*S;
+        if (capaActiva) {
+          if (capaActiva.imagenEjemplo) {
+            image(capaActiva.imagenEjemplo, 25*S, yTexto + 8*S, 80*S, 80*S);
+          }
+          textStyle(BOLD);
+          textSize(12*S);
+          text(capaActiva.nombre, 120*S, yTexto + 26*S);
+          textStyle(NORMAL);
+
+          textSize(12*S);
+          text(capaActiva.descripcion, 120*S, yTexto + 46*S, 370*S);
+        } else {
+          textSize(12*S);
+          text("Pasa el cursor por Travertinos, Carbonatos, Sulfatos, Cloruros y Vegetación; haz clic para fijar su ficha.", 20*S, yTexto, 480*S);
+        }
+      } else if (etapa === 7) {
+        text("Fin: clic en la nube para reiniciar", 20*S, yBase + 38*S);
+        narr("7- Evolución química de salmueras, finalmente enriquecidas en metales alcalinos, litio potasio y tierras raras.", yBase, fs);
+      }
+    }
+
+    function narr(msg, yBase, fs) {
+      textSize(fs);
+      text("¿Qué está ocurriendo?:", 20*S, yBase + 58*S);
+      text(msg, 20*S, yBase + 76*S, 480*S);
+    }
+  </script>
+</body>
+</html>
