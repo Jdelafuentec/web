@@ -76,24 +76,18 @@
   <script>
     // === Configuración de assets ===
     const ASSETS = [
-      {key:'cabeza',   name:'Cabeza',   url:'https://jdelafuentec.github.io/web/ayudantias/cabeza.png'},
-      {key:'cuello',   name:'Cuello',   url:'https://jdelafuentec.github.io/web/ayudantias/cuello.png'},
-      {key:'hombros',  name:'Hombros',  url:'https://jdelafuentec.github.io/web/ayudantias/hombres.png'}, // (archivo se llama hombres.png)
-      {key:'pecho',    name:'Pecho',    url:'https://jdelafuentec.github.io/web/ayudantias/pecho.png'},
-      {key:'estomago', name:'Estómago', url:'https://jdelafuentec.github.io/web/ayudantias/estomago.png'},
-      {key:'pelvis',   name:'Pelvis',   url:'https://jdelafuentec.github.io/web/ayudantias/pelvis.png'},
+      {key:'cabeza',    name:'Cabeza',       url:'https://jdelafuentec.github.io/web/ayudantias/cabeza.png'},
+      {key:'cuello',    name:'Cuello',       url:'https://jdelafuentec.github.io/web/ayudantias/cuello.png'},
+      {key:'hombroIzq', name:'Hombro Izquierdo', url:'https://jdelafuentec.github.io/web/ayudantias/hombros.png'},
+      {key:'hombroDer', name:'Hombro Derecho',   url:'https://jdelafuentec.github.io/web/ayudantias/hombros2.png'},
+      {key:'pecho',     name:'Pecho',        url:'https://jdelafuentec.github.io/web/ayudantias/pecho.png'},
+      {key:'estomago',  name:'Estómago',     url:'https://jdelafuentec.github.io/web/ayudantias/estomago.png'},
+      {key:'pelvis',    name:'Pelvis',       url:'https://jdelafuentec.github.io/web/ayudantias/pelvis.png'},
     ];
 
     // Posiciones iniciales (aprox). Puedes mover en Modo edición.
     // Coordenadas normalizadas de 0..1 (x: izquierda->derecha, y: arriba->abajo)
-    let POS = {
-      cabeza:{x:0.50, y:0.18},
-      cuello:{x:0.50, y:0.26},
-      hombros:{x:0.50, y:0.35},
-      pecho:{x:0.50, y:0.46},
-      estomago:{x:0.50, y:0.60},
-      pelvis:{x:0.50, y:0.73},
-    };
+    let POS = { cabeza:{x:0.50,y:0.18}, cuello:{x:0.50,y:0.26}, hombroIzq:{x:0.35,y:0.36}, hombroDer:{x:0.65,y:0.36}, pecho:{x:0.50,y:0.46}, estomago:{x:0.50,y:0.60}, pelvis:{x:0.50,y:0.73} };
 
     const stage = document.getElementById('stage');
     const coordsTip = document.getElementById('coords');
