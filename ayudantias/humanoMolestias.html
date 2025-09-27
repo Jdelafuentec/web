@@ -3,290 +3,107 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Body Stress Mapper – Prototype</title>
+  <title>Body Marker – MVP (simple)</title>
   <style>
-    :root{
-      --bg:#0b1220; --panel:#111827; --ink:#e5e7eb; --muted:#9ca3af; --accent:#7dd3fc;
-      --card:#0f172a; --chip:#1f2937; --grid:#1e293b;
-    }
+    :root{ --bg:#0b1220; --ink:#e5e7eb; --muted:#9ca3af; --panel:#111827; --btn:#1f2937; }
     *{box-sizing:border-box}
-    html,body{height:100%}
-    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:#0b1220;color:var(--ink);padding:12px}
-    header{display:flex;gap:12px;align-items:center;justify-content:space-between;margin:0 auto;max-width:1200px}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--ink);padding:16px}
+    header{max-width:760px;margin:0 auto 12px;display:flex;justify-content:space-between;align-items:center}
     h1{font-size:18px;margin:0}
-    .pill{font-size:12px;padding:4px 8px;border-radius:999px;background:#111827;color:var(--muted);border:1px solid #243045}
-    .app{display:grid;grid-template-columns:1fr 320px;gap:12px;max-width:1200px;margin:10px auto}
-    .board,.side{background:var(--panel);border:1px solid #1f2937;border-radius:14px;padding:12px}
-    .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-    button,select,input[type=number],input[type=file]{background:var(--chip);color:var(--ink);border:1px solid #374151;border-radius:10px;padding:8px 10px}
-    button:hover{filter:brightness(1.1)}
-    .canvasWrap{position:relative;aspect-ratio:3/5;width:100%;background:#0a1426;border-radius:10px;overflow:hidden}
-    .figure{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;}
-    svg#overlay{position:absolute;inset:0;width:100%;height:100%;}
-    .legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-    .chip{display:inline-flex;align-items:center;gap:6px;padding:6px 8px;border-radius:999px;background:var(--chip);border:1px solid #2b364d;font-size:12px}
-    .sw{width:10px;height:10px;border-radius:2px;background:#fff;display:inline-block}
-    .stat{background:var(--card);border:1px solid #202b42;padding:10px;border-radius:12px;margin-top:10px}
-    .stat h3{margin:0 0 6px 0;font-size:14px;color:var(--muted)}
-    .bar{height:8px;background:#132036;border-radius:999px;overflow:hidden}
-    .bar>i{display:block;height:100%;background:var(--accent)}
+    .app{max-width:760px;margin:0 auto;display:grid;grid-template-columns:1fr 240px;gap:12px}
+    .card{background:var(--panel);border:1px solid #1f2937;border-radius:12px;padding:12px}
+    .stage{position:relative;aspect-ratio:3/5;width:100%;border-radius:8px;overflow:hidden;background:#0a1426}
+    .figure{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+    svg#overlay{position:absolute;inset:0;width:100%;height:100%;cursor:crosshair}
+    button,input[type=file]{background:var(--btn);color:var(--ink);border:1px solid #334155;border-radius:10px;padding:8px 10px}
+    button:hover{filter:brightness(1.08)}
     .small{font-size:12px;color:var(--muted)}
-    .hr{height:1px;background:#1f2a3e;margin:10px 0}
-    label.zone-label{position:absolute;background:rgba(17,24,39,.75);border:1px solid #334155;padding:2px 6px;border-radius:6px;font-size:11px;pointer-events:none}
   </style>
 </head>
 <body>
   <header>
-    <h1>Body Stress Mapper · Prototype</h1>
-    <div class="row">
-      <span class="pill">Click para marcar · Doble click para borrar el punto más cercano</span>
-    </div>
+    <h1>Body Marker – MVP</h1>
+    <span class="small">Click = agregar punto · Doble‑click = borrar punto cercano</span>
   </header>
 
   <div class="app">
-    <section class="board">
-      <div class="canvasWrap" id="wrap">
+    <section class="card">
+      <div class="stage" id="stage">
         <img class="figure" src="https://jdelafuentec.github.io/web/ayudantias/humano.png" alt="humano"/>
-        <!-- Capa de dibujo -->
+        <!-- Capa para puntos -->
         <svg id="overlay" viewBox="0 0 100 160" xmlns="http://www.w3.org/2000/svg"></svg>
-        <!-- Etiquetas de zonas (posicionadas vía JS) -->
       </div>
-      <div class="legend" id="legend"></div>
     </section>
 
-    <aside class="side">
-      <div class="row" style="justify-content:space-between">
-        <label>k (clusters): <input id="k" type="number" min="1" max="6" step="1" value="3" style="width:72px"/></label>
-        <div class="row"><button id="recluster">Recalcular</button><button id="clear">Limpiar</button></div>
-      </div>
-      <div class="hr"></div>
-      <div class="row" style="justify-content:space-between">
+    <aside class="card">
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button id="clear">Limpiar</button>
         <button id="export">Exportar JSON</button>
-        <label class="row">Importar <input id="import" type="file" accept="application/json"/></label>
+        <label>Importar <input id="import" type="file" accept="application/json"></label>
       </div>
-      <p class="small">Coordenadas normalizadas (x,y en 0..1) sobre el contenedor.</p>
-      <div class="hr"></div>
-      <div class="row" style="justify-content:space-between">
-        <label class="row"><input type="checkbox" id="toggleZones" checked/> Mostrar zonas y nombres</label>
-      </div>
-      <div class="stat">
-        <h3>Perfil de Estrés (heurístico)</h3>
-        <div id="scores"></div>
-        <p class="small">Basado en densidad de puntos por zona (editable en <code>ZONES</code>).</p>
-      </div>
-      <div class="stat">
-        <h3>Resumen</h3>
-        <div id="summary"></div>
-      </div>
+      <p class="small" id="count" style="margin-top:10px">0 puntos</p>
+      <p class="small">Este MVP sólo marca puntos y permite exportar/importar. Si luego quieres, añadimos clustering y perfil.</p>
     </aside>
   </div>
 
   <script>
-    // ====== Estado y utilidades ======
-    const state = { points: [], labels: [], centers: [], k: 3 };
     const overlay = document.getElementById('overlay');
-    const wrap = document.getElementById('wrap');
-    const COLORS = ['#60a5fa','#34d399','#fbbf24','#f472b6','#a78bfa','#fb7185'];
-    const rnd = (n=1)=>Math.round(n*100)/100;
-    const clamp = (x)=>Math.max(0,Math.min(100,Math.round(x)));
+    const countEl = document.getElementById('count');
+    const state = { points: [] }; // puntos normalizados (0..1)
+
     function dist(a,b){ const dx=a.x-b.x, dy=a.y-b.y; return Math.hypot(dx,dy); }
 
-    // K-means (k-means++ init, determinismo semilla por centroide global)
-    function kmeans(points, k=3, maxIter=40){
-      if(!points.length || k<1) return {centers:[],labels:[]};
-      k = Math.min(k, points.length);
-      const centers = [];
-      const cx = points.reduce((s,p)=>s+p.x,0)/points.length;
-      const cy = points.reduce((s,p)=>s+p.y,0)/points.length;
-      let seed=0, bestD=-1;
-      points.forEach((p,i)=>{ const d=(p.x-cx)**2+(p.y-cy)**2; if(d>bestD){bestD=d; seed=i;} });
-      centers.push({...points[seed]});
-      while(centers.length<k){
-        const d2 = points.map(p=> Math.min(...centers.map(c=> (p.x-c.x)**2+(p.y-c.y)**2)) );
-        const sum = d2.reduce((a,b)=>a+b,0);
-        let r = Math.random()*sum; let idx=0;
-        for(let i=0;i<points.length;i++){ r-=d2[i]; if(r<=0){ idx=i; break; } }
-        centers.push({...points[idx]});
-      }
-      let labels = new Array(points.length).fill(0);
-      for(let it=0; it<maxIter; it++){
-        let changed=false;
-        for(let i=0;i<points.length;i++){
-          let best=0, bestD=Infinity;
-          for(let c=0;c<k;c++){
-            const d=dist(points[i],centers[c]);
-            if(d<bestD){bestD=d; best=c;}
-          }
-          if(labels[i]!==best){labels[i]=best; changed=true;}
-        }
-        const acc = Array.from({length:k},()=>({x:0,y:0,n:0}));
-        for(let i=0;i<points.length;i++){ const l=labels[i]; acc[l].x+=points[i].x; acc[l].y+=points[i].y; acc[l].n++; }
-        for(let c=0;c<k;c++){ if(acc[c].n){ centers[c].x=acc[c].x/acc[c].n; centers[c].y=acc[c].y/acc[c].n; } }
-        if(!changed) break;
-      }
-      return {centers, labels};
+    function redraw(){
+      overlay.innerHTML = '';
+      state.points.forEach(p => {
+        const cx = p.x * 100, cy = p.y * 160;
+        const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+        c.setAttribute('cx', cx); c.setAttribute('cy', cy); c.setAttribute('r', 2.2);
+        c.setAttribute('fill', '#fb7185'); // rojo suave
+        c.setAttribute('stroke', '#111827'); c.setAttribute('stroke-width', '0.6');
+        overlay.appendChild(c);
+      });
+      countEl.textContent = `${state.points.length} punto${state.points.length===1?'':'s'}`;
     }
 
-    // ====== Zonas solicitadas ======
-    // viewBox 100x160 (x,y,w,h) aprox sobre la silueta frontal
-    const ZONES = [
-      {key:'cabeza',   name:'Cabeza',   box:[35,  2, 30, 20], w:1.2, color:'rgba(147,197,253,.18)'},
-      {key:'cuello',   name:'Cuello',   box:[44, 24, 12, 8 ], w:1.0, color:'rgba(125,211,252,.18)'} ,
-      {key:'hombros',  name:'Hombros',  box:[28, 34, 44, 12], w:1.1, color:'rgba(134,239,172,.18)'} ,
-      {key:'brazos',   name:'Brazos',   box:[20, 42, 60, 55], w:0.8, color:'rgba(217,180,255,.12)'},
-      {key:'pecho',    name:'Pecho',    box:[38, 50, 24, 20], w:1.0, color:'rgba(252,211,77,.14)'},
-      {key:'corazon',  name:'Corazón',  box:[48, 56,  8, 10], w:1.3, color:'rgba(248,113,113,.18)'} ,
-      {key:'estomago', name:'Estómago', box:[40, 72, 20, 18], w:1.0, color:'rgba(94,234,212,.12)'} ,
-      {key:'pelvis',   name:'Pelvis',   box:[42, 92, 16, 16], w:1.1, color:'rgba(148,163,184,.14)'},
-      {key:'pies',     name:'Pies',     box:[42,138, 16, 20], w:0.9, color:'rgba(203,213,225,.12)'}
-    ];
-
-    function inBox(p, box){ const [x,y,w,h]=box; const X=p.x*100, Y=p.y*160; return (X>=x && X<=x+w && Y>=y && Y<=y+h); }
-
-    function computeStressProfile(){
-      if(!state.points.length) return {};
-      const counts = Object.fromEntries(ZONES.map(z=>[z.key,0]));
-      state.points.forEach(p=>{ ZONES.forEach(z=>{ if(inBox(p,z.box)) counts[z.key]++; }); });
-      const total = state.points.length || 1;
-      const scores = {}; ZONES.forEach(z=>{ scores[z.key]=Math.min(100,Math.round((counts[z.key]/total)*100*z.w)); });
-      // perfiles simples agregados
-      const profile = {
-        Cognitivo: clamp(scores.cabeza*0.7 + scores.cuello*0.3),
-        Torácico: clamp(scores.pecho*0.6 + scores.corazon*0.4),
-        Abdominal: clamp(scores.estomago*1.0),
-        Postural: clamp(scores.hombros*0.5 + scores.pelvis*0.3 + scores.pies*0.2),
-        Miembro_Superior: clamp(scores.brazos*1.0),
-        Global: clamp(Object.values(scores).reduce((a,b)=>a+b,0)/ZONES.length)
-      };
-      return {scores, profile, counts};
-    }
-
-    // ====== Interacción ======
     function clientToNorm(e){
-      const rect = wrap.getBoundingClientRect();
-      return { x:(e.clientX-rect.left)/rect.width, y:(e.clientY-rect.top)/rect.height };
+      const rect = overlay.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width;
+      const y = (e.clientY - rect.top) / rect.height;
+      // clamp por si acaso
+      return { x: Math.min(1, Math.max(0, x)), y: Math.min(1, Math.max(0, y)) };
     }
 
-    wrap.addEventListener('click', e=>{ const p=clientToNorm(e); state.points.push(p); recompute(); });
-    wrap.addEventListener('dblclick', e=>{
-      e.preventDefault(); if(!state.points.length) return;
-      const p = clientToNorm(e); let best=-1, bestD=Infinity;
-      state.points.forEach((q,i)=>{ const d=dist(q,p); if(d<bestD){bestD=d; best=i;} });
-      if(best>=0){ state.points.splice(best,1); recompute(); }
+    overlay.addEventListener('click', (e)=>{
+      const p = clientToNorm(e);
+      state.points.push(p);
+      redraw();
     });
 
-    document.getElementById('k').addEventListener('change', e=>{ state.k=Math.max(1,Math.min(6,parseInt(e.target.value||3))); recompute(); });
-    document.getElementById('recluster').addEventListener('click', recompute);
-    document.getElementById('clear').addEventListener('click', ()=>{ state.points=[]; recompute(); });
-    document.getElementById('export').addEventListener('click', ()=>{
-      const blob=new Blob([JSON.stringify({points:state.points},null,2)],{type:'application/json'});
-      const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='molestias.json'; a.click(); URL.revokeObjectURL(url);
+    overlay.addEventListener('dblclick', (e)=>{
+      e.preventDefault(); if(!state.points.length) return;
+      const p = clientToNorm(e);
+      let best=-1, bestD=Infinity;
+      state.points.forEach((q,i)=>{ const d=dist(q,p); if(d<bestD){bestD=d; best=i;} });
+      if(best>=0){ state.points.splice(best,1); redraw(); }
     });
-    document.getElementById('import').addEventListener('change', e=>{
-      const f=e.target.files?.[0]; if(!f) return; const r=new FileReader();
-      r.onload=()=>{ try{ const o=JSON.parse(r.result); if(Array.isArray(o.points)){ state.points=o.points.map(p=>({x:+p.x,y:+p.y})); recompute(); } }catch{ alert('JSON inválido'); } };
+
+    document.getElementById('clear').addEventListener('click', ()=>{ state.points=[]; redraw(); });
+
+    document.getElementById('export').addEventListener('click', ()=>{
+      const blob = new Blob([JSON.stringify({points:state.points}, null, 2)], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'molestias.json'; a.click(); URL.revokeObjectURL(url);
+    });
+
+    document.getElementById('import').addEventListener('change', (e)=>{
+      const f = e.target.files?.[0]; if(!f) return;
+      const r = new FileReader();
+      r.onload = ()=>{ try{ const o = JSON.parse(r.result); if(Array.isArray(o.points)){ state.points = o.points.map(p=>({x:+p.x,y:+p.y})); redraw(); } } catch{ alert('JSON inválido'); } };
       r.readAsText(f);
     });
-    document.getElementById('toggleZones').addEventListener('change', draw);
 
-    // ====== Render ======
-    function drawZones(){
-      // dibuja rectángulos semitransparentes y bordes
-      ZONES.forEach((z)=>{
-        const [x,y,w,h]=z.box;
-        const r=document.createElementNS('http://www.w3.org/2000/svg','rect');
-        r.setAttribute('x',x); r.setAttribute('y',y); r.setAttribute('width',w); r.setAttribute('height',h);
-        r.setAttribute('fill',z.color); r.setAttribute('stroke','#334155'); r.setAttribute('stroke-width','0.6'); r.setAttribute('rx','2');
-        r.setAttribute('data-zone',z.key);
-        overlay.appendChild(r);
-      });
-      // etiquetas html posicionadas
-      // quitamos previas
-      [...wrap.querySelectorAll('label.zone-label')].forEach(n=>n.remove());
-      const rect = wrap.getBoundingClientRect();
-      ZONES.forEach(z=>{
-        const [x,y,w,h]=z.box; const lab=document.createElement('label'); lab.className='zone-label'; lab.textContent=z.name;
-        wrap.appendChild(lab);
-        // convertir viewBox -> px
-        const left = (x/100)*rect.width;
-        const top  = (y/160)*rect.height;
-        lab.style.left = (left+6)+"px"; lab.style.top = (top+6)+"px";
-      });
-    }
-
-    function drawPoints(){
-      state.points.forEach((p,i)=>{
-        const c = COLORS[(state.labels[i]||0)%COLORS.length];
-        const cx=p.x*100, cy=p.y*160;
-        const d=document.createElementNS('http://www.w3.org/2000/svg','circle');
-        d.setAttribute('cx',cx); d.setAttribute('cy',cy); d.setAttribute('r',1.9);
-        d.setAttribute('fill',c); d.setAttribute('stroke','#0b1020'); d.setAttribute('stroke-width','0.5');
-        d.setAttribute('class','dot'); overlay.appendChild(d);
-      });
-      state.centers.forEach((c,i)=>{
-        const cx=c.x*100, cy=c.y*160;
-        const g=document.createElementNS('http://www.w3.org/2000/svg','g');
-        const halo=document.createElementNS('http://www.w3.org/2000/svg','circle');
-        halo.setAttribute('cx',cx); halo.setAttribute('cy',cy); halo.setAttribute('r',4.5);
-        halo.setAttribute('fill','none'); halo.setAttribute('stroke',COLORS[i%COLORS.length]); halo.setAttribute('stroke-width','1.2'); halo.setAttribute('stroke-opacity','0.9');
-        const core=document.createElementNS('http://www.w3.org/2000/svg','circle');
-        core.setAttribute('cx',cx); core.setAttribute('cy',cy); core.setAttribute('r',1.2); core.setAttribute('fill',COLORS[i%COLORS.length]);
-        g.appendChild(halo); g.appendChild(core); overlay.appendChild(g);
-      });
-    }
-
-    function renderLegend(){
-      const el=document.getElementById('legend'); el.innerHTML='';
-      for(let i=0;i<state.k;i++){
-        const div=document.createElement('div'); div.className='chip';
-        const sw=document.createElement('span'); sw.className='sw'; sw.style.background=COLORS[i%COLORS.length];
-        const txt=document.createElement('span'); const count=state.labels.filter(l=>l===i).length;
-        txt.textContent=`Cluster ${i+1} · ${count} pts`;
-        div.appendChild(sw); div.appendChild(txt); el.appendChild(div);
-      }
-      if(!state.points.length){ el.innerHTML='<span class="small">Haz click sobre el cuerpo para agregar molestias.</span>'; }
-    }
-
-    function renderSummary(){
-      const s=document.getElementById('summary');
-      if(!state.points.length){ s.innerHTML='<span class="small">Añade puntos para ver resumen.</span>'; return; }
-      const counts = state.labels.reduce((m,l)=>{m[l]=(m[l]||0)+1; return m;},{});
-      const top = Object.entries(counts).sort((a,b)=>b[1]-a[1])[0];
-      const major = top? `Cluster dominante: #${(+top[0]+1)} (${top[1]} pts)` : '—';
-      s.innerHTML = major;
-    }
-
-    function renderScores(){
-      const box=document.getElementById('scores');
-      const res=computeStressProfile();
-      if(!res.profile){ box.innerHTML='<span class="small">Sin datos aún.</span>'; return; }
-      const P=res.profile; box.innerHTML='';
-      Object.keys(P).forEach(k=>{
-        const v=P[k]; const wrap=document.createElement('div'); wrap.style.marginBottom='10px';
-        const label=document.createElement('div'); label.textContent=`${k.replace('_',' ')} · ${v}`; label.className='small';
-        const bar=document.createElement('div'); bar.className='bar'; const i=document.createElement('i'); i.style.width=v+'%'; bar.appendChild(i);
-        wrap.appendChild(label); wrap.appendChild(bar); box.appendChild(wrap);
-      });
-    }
-
-    function recompute(){
-      const {centers,labels}=kmeans(state.points,state.k);
-      state.centers=centers; state.labels=labels;
-      draw(); renderLegend(); renderSummary(); renderScores();
-    }
-
-    function draw(){
-      overlay.innerHTML='';
-      // zonas
-      if(document.getElementById('toggleZones').checked){ drawZones(); }
-      // puntos y centros
-      drawPoints();
-    }
-
-    // start
-    recompute();
-    // redibujar etiquetas en resize (para mantener px
-    window.addEventListener('resize', ()=>{ draw(); });
+    redraw();
   </script>
 </body>
 </html>
