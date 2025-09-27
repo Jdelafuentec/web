@@ -55,7 +55,7 @@
 
     <aside class="card">
       <div class="row" style="justify-content:space-between">
-        <label class="row"><input type="checkbox" id="editToggle"/> Modo edición (arrastrar)</label>
+        <label class="row"><input type="checkbox" id="editToggle" checked/> Modo edición (arrastrar)</label>
         <div class="row">
           <button id="copy">Copiar JSON</button>
           <button id="reset">Reset</button>
@@ -99,6 +99,7 @@
     const coordsTip = document.getElementById('coords');
     const editToggle = document.getElementById('editToggle');
     const tbody = document.querySelector('#table tbody');
+    let selected = null; // hotspot seleccionado para mover con flechas
 
     function pct(n){ return (n*100).toFixed(2)+'%'; }
     function round3(n){ return Math.round(n*1000)/1000; }
@@ -116,6 +117,7 @@
       let dragging=false; let offX=0, offY=0;
       img.addEventListener('pointerdown', (e)=>{
         if(!editToggle.checked) return; dragging=true; img.setPointerCapture(e.pointerId); img.classList.add('edit');
+        selected = a.key; markSelected();
         const rect=stage.getBoundingClientRect();
         const x = (e.clientX-rect.left)/rect.width; const y=(e.clientY-rect.top)/rect.height;
         offX = x - POS[a.key].x; offY = y - POS[a.key].y;
@@ -124,13 +126,20 @@
         if(!dragging) return; const rect=stage.getBoundingClientRect();
         let x=(e.clientX-rect.left)/rect.width - offX; let y=(e.clientY-rect.top)/rect.height - offY;
         const step = e.shiftKey? 0.002 : 0; // mover más fino con Shift
-        x = Math.min(1, Math.max(0, Math.round(x/ (step||0.001)) * (step||0.001) ));
-        y = Math.min(1, Math.max(0, Math.round(y/ (step||0.001)) * (step||0.001) ));
+        x = Math.min(1, Math.max(0, step? Math.round(x/step)*step : x));
+        y = Math.min(1, Math.max(0, step? Math.round(y/step)*step : y));
         POS[a.key].x=x; POS[a.key].y=y;
         img.style.left=pct(x); img.style.top=pct(y);
         refreshTable();
       });
       img.addEventListener('pointerup', ()=>{ dragging=false; img.classList.remove('edit'); });
+      img.addEventListener('click', ()=>{
+        if(editToggle.checked){ selected = a.key; markSelected(); return; }
+        // botón activo: pequeño flash / ejemplo de handler
+        img.style.filter='drop-shadow(0 0 8px rgba(125,211,252,.9))';
+        setTimeout(()=>{ img.style.filter='drop-shadow(0 0 4px rgba(0,0,0,.3))'; }, 200);
+        console.log('Botón', a.key, '→', POS[a.key]);
+      });
       img.addEventListener('click', ()=>{
         if(editToggle.checked) return; // en edición no clickeamos
         // botón activo: pequeño flash / ejemplo de handler
@@ -166,6 +175,24 @@
     }
 
     refreshTable();
+
+    // mover con flechas el seleccionado
+    function markSelected(){
+      ASSETS.forEach(a=>{ nodes[a.key].style.outline='none'; nodes[a.key].style.outlineOffset='0px'; });
+      if(selected && nodes[selected]){ nodes[selected].style.outline='2px solid #7dd3fc'; nodes[selected].style.outlineOffset='2px'; }
+    }
+    window.addEventListener('keydown', (e)=>{
+      if(!editToggle.checked || !selected) return;
+      const step = e.shiftKey? 0.002 : 0.01; // Shift = fino
+      if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)) e.preventDefault();
+      const p = POS[selected]; if(!p) return;
+      if(e.key==='ArrowUp')    p.y = Math.max(0, p.y - step);
+      if(e.key==='ArrowDown')  p.y = Math.min(1, p.y + step);
+      if(e.key==='ArrowLeft')  p.x = Math.max(0, p.x - step);
+      if(e.key==='ArrowRight') p.x = Math.min(1, p.x + step);
+      nodes[selected].style.left = pct(p.x); nodes[selected].style.top = pct(p.y);
+      refreshTable();
+    });
 
     // Botones de utilidad
     document.getElementById('copy').addEventListener('click', ()=>{
