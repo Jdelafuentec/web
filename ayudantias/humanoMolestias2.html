@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Body Selector · máximo 3 partes</title>
+  <style>
+    :root{ --bg:#0b1220; --ink:#e5e7eb; --muted:#9ca3af; --panel:#0f172a; --line:#1f2a3e; --btn:#1f2937; --accent:#7dd3fc; }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--ink);padding:16px}
+    header{max-width:900px;margin:0 auto 12px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+    h1{font-size:18px;margin:0}
+    .app{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 280px;gap:12px}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px}
+    .stage{position:relative;aspect-ratio:9/16;width:100%;border-radius:10px;overflow:hidden;background:#0a1426}
+    .figure{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+    .hotspot{position:absolute;transform:translate(-50%,-50%);width:18%; /* tamaño relativo del círculo */
+      display:none; filter:drop-shadow(0 0 4px rgba(0,0,0,.35));}
+    .hotspot.on{display:block}
+    .small{font-size:12px;color:var(--muted)}
+    button{background:var(--btn);color:var(--ink);border:1px solid #334155;border-radius:10px;padding:8px 10px}
+    button:hover{filter:brightness(1.08)}
+    ul{margin:6px 0 0 18px;padding:0}
+    .kbd{font-family:ui-monospace, SFMono-Regular, Menlo, monospace;background:#0b1220;border:1px solid #22314a;border-radius:6px;padding:2px 6px}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Body Selector · 3 partes máx.</h1>
+    <span class="small">Haz <b>click</b> cerca de una zona (cabeza, cuello, hombros, etc.). Al seleccionar una 4ª, se deselecciona la más antigua.</span>
+  </header>
+
+  <div class="app">
+    <section class="card">
+      <div class="stage" id="stage">
+        <!-- Imagen base sólo de fondo al iniciar -->
+        <img class="figure" src="https://jdelafuentec.github.io/web/ayudantias/humano1-01.png" alt="humano"/>
+        <!-- Los botones (círculos) se crean como <img> ocultos y se muestran al hacer click en su zona -->
+      </div>
+    </section>
+
+    <aside class="card">
+      <p class="small">Seleccionadas (<span id="count">0</span>/3):</p>
+      <ul id="list"></ul>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+        <button id="reset">Reset</button>
+        <button id="copy">Copiar selección</button>
+      </div>
+      <p class="small" style="margin-top:10px">Nota: las posiciones están <b>normalizadas</b> (0..1). Si ya mediste XY exactos, reemplázalos abajo en <span class="kbd">POS</span>.</p>
+    </aside>
+  </div>
+
+  <script>
+    // === Configuración de assets (círculos) ===
+    const ASSETS = [
+      {key:'cabeza',    name:'Cabeza',        url:'https://jdelafuentec.github.io/web/ayudantias/cabeza.png',    size:0.18},
+      {key:'cuello',    name:'Cuello',        url:'https://jdelafuentec.github.io/web/ayudantias/cuello.png',    size:0.18},
+      {key:'hombroIzq', name:'Hombro Izquierdo', url:'https://jdelafuentec.github.io/web/ayudantias/hombros.png', size:0.20},
+      {key:'hombroDer', name:'Hombro Derecho',   url:'https://jdelafuentec.github.io/web/ayudantias/hombros2.png',size:0.20},
+      {key:'pecho',     name:'Pecho',         url:'https://jdelafuentec.github.io/web/ayudantias/pecho.png',     size:0.20},
+      {key:'estomago',  name:'Estómago',      url:'https://jdelafuentec.github.io/web/ayudantias/estomago.png',  size:0.20},
+      {key:'pelvis',    name:'Pelvis',        url:'https://jdelafuentec.github.io/web/ayudantias/pelvis.png',    size:0.20},
+    ];
+
+    // === Coordenadas normalizadas (0..1). REEMPLAZA con tus XY finales si ya los tienes medidos ===
+    // (Valores aproximados a modo de ejemplo)
+    const POS = {
+      cabeza:{x:0.50, y:0.18},
+      cuello:{x:0.50, y:0.26},
+      hombroIzq:{x:0.35, y:0.36},
+      hombroDer:{x:0.65, y:0.36},
+      pecho:{x:0.50, y:0.46},
+      estomago:{x:0.50, y:0.60},
+      pelvis:{x:0.50, y:0.73},
+    };
+
+    const stage = document.getElementById('stage');
+    const list = document.getElementById('list');
+    const countEl = document.getElementById('count');
+
+    // Crear nodos ocultos para cada asset
+    const nodes = {};
+    ASSETS.forEach(a=>{
+      const img=document.createElement('img');
+      img.src=a.url; img.alt=a.name; img.className='hotspot';
+      img.style.left=(POS[a.key].x*100)+'%';
+      img.style.top =(POS[a.key].y*100)+'%'; // usamos % relativos al alto del contenedor (CSS translate(-50%,-50%))
+      img.style.width=(a.size*100)+'%';
+      img.dataset.key=a.key;
+      stage.appendChild(img);
+      nodes[a.key]=img;
+    });
+
+    // Cola de selección (máximo 3)
+    const queue=[]; // orden de selección (FIFO)
+    const selected = new Set();
+
+    function updateList(){
+      countEl.textContent = selected.size;
+      list.innerHTML='';
+      queue.forEach(k=>{
+        const a = ASSETS.find(x=>x.key===k);
+        const li=document.createElement('li'); li.textContent=a? a.name : k; list.appendChild(li);
+      });
+    }
+
+    function show(key){ nodes[key]?.classList.add('on'); }
+    function hide(key){ nodes[key]?.classList.remove('on'); }
+
+    function toggleKey(key){
+      if(selected.has(key)){
+        // deseleccionar si ya estaba
+        selected.delete(key);
+        const idx = queue.indexOf(key); if(idx>=0) queue.splice(idx,1);
+        hide(key); updateList(); return;
+      }
+      // seleccionar
+      selected.add(key); queue.push(key); show(key);
+      // si excede 3, saca el más antiguo
+      if(queue.length>3){
+        const old = queue.shift();
+        selected.delete(old); hide(old);
+      }
+      updateList();
+    }
+
+    // Detección de click por cercanía al centro del hotspot
+    function handleStageClick(e){
+      const rect = stage.getBoundingClientRect();
+      const px = e.clientX - rect.left; // coordenadas en píxeles
+      const py = e.clientY - rect.top;
+
+      // buscar el hotspot más cercano dentro de su radio
+      let bestKey=null, bestD=Infinity;
+      ASSETS.forEach(a=>{
+        const cx = POS[a.key].x * rect.width;  // centro en px
+        const cy = POS[a.key].y * rect.height;
+        const radius = (a.size * rect.width) * 0.5; // radio en px (según ancho)
+        const dx = px - cx, dy = py - cy; const d = Math.hypot(dx,dy);
+        if(d < radius && d < bestD){ bestD=d; bestKey=a.key; }
+      });
+      if(bestKey){ toggleKey(bestKey); }
+    }
+
+    stage.addEventListener('click', handleStageClick);
+
+    // Botones
+    document.getElementById('reset').addEventListener('click', ()=>{
+      [...selected].forEach(k=> hide(k));
+      selected.clear(); queue.length=0; updateList();
+    });
+    document.getElementById('copy').addEventListener('click', ()=>{
+      const payload = JSON.stringify({selected:Array.from(queue)}, null, 2);
+      navigator.clipboard.writeText(payload).then(()=> alert('Selección copiada')).catch(()=>{
+        const ta=document.createElement('textarea'); ta.value=payload; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); alert('Selección copiada');
+      });
+    });
+
+    // Inicial
+    updateList();
+  </script>
+</body>
+</html>
