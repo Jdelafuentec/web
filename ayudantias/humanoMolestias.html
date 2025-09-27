@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Body Stress Mapper – Prototype</title>
+  <style>
+    /* ... estilos iguales al prototipo anterior ... */
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Body Stress Mapper · Prototype</h1>
+    <div class="row">
+      <span class="pill">Click para marcar molestias · Doble click para borrar el punto más cercano</span>
+    </div>
+  </header>
+
+  <div class="app">
+    <section class="board">
+      <div class="canvasWrap" id="wrap">
+        <!-- En lugar de SVG, cargamos la imagen humano.png -->
+        <img id="figure" src="https://jdelafuentec.github.io/web/ayudantias/humano.png" alt="humano" style="width:100%;height:100%;object-fit:contain;" />
+        <svg id="overlay" viewBox="0 0 100 160" xmlns="http://www.w3.org/2000/svg" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;"></svg>
+      </div>
+      <div class="legend" id="legend"></div>
+    </section>
+
+    <aside class="side">
+      <!-- ... mismos controles laterales ... -->
+    </aside>
+  </div>
+
+  <script>
+    const overlay = document.getElementById('overlay');
+    const wrap = document.getElementById('wrap');
+
+    const state = { points: [], labels: [], centers: [], k: 3 };
+
+    function dist(a,b){ const dx=a.x-b.x, dy=a.y-b.y; return Math.hypot(dx,dy); }
+
+    function kmeans(points,k=3,maxIter=40){ /* ... igual que antes ... */ }
+
+    // Click relativo a la imagen
+    wrap.addEventListener('click', e=>{
+      const rect = wrap.getBoundingClientRect();
+      const x = (e.clientX-rect.left)/rect.width;
+      const y = (e.clientY-rect.top)/rect.height;
+      state.points.push({x,y});
+      recompute();
+    });
+
+    wrap.addEventListener('dblclick', e=>{
+      const rect = wrap.getBoundingClientRect();
+      const x = (e.clientX-rect.left)/rect.width;
+      const y = (e.clientY-rect.top)/rect.height;
+      let best=-1,bestD=Infinity;
+      state.points.forEach((p,i)=>{const d=dist(p,{x,y}); if(d<bestD){bestD=d; best=i;}});
+      if(best>=0){ state.points.splice(best,1); recompute(); }
+    });
+
+    function recompute(){
+      const {centers,labels}=kmeans(state.points,state.k);
+      state.centers=centers; state.labels=labels;
+      draw();
+    }
+
+    function draw(){
+      overlay.innerHTML='';
+      state.points.forEach((p,i)=>{
+        const c=['#60a5fa','#34d399','#fbbf24','#f472b6','#a78bfa','#fb7185'][state.labels[i]%6];
+        const cx=p.x*100, cy=p.y*160;
+        const d=document.createElementNS('http://www.w3.org/2000/svg','circle');
+        d.setAttribute('cx',cx); d.setAttribute('cy',cy); d.setAttribute('r',2);
+        d.setAttribute('fill',c); d.setAttribute('stroke','#0b1020');
+        overlay.appendChild(d);
+      });
+    }
+
+    recompute();
+  </script>
+</body>
+</html>
