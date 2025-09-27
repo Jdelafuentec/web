@@ -3,107 +3,198 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Body Marker – MVP (simple)</title>
+  <title>Body Hotspots – Calibración XY (GitHub Pages)</title>
   <style>
-    :root{ --bg:#0b1220; --ink:#e5e7eb; --muted:#9ca3af; --panel:#111827; --btn:#1f2937; }
+    :root{ --bg:#0b1220; --ink:#e5e7eb; --muted:#9ca3af; --panel:#0f172a; --line:#1f2a3e; --btn:#1f2937; --ok:#86efac; --accent:#7dd3fc; }
     *{box-sizing:border-box}
     body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--ink);padding:16px}
-    header{max-width:760px;margin:0 auto 12px;display:flex;justify-content:space-between;align-items:center}
+    header{max-width:1100px;margin:0 auto 12px;display:flex;justify-content:space-between;align-items:center;gap:12px}
     h1{font-size:18px;margin:0}
-    .app{max-width:760px;margin:0 auto;display:grid;grid-template-columns:1fr 240px;gap:12px}
-    .card{background:var(--panel);border:1px solid #1f2937;border-radius:12px;padding:12px}
-    .stage{position:relative;aspect-ratio:3/5;width:100%;border-radius:8px;overflow:hidden;background:#0a1426}
+    .pill{font-size:12px;padding:4px 8px;border-radius:999px;background:#111827;color:var(--muted);border:1px solid #243045}
+    .app{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 340px;gap:12px}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px}
+    .stage{position:relative;aspect-ratio:9/16;width:100%;border-radius:10px;overflow:hidden;background:#0a1426}
     .figure{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
-    svg#overlay{position:absolute;inset:0;width:100%;height:100%;cursor:crosshair}
-    button,input[type=file]{background:var(--btn);color:var(--ink);border:1px solid #334155;border-radius:10px;padding:8px 10px}
+    .grid{position:absolute;inset:0;pointer-events:none;background-image:
+      linear-gradient(to right, rgba(255,255,255,.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size: 10% 100%, 100% 10%;
+      mix-blend-mode: lighten;}
+    .hotspot{position:absolute;transform:translate(-50%,-50%);width:18%; /* tamaño relativo del círculo */
+      cursor: pointer; filter: drop-shadow(0 0 4px rgba(0,0,0,.3));}
+    .hotspot.edit{cursor: grab}
+    .hotspot:active{cursor: grabbing}
+    .coords-tip{position:absolute;pointer-events:none;background:rgba(15,23,42,.9);border:1px solid #334155;color:#e5e7eb;padding:4px 6px;border-radius:6px;font-size:12px;transform:translate(8px,-8px)}
+    .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    button,input[type=checkbox]{background:var(--btn);color:var(--ink);border:1px solid #334155;border-radius:10px;padding:8px 10px}
     button:hover{filter:brightness(1.08)}
     .small{font-size:12px;color:var(--muted)}
+    table{width:100%;border-collapse:collapse;font-size:12px}
+    th,td{padding:6px;border-bottom:1px solid #1f2a3e;text-align:left}
+    td.num{font-variant-numeric:tabular-nums}
+    .ok{color:var(--ok)}
+    .accent{color:var(--accent)}
+    .kbd{font-family:ui-monospace, SFMono-Regular, Menlo, monospace;background:#0b1220;border:1px solid #22314a;border-radius:6px;padding:2px 6px}
   </style>
 </head>
 <body>
   <header>
-    <h1>Body Marker – MVP</h1>
-    <span class="small">Click = agregar punto · Doble‑click = borrar punto cercano</span>
+    <h1>Body Hotspots · Calibración de posiciones (XY)</h1>
+    <span class="pill">Arrastra en <b>Modo edición</b> para colocar los botones · Click en el fondo muestra XY</span>
   </header>
 
   <div class="app">
     <section class="card">
       <div class="stage" id="stage">
-        <img class="figure" src="https://jdelafuentec.github.io/web/ayudantias/humano.png" alt="humano"/>
-        <!-- Capa para puntos -->
-        <svg id="overlay" viewBox="0 0 100 160" xmlns="http://www.w3.org/2000/svg"></svg>
+        <img class="figure" src="https://jdelafuentec.github.io/web/ayudantias/humano1-01.png" alt="humano"/>
+        <div class="grid"></div>
+        <!-- Hotspots se insertan aquí -->
+        <div id="coords" class="coords-tip" style="display:none"></div>
       </div>
     </section>
 
     <aside class="card">
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button id="clear">Limpiar</button>
-        <button id="export">Exportar JSON</button>
-        <label>Importar <input id="import" type="file" accept="application/json"></label>
+      <div class="row" style="justify-content:space-between">
+        <label class="row"><input type="checkbox" id="editToggle"/> Modo edición (arrastrar)</label>
+        <div class="row">
+          <button id="copy">Copiar JSON</button>
+          <button id="reset">Reset</button>
+        </div>
       </div>
-      <p class="small" id="count" style="margin-top:10px">0 puntos</p>
-      <p class="small">Este MVP sólo marca puntos y permite exportar/importar. Si luego quieres, añadimos clustering y perfil.</p>
+      <p class="small">Usa <span class="kbd">Shift</span> para mover más lento. Las posiciones son <b>normalizadas</b> (0..1) respecto al contenedor.</p>
+      <div class="row" style="margin-top:8px">
+        <button id="saveLocal">Guardar en este navegador</button>
+        <button id="loadLocal">Cargar guardado</button>
+        <button id="clearLocal">Borrar guardado</button>
+      </div>
+      <h3 style="margin:12px 0 6px">Posiciones</h3>
+      <table id="table"><thead><tr><th>Parte</th><th class="num">x</th><th class="num">y</th></tr></thead><tbody></tbody></table>
+      <p class="small">Siguiente paso (opcional): cuando salgas de edición, los círculos funcionan como <b>botones</b> (se verán resaltados al hacer click). Luego podemos usar esos eventos para registrar molestias, abrir formularios, etc.</p>
     </aside>
   </div>
 
   <script>
-    const overlay = document.getElementById('overlay');
-    const countEl = document.getElementById('count');
-    const state = { points: [] }; // puntos normalizados (0..1)
+    // === Configuración de assets ===
+    const ASSETS = [
+      {key:'cabeza',   name:'Cabeza',   url:'https://jdelafuentec.github.io/web/ayudantias/cabeza.png'},
+      {key:'cuello',   name:'Cuello',   url:'https://jdelafuentec.github.io/web/ayudantias/cuello.png'},
+      {key:'hombros',  name:'Hombros',  url:'https://jdelafuentec.github.io/web/ayudantias/hombres.png'}, // (archivo se llama hombres.png)
+      {key:'pecho',    name:'Pecho',    url:'https://jdelafuentec.github.io/web/ayudantias/pecho.png'},
+      {key:'estomago', name:'Estómago', url:'https://jdelafuentec.github.io/web/ayudantias/estomago.png'},
+      {key:'pelvis',   name:'Pelvis',   url:'https://jdelafuentec.github.io/web/ayudantias/pelvis.png'},
+    ];
 
-    function dist(a,b){ const dx=a.x-b.x, dy=a.y-b.y; return Math.hypot(dx,dy); }
+    // Posiciones iniciales (aprox). Puedes mover en Modo edición.
+    // Coordenadas normalizadas de 0..1 (x: izquierda->derecha, y: arriba->abajo)
+    let POS = {
+      cabeza:{x:0.50, y:0.18},
+      cuello:{x:0.50, y:0.26},
+      hombros:{x:0.50, y:0.35},
+      pecho:{x:0.50, y:0.46},
+      estomago:{x:0.50, y:0.60},
+      pelvis:{x:0.50, y:0.73},
+    };
 
-    function redraw(){
-      overlay.innerHTML = '';
-      state.points.forEach(p => {
-        const cx = p.x * 100, cy = p.y * 160;
-        const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
-        c.setAttribute('cx', cx); c.setAttribute('cy', cy); c.setAttribute('r', 2.2);
-        c.setAttribute('fill', '#fb7185'); // rojo suave
-        c.setAttribute('stroke', '#111827'); c.setAttribute('stroke-width', '0.6');
-        overlay.appendChild(c);
+    const stage = document.getElementById('stage');
+    const coordsTip = document.getElementById('coords');
+    const editToggle = document.getElementById('editToggle');
+    const tbody = document.querySelector('#table tbody');
+
+    function pct(n){ return (n*100).toFixed(2)+'%'; }
+    function round3(n){ return Math.round(n*1000)/1000; }
+
+    // Construir hotspots
+    const nodes = {};
+    ASSETS.forEach(a=>{
+      const img = document.createElement('img');
+      img.src = a.url; img.alt = a.name; img.className = 'hotspot';
+      img.style.left = pct(POS[a.key].x); img.style.top = pct(POS[a.key].y);
+      img.dataset.key = a.key; img.title = a.name;
+      stage.appendChild(img); nodes[a.key]=img;
+
+      // Interacción: arrastrar en modo edición
+      let dragging=false; let offX=0, offY=0;
+      img.addEventListener('pointerdown', (e)=>{
+        if(!editToggle.checked) return; dragging=true; img.setPointerCapture(e.pointerId); img.classList.add('edit');
+        const rect=stage.getBoundingClientRect();
+        const x = (e.clientX-rect.left)/rect.width; const y=(e.clientY-rect.top)/rect.height;
+        offX = x - POS[a.key].x; offY = y - POS[a.key].y;
       });
-      countEl.textContent = `${state.points.length} punto${state.points.length===1?'':'s'}`;
+      img.addEventListener('pointermove', (e)=>{
+        if(!dragging) return; const rect=stage.getBoundingClientRect();
+        let x=(e.clientX-rect.left)/rect.width - offX; let y=(e.clientY-rect.top)/rect.height - offY;
+        const step = e.shiftKey? 0.002 : 0; // mover más fino con Shift
+        x = Math.min(1, Math.max(0, Math.round(x/ (step||0.001)) * (step||0.001) ));
+        y = Math.min(1, Math.max(0, Math.round(y/ (step||0.001)) * (step||0.001) ));
+        POS[a.key].x=x; POS[a.key].y=y;
+        img.style.left=pct(x); img.style.top=pct(y);
+        refreshTable();
+      });
+      img.addEventListener('pointerup', ()=>{ dragging=false; img.classList.remove('edit'); });
+      img.addEventListener('click', ()=>{
+        if(editToggle.checked) return; // en edición no clickeamos
+        // botón activo: pequeño flash / ejemplo de handler
+        img.style.filter='drop-shadow(0 0 8px rgba(125,211,252,.9))';
+        setTimeout(()=>{ img.style.filter='drop-shadow(0 0 4px rgba(0,0,0,.3))'; }, 200);
+        console.log('Botón', a.key, '→', POS[a.key]);
+      });
+    });
+
+    // Mostrar XY al hacer click en el fondo
+    stage.addEventListener('click', (e)=>{
+      if(e.target.classList.contains('hotspot')) return; // ignorar si clic en botón
+      const rect=stage.getBoundingClientRect();
+      const x=(e.clientX-rect.left)/rect.width; const y=(e.clientY-rect.top)/rect.height;
+      coordsTip.style.left = (e.clientX-rect.left)+ 'px';
+      coordsTip.style.top  = (e.clientY-rect.top) + 'px';
+      coordsTip.style.display='block';
+      coordsTip.textContent = `x:${round3(x)}  y:${round3(y)}`;
+      setTimeout(()=> coordsTip.style.display='none', 1800);
+      console.log('XY', {x:round3(x), y:round3(y)});
+    });
+
+    // Tabla de posiciones
+    function refreshTable(){
+      tbody.innerHTML='';
+      ASSETS.forEach(a=>{
+        const tr=document.createElement('tr');
+        const td1=document.createElement('td'); td1.textContent=a.name; tr.appendChild(td1);
+        const td2=document.createElement('td'); td2.className='num'; td2.textContent=round3(POS[a.key].x); tr.appendChild(td2);
+        const td3=document.createElement('td'); td3.className='num'; td3.textContent=round3(POS[a.key].y); tr.appendChild(td3);
+        tbody.appendChild(tr);
+      });
     }
 
-    function clientToNorm(e){
-      const rect = overlay.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width;
-      const y = (e.clientY - rect.top) / rect.height;
-      // clamp por si acaso
-      return { x: Math.min(1, Math.max(0, x)), y: Math.min(1, Math.max(0, y)) };
-    }
+    refreshTable();
 
-    overlay.addEventListener('click', (e)=>{
-      const p = clientToNorm(e);
-      state.points.push(p);
-      redraw();
+    // Botones de utilidad
+    document.getElementById('copy').addEventListener('click', ()=>{
+      const payload = JSON.stringify(POS, null, 2);
+      navigator.clipboard.writeText(payload).then(()=>{
+        alert('JSON copiado al portapapeles');
+      }).catch(()=>{
+        // fallback
+        const ta=document.createElement('textarea'); ta.value=payload; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); alert('JSON copiado');
+      });
     });
 
-    overlay.addEventListener('dblclick', (e)=>{
-      e.preventDefault(); if(!state.points.length) return;
-      const p = clientToNorm(e);
-      let best=-1, bestD=Infinity;
-      state.points.forEach((q,i)=>{ const d=dist(q,p); if(d<bestD){bestD=d; best=i;} });
-      if(best>=0){ state.points.splice(best,1); redraw(); }
+    document.getElementById('reset').addEventListener('click', ()=>{
+      POS = { cabeza:{x:0.50,y:0.18}, cuello:{x:0.50,y:0.26}, hombros:{x:0.50,y:0.35}, pecho:{x:0.50,y:0.46}, estomago:{x:0.50,y:0.60}, pelvis:{x:0.50,y:0.73} };
+      ASSETS.forEach(a=>{ nodes[a.key].style.left=pct(POS[a.key].x); nodes[a.key].style.top=pct(POS[a.key].y); });
+      refreshTable();
     });
 
-    document.getElementById('clear').addEventListener('click', ()=>{ state.points=[]; redraw(); });
-
-    document.getElementById('export').addEventListener('click', ()=>{
-      const blob = new Blob([JSON.stringify({points:state.points}, null, 2)], {type:'application/json'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a'); a.href = url; a.download = 'molestias.json'; a.click(); URL.revokeObjectURL(url);
+    document.getElementById('saveLocal').addEventListener('click', ()=>{
+      localStorage.setItem('bodyHotspotsPOS', JSON.stringify(POS));
+      alert('Posiciones guardadas localmente.');
     });
-
-    document.getElementById('import').addEventListener('change', (e)=>{
-      const f = e.target.files?.[0]; if(!f) return;
-      const r = new FileReader();
-      r.onload = ()=>{ try{ const o = JSON.parse(r.result); if(Array.isArray(o.points)){ state.points = o.points.map(p=>({x:+p.x,y:+p.y})); redraw(); } } catch{ alert('JSON inválido'); } };
-      r.readAsText(f);
+    document.getElementById('loadLocal').addEventListener('click', ()=>{
+      const raw=localStorage.getItem('bodyHotspotsPOS'); if(!raw) return alert('No hay guardado local.');
+      try{ POS=JSON.parse(raw); }catch{ return alert('Guardado corrupto.'); }
+      ASSETS.forEach(a=>{ if(POS[a.key]){ nodes[a.key].style.left=pct(POS[a.key].x); nodes[a.key].style.top=pct(POS[a.key].y);} });
+      refreshTable();
     });
-
-    redraw();
+    document.getElementById('clearLocal').addEventListener('click', ()=>{ localStorage.removeItem('bodyHotspotsPOS'); alert('Guardado local borrado.'); });
   </script>
 </body>
 </html>
