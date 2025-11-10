@@ -1,54 +1,152 @@
-<!-- TRANSECTO -->
-<div class="row eco-section">
-  <h2 class="titulo-seccion">Transecto ecológico (Maricunga)</h2>
-  <p>
-    El transecto permite visualizar puntos georreferenciados de observación con material fotográfico asociado,
-    facilitando el seguimiento de patrones de vegetación y superficie en el paisaje altoandino.
-  </p>
-  <div class="iframe-container">
-    <iframe
-      src="https://ee-javidelafountain.projects.earthengine.app/view/transecto1maricunga"
-      title="Transecto Ecológico Maricunga"
-      frameborder="0"
-      allowfullscreen>
-    </iframe>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ecología | Observatorio OASIS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Usa el CSS del sitio -->
+  <link rel="stylesheet" href="https://jdelafuentec.github.io/web/style.css">
+</head>
+<body>
+  <div id="indicebody">
+
+    <!-- Encabezado con logo -->
+    <div class="row">
+      <div class="logo-oasis">
+        <img src="https://jdelafuentec.github.io/web/OA_Recurso48.png" alt="Logo Observatorio OASIS">
+      </div>
+    </div>
+
+    <!-- Título principal e introducción -->
+    <div class="row">
+      <div class="imagen-padding">
+        <img src="https://jdelafuentec.github.io/web/IMG_1023.JPG"
+             alt="Ejemplares botánicos del Herbario Digital OASIS">
+      </div>
+
+      <div class="titulo1">
+        <h1>Ecología</h1>
+      </div>
+      <div class="texto">
+        <h2>
+          La línea de Ecología del Observatorio OASIS integra observaciones biológicas, sociales y ambientales
+          para comprender cómo interactúan vegetación, agua y clima en los ecosistemas altoandinos. El enfoque
+          socioecológico combina teledetección, observación en terreno y repositorios abiertos para apoyar
+          la conservación y la gestión informada de estos sistemas.
+        </h2>
+      </div>
+    </div>
+
+    <!-- NDVI -->
+    <div class="row">
+      <div class="titulo2">
+        <h1>Mapa NDVI de zonas de estudio</h1>
+      </div>
+      <div class="iframe-container">
+        <iframe
+          src="https://proyectooasis-464321.projects.earthengine.app/view/ndvizonas"
+          title="Mapa NDVI - OASIS"
+          frameborder="0"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+
+    <!-- Transecto -->
+    <div class="row">
+      <div class="titulo2">
+        <h1>Transecto ecológico (Maricunga)</h1>
+      </div>
+      <div class="iframe-container">
+        <iframe
+          src="https://ee-javidelafountain.projects.earthengine.app/view/transecto1maricunga"
+          title="Transecto Ecológico Maricunga"
+          frameborder="0"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <!-- Imagen justo debajo del mapa de transecto -->
+      <div class="imagen-padding">
+        <img src="https://jdelafuentec.github.io/web/transectoEcologia.jpg"
+             alt="Vegetación altoandina observada en el transecto de Maricunga">
+      </div>
+    </div>
+
+    <!-- Herbario -->
+    <div class="row">
+      <div class="titulo2">
+        <h1>Herbario Digital OASIS</h1>
+      </div>
+
+      <!-- Imagen introductoria del herbario -->
+      <div class="imagen-padding">
+        <img src="https://jdelafuentec.github.io/web/IMG_0923.JPG"
+             alt="Ejemplares botánicos del Herbario Digital OASIS">
+      </div>
+
+      <div class="texto">
+        <p>
+          El <strong>Herbario Digital OASIS</strong> es una plataforma abierta que reúne las especies vegetales documentadas
+          en los salares y lagunas altoandinas del norte de Chile. Cada registro incluye fotografías de campo,
+          identificación taxonómica y observaciones morfológicas realizadas por especialistas, consolidando un
+          archivo visual y descriptivo de la flora altoandina.
+        </p>
+        <p>
+          Su propósito es facilitar el estudio comparativo de especies y comunidades vegetales, apoyar la educación
+          ambiental y poner a disposición del público un repositorio colaborativo de conocimiento ecológico.
+          Este herbario es una herramienta viva que crecerá con cada campaña de terreno, contribuyendo al monitoreo
+          y la comprensión de la biodiversidad en los ecosistemas de altura.
+        </p>
+      </div>
+
+      <div class="contenedor-botones2">
+        <a class="boton-mapa" href="https://herbario-digital-oasis-2ad2206e.base44.app" target="_blank" rel="noopener">
+          Explorar Herbario Digital OASIS
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer institucional igual al index -->
+    <footer class="footer-oasis">
+      <div class="footer-text">
+        Proyecto Anillo Temático Li y Salares – ANID || ATE2400015 (2024–2027)
+      </div>
+
+      <div class="footer-columns">
+        <div class="logos-left">
+          <div class="logo-row">
+            <div class="logo-placeholder"></div>
+            <a href="https://www.udd.cl/" target="_blank">
+              <img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-49-scaled.png" alt="UDD">
+            </a>
+            <a href="https://www.uda.cl/" target="_blank">
+              <img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-50.png" alt="UDA">
+            </a>
+          </div>
+          <div class="logo-row">
+            <a href="https://www.unab.cl/" target="_blank">
+              <img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-55-1024x343.png" alt="UNAB">
+            </a>
+            <a href="https://www.udec.cl/pexterno/" target="_blank">
+              <img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-54-1024x388.png" alt="UdeC">
+            </a>
+            <a href="https://www.ufro.cl/" target="_blank">
+              <img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-53-1024x358.png" alt="UFRO">
+            </a>
+            <a class="logos-smi" href="https://smiicechile.cl/" target="_blank">
+              <img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-52-1024x127.png" alt="SMI ICE Chile">
+            </a>
+          </div>
+        </div>
+
+        <div class="logo-anid">
+          <a href="https://anid.cl/" target="_blank">
+            <img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-51-1024x932.png" alt="ANID">
+          </a>
+        </div>
+      </div>
+    </footer>
+
   </div>
-
-  <!-- Imagen debajo del mapa del transecto -->
-  <div class="imagen-padding" style="margin-top: 30px; text-align: center;">
-    <img src="https://jdelafuentec.github.io/web/transectoEcologia.jpg" 
-         alt="Vegetación altoandina observada en el transecto de Maricunga" 
-         style="width: 100%; height: auto; border-radius: 4px;">
-  </div>
-</div>
-
-<!-- HERBARIO -->
-<div class="row eco-section" style="margin-top: 40px;">
-  <h2 class="titulo-seccion">Herbario Digital OASIS</h2>
-
-  <!-- Imagen introductoria del herbario -->
-  <div class="imagen-padding" style="margin-bottom: 20px; text-align: center;">
-    <img src="https://jdelafuentec.github.io/web/herbarioOasis.jpg" 
-         alt="Ejemplares botánicos del Herbario Digital OASIS" 
-         style="width: 100%; height: auto; border-radius: 4px;">
-  </div>
-
-  <p>
-    El <strong>Herbario Digital OASIS</strong> es una plataforma abierta que reúne las especies vegetales documentadas 
-    en los salares y lagunas altoandinas del norte de Chile. Cada registro incluye fotografías de campo, 
-    identificación taxonómica y observaciones morfológicas realizadas por especialistas, consolidando un 
-    archivo visual y descriptivo de la flora altoandina.
-  </p>
-  <p>
-    Su propósito es facilitar el estudio comparativo de especies y comunidades vegetales, apoyar la educación 
-    ambiental y poner a disposición del público un repositorio colaborativo de conocimiento ecológico. 
-    Este herbario es una herramienta viva que crecerá con cada campaña de terreno, contribuyendo al monitoreo 
-    y la comprensión de la biodiversidad en los ecosistemas de altura.
-  </p>
-
-  <div style="margin-top: 12px;">
-    <a class="boton-cta" href="https://herbario-digital-oasis-2ad2206e.base44.app" target="_blank" rel="noopener">
-      Explorar Herbario Digital OASIS
-    </a>
-  </div>
-</div>
+</body>
+</html>
