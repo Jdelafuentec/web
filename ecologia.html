@@ -1,137 +1,157 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Ecología | Proyecto OASIS</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <title>Ecología | Observatorio OASIS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Usa el mismo CSS global del sitio -->
+  <link rel="stylesheet" href="https://jdelafuentec.github.io/web/style.css">
+  <!-- Estilos mínimos específicos de esta página (respetan tu paleta y clases) -->
   <style>
-    body {
-      margin: 0;
-      font-family: "Poppins", Arial, sans-serif;
-      color: #023A40;
-      background-color: #f9f9f9;
-      line-height: 1.6;
+    .eco-hero {
+      background-color: white;
+      padding: 4% 10% 2%;
     }
+    .eco-hero .logo-oasis img { width: 40%; height: auto; display: inline-block; padding-top: 4%; }
+    .eco-hero .intro { max-width: 980px; margin-top: 1rem; line-height: 1.6; }
 
-    header.ecologia-oasis-cover {
-      background: linear-gradient(rgba(2,58,64,0.6), rgba(2,58,64,0.6)), 
-                  url('https://jdelafuentec.github.io/web/images/ecologia-cover.jpg') center/cover no-repeat;
-      color: #fff;
-      padding: 100px 20px;
-      text-align: center;
-    }
-
-    header.ecologia-oasis-cover h1 {
-      font-size: 3em;
-      margin-bottom: 10px;
-      letter-spacing: 1px;
-    }
-
-    header.ecologia-oasis-cover p {
-      font-size: 1.3em;
-      max-width: 700px;
-      margin: 0 auto;
-    }
-
-    main {
-      max-width: 1100px;
-      margin: 60px auto;
-      padding: 0 20px;
-    }
-
-    section {
-      margin-bottom: 60px;
-    }
-
-    h2 {
-      color: #035959;
-      font-size: 2em;
-      margin-bottom: 15px;
-      border-left: 5px solid #95BFB8;
+    .eco-section { background-color: white; padding: 3% 10%; }
+    .eco-section .titulo-seccion {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin: 0 0 .75rem 0;
+      color: #323B4E;
+      border-left: 4px solid #323B4E;
       padding-left: 10px;
     }
 
-    p {
-      margin-bottom: 20px;
-      font-size: 1.1em;
-    }
-
-    iframe {
-      width: 100%;
-      height: 600px;
-      border: none;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-
-    a.boton {
+    /* Botón estilo sitio (basado en .boton-mapa) */
+    .boton-cta {
       display: inline-block;
-      background: #023A40;
-      color: white;
-      padding: 12px 25px;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: background 0.3s;
-    }
-
-    a.boton:hover {
-      background: #035959;
-    }
-
-    footer {
-      background: #023A40;
+      background-color: #444;
       color: #fff;
-      text-align: center;
-      padding: 40px 20px;
-      margin-top: 80px;
-    }
-
-    footer a {
-      color: #95BFB8;
+      border: none;
+      border-radius: 0;
       text-decoration: none;
+      padding: 12px 18px;
+      font-size: 16px;
+      transition: background-color .2s;
+      cursor: pointer;
     }
+    .boton-cta:hover { background-color: #222; }
 
-    footer a:hover {
-      text-decoration: underline;
+    /* Separador sutil antes del footer */
+    .eco-spacer { height: 40px; background: white; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .eco-hero { padding: 8% 6% 4%; }
+      .eco-section { padding: 6% 6%; }
+      .iframe-container iframe { height: 420px !important; }
     }
   </style>
 </head>
 <body>
-  <header class="ecologia-oasis-cover">
-    <div class="cover-texto">
-      <h1>Ecología</h1>
-      <p>Monitoreamos la biodiversidad y los procesos ecológicos que sustentan los ecosistemas altoandinos.</p>
+  <div id="indicebody">
+
+    <!-- HERO con logo y título, coherente con tu index -->
+    <div class="row eco-hero">
+      <div class="logo-oasis" style="text-align: left;">
+        <img src="https://jdelafuentec.github.io/web/OA_Recurso48.png" alt="Logo Observatorio OASIS">
+      </div>
+      <div class="titulo1">
+        <h1>Ecología</h1>
+      </div>
+      <p class="intro">
+        La línea de Ecología del Observatorio OASIS integra observaciones biológicas, sociales y ambientales
+        para comprender cómo interactúan vegetación, agua y clima en los ecosistemas altoandinos. El enfoque
+        socioecológico combina teledetección, observación en terreno y repositorios abiertos para apoyar la
+        conservación y la gestión informada de estos sistemas.
+      </p>
     </div>
-  </header>
 
-  <main>
-    <section>
-      <h2>Enfoque socioecológico</h2>
-      <p>La línea de Ecología del Observatorio OASIS integra observaciones biológicas, sociales y ambientales para comprender las relaciones entre vegetación, agua y cambio climático en los salares altoandinos. Este enfoque socioecológico busca generar conocimiento aplicado que apoye la conservación de estos ecosistemas únicos y su coexistencia con actividades humanas.</p>
-      <p>El trabajo combina teledetección satelital, monitoreo en terreno y bases de datos abiertas sobre flora, fauna y cobertura vegetal. Estos insumos permiten observar tendencias en la productividad, la cobertura de vegetación y la respuesta de los ecosistemas ante variaciones hidrológicas y climáticas.</p>
-    </section>
+    <!-- NDVI -->
+    <div class="row eco-section">
+      <h2 class="titulo-seccion">Mapa NDVI de zonas de estudio</h2>
+      <p>
+        El NDVI (Índice de Vegetación de Diferencia Normalizada) permite evaluar la densidad y el estado de la
+        cobertura vegetal a partir de imágenes satelitales Sentinel-2. El visor muestra la variación espacial del NDVI
+        en distintas zonas monitoreadas por el Observatorio OASIS.
+      </p>
+      <div class="iframe-container">
+        <iframe
+          src="https://proyectooasis-464321.projects.earthengine.app/view/ndvizonas"
+          title="Mapa NDVI - OASIS"
+          frameborder="0"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
 
-    <section>
-      <h2>Mapa NDVI de zonas de estudio</h2>
-      <p>El índice de vegetación de diferencia normalizada (NDVI) permite evaluar la salud y densidad de la cobertura vegetal a partir de imágenes satelitales Sentinel-2. En el siguiente visor se representa la variación espacial del NDVI en distintas zonas monitoreadas del Observatorio OASIS.</p>
-      <iframe src="https://proyectooasis-464321.projects.earthengine.app/view/ndvizonas" title="Mapa NDVI Zonas OASIS"></iframe>
-    </section>
+    <!-- Transecto -->
+    <div class="row eco-section">
+      <h2 class="titulo-seccion">Transecto ecológico (Maricunga)</h2>
+      <p>
+        El transecto permite visualizar puntos georreferenciados de observación con material fotográfico asociado,
+        facilitando el seguimiento de patrones de vegetación y superficie en el paisaje altoandino.
+      </p>
+      <div class="iframe-container">
+        <iframe
+          src="https://ee-javidelafountain.projects.earthengine.app/view/transecto1maricunga"
+          title="Transecto Ecológico Maricunga"
+          frameborder="0"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <div style="margin-top: 12px;">
+        <a class="boton-cta" href="https://herbario-digital-oasis-2ad2206e.base44.app" target="_blank" rel="noopener">
+          Explorar Herbario Digital OASIS
+        </a>
+      </div>
+    </div>
 
-    <section>
-      <h2>Transecto ecológico de Maricunga</h2>
-      <p>El transecto ecológico permite visualizar los puntos de observación georreferenciados donde se registran condiciones de vegetación y superficie. Cada punto está asociado a imágenes de terreno que contribuyen al monitoreo continuo del paisaje altoandino.</p>
-      <iframe src="https://ee-javidelafountain.projects.earthengine.app/view/transecto1maricunga" title="Transecto Ecológico Maricunga"></iframe>
-    </section>
+    <div class="eco-spacer"></div>
 
-    <section>
-      <h2>Herbario Digital OASIS</h2>
-      <p>El herbario digital compila las especies vegetales identificadas en las zonas de estudio, integrando fotografías, coordenadas y descripciones taxonómicas. Esta plataforma abierta facilita la investigación colaborativa y la educación ambiental.</p>
-      <a class="boton" href="https://herbario-digital-oasis-2ad2206e.base44.app" target="_blank">Explorar el Herbario Digital</a>
-    </section>
-  </main>
+    <!-- Footer institucional igual al index -->
+    <footer class="footer-oasis">
+      <div class="footer-text">
+        Proyecto Anillo Temático Li y Salares – ANID || ATE2400015 (2024–2027)
+      </div>
 
-  <footer>
-    <p>© 2025 Proyecto OASIS — Observatorio de Salares Andinos | <a href="https://oasis.udd.cl" target="_blank">oasis.udd.cl</a></p>
-  </footer>
+      <div class="footer-columns">
+        <div class="logos-left">
+          <div class="logo-row">
+            <div class="logo-placeholder"></div>
+            <a href="https://www.udd.cl/" target="_blank">
+              <img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-49-scaled.png" alt="UDD">
+            </a>
+            <a href="https://www.uda.cl/" target="_blank">
+              <img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-50.png" alt="UDA">
+            </a>
+          </div>
+          <div class="logo-row">
+            <a href="https://www.unab.cl/" target="_blank">
+              <img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-55-1024x343.png" alt="UNAB">
+            </a>
+            <a href="https://www.udec.cl/pexterno/" target="_blank">
+              <img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-54-1024x388.png" alt="UdeC">
+            </a>
+            <a href="https://www.ufro.cl/" target="_blank">
+              <img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-53-1024x358.png" alt="UFRO">
+            </a>
+            <a class="logos-smi" href="https://smiicechile.cl/" target="_blank">
+              <img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-52-1024x127.png" alt="SMI ICE Chile" style="width: 40%; height: auto; display: inline-block;">
+            </a>
+          </div>
+        </div>
+
+        <div class="logo-anid">
+          <a href="https://anid.cl/" target="_blank">
+            <img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-51-1024x932.png" alt="ANID">
+          </a>
+        </div>
+      </div>
+    </footer>
+  </div>
 </body>
 </html>
