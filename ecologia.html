@@ -6,6 +6,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <!-- Usa el CSS del sitio -->
   <link rel="stylesheet" href="https://jdelafuentec.github.io/web/style.css">
+
+  <!-- Ajuste local SOLO para esta página -->
+  <style>
+    /* Controla el tamaño del logo en esta página sin afectar otras */
+    .logo-oasis img {
+      width: 28% !important;   /* Ajusta aquí (25–35%) según prefieras */
+      max-width: 520px;        /* Tope en pantallas grandes */
+      height: auto;
+      display: inline-block;
+      padding-top: 3%;
+    }
+    @media (max-width: 768px) {
+      .logo-oasis img { width: 60% !important; max-width: none; }
+    }
+  </style>
 </head>
 <body>
   <div id="indicebody">
