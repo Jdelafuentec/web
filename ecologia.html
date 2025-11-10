@@ -3,14 +3,135 @@
 <head>
   <meta charset="UTF-8">
   <title>Ecología | Proyecto OASIS</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", Arial, sans-serif;
+      color: #023A40;
+      background-color: #f9f9f9;
+      line-height: 1.6;
+    }
+
+    header.ecologia-oasis-cover {
+      background: linear-gradient(rgba(2,58,64,0.6), rgba(2,58,64,0.6)), 
+                  url('https://jdelafuentec.github.io/web/images/ecologia-cover.jpg') center/cover no-repeat;
+      color: #fff;
+      padding: 100px 20px;
+      text-align: center;
+    }
+
+    header.ecologia-oasis-cover h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+
+    header.ecologia-oasis-cover p {
+      font-size: 1.3em;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+
+    section {
+      margin-bottom: 60px;
+    }
+
+    h2 {
+      color: #035959;
+      font-size: 2em;
+      margin-bottom: 15px;
+      border-left: 5px solid #95BFB8;
+      padding-left: 10px;
+    }
+
+    p {
+      margin-bottom: 20px;
+      font-size: 1.1em;
+    }
+
+    iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    a.boton {
+      display: inline-block;
+      background: #023A40;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    a.boton:hover {
+      background: #035959;
+    }
+
+    footer {
+      background: #023A40;
+      color: #fff;
+      text-align: center;
+      padding: 40px 20px;
+      margin-top: 80px;
+    }
+
+    footer a {
+      color: #95BFB8;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
   <header class="ecologia-oasis-cover">
     <div class="cover-texto">
       <h1>Ecología</h1>
-      <p>Estudiamos la biodiversidad y dinámicas ecológicas de los salares altoandinos.</p>
+      <p>Monitoreamos la biodiversidad y los procesos ecológicos que sustentan los ecosistemas altoandinos.</p>
     </div>
   </header>
+
+  <main>
+    <section>
+      <h2>Enfoque socioecológico</h2>
+      <p>La línea de Ecología del Observatorio OASIS integra observaciones biológicas, sociales y ambientales para comprender las relaciones entre vegetación, agua y cambio climático en los salares altoandinos. Este enfoque socioecológico busca generar conocimiento aplicado que apoye la conservación de estos ecosistemas únicos y su coexistencia con actividades humanas.</p>
+      <p>El trabajo combina teledetección satelital, monitoreo en terreno y bases de datos abiertas sobre flora, fauna y cobertura vegetal. Estos insumos permiten observar tendencias en la productividad, la cobertura de vegetación y la respuesta de los ecosistemas ante variaciones hidrológicas y climáticas.</p>
+    </section>
+
+    <section>
+      <h2>Mapa NDVI de zonas de estudio</h2>
+      <p>El índice de vegetación de diferencia normalizada (NDVI) permite evaluar la salud y densidad de la cobertura vegetal a partir de imágenes satelitales Sentinel-2. En el siguiente visor se representa la variación espacial del NDVI en distintas zonas monitoreadas del Observatorio OASIS.</p>
+      <iframe src="https://proyectooasis-464321.projects.earthengine.app/view/ndvizonas" title="Mapa NDVI Zonas OASIS"></iframe>
+    </section>
+
+    <section>
+      <h2>Transecto ecológico de Maricunga</h2>
+      <p>El transecto ecológico permite visualizar los puntos de observación georreferenciados donde se registran condiciones de vegetación y superficie. Cada punto está asociado a imágenes de terreno que contribuyen al monitoreo continuo del paisaje altoandino.</p>
+      <iframe src="https://ee-javidelafountain.projects.earthengine.app/view/transecto1maricunga" title="Transecto Ecológico Maricunga"></iframe>
+    </section>
+
+    <section>
+      <h2>Herbario Digital OASIS</h2>
+      <p>El herbario digital compila las especies vegetales identificadas en las zonas de estudio, integrando fotografías, coordenadas y descripciones taxonómicas. Esta plataforma abierta facilita la investigación colaborativa y la educación ambiental.</p>
+      <a class="boton" href="https://herbario-digital-oasis-2ad2206e.base44.app" target="_blank">Explorar el Herbario Digital</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Proyecto OASIS — Observatorio de Salares Andinos | <a href="https://oasis.udd.cl" target="_blank">oasis.udd.cl</a></p>
+  </footer>
 </body>
 </html>
