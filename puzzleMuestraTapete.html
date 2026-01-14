@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego Puzzle - Muestra Tapete</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; background-color: #f0f0f0; }
+        
+        h1 { color: #333; }
+
+        #tablero {
+            display: grid;
+            grid-template-columns: repeat(4, 120px); /* 4 columnas */
+            grid-template-rows: repeat(4, 120px);    /* 4 filas */
+            gap: 2px;
+            margin: 20px auto;
+            width: fit-content;
+            background-color: #999;
+            border: 5px solid #333;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .pieza {
+            width: 120px;
+            height: 120px;
+            background-size: cover;
+            background-position: center;
+            cursor: grab;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-sizing: border-box;
+        }
+
+        .pieza:active { cursor: grabbing; }
+
+        .original-hint {
+            margin-top: 20px;
+            max-width: 200px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Puzzle: Muestra Tapete</h1>
+    <p>Arrastra una pieza sobre otra para intercambiarlas.</p>
+
+    <div id="tablero"></div>
+
+    <img src="https://jdelafuentec.github.io/web/piezas_muestraTapete/original_muestraTapete.jpg" 
+         alt="Guía" class="original-hint">
+
+    <script>
+        const tablero = document.getElementById('tablero');
+        const BASE_URL = "https://jdelafuentec.github.io/web/piezas_muestraTapete/";
+        let piezaArrastrada = null;
+
+        // 1. Crear lista de posiciones
+        let posiciones = [];
+        for (let f = 0; f < 4; f++) {
+            for (let c = 0; c < 4; c++) {
+                posiciones.push({ f, c });
+            }
+        }
+
+        // 2. Desordenar posiciones
+        posiciones.sort(() => Math.random() - 0.5);
+
+        // 3. Crear piezas en el tablero
+        posiciones.forEach((pos) => {
+            const div = document.createElement('div');
+            div.className = 'pieza';
+            div.draggable = true;
+            
+            // Imagen de la pieza
+            div.style.backgroundImage = `url('${BASE_URL}pieza_${pos.f}_${pos.c}.png')`;
+            
+            // Guardamos su identidad para saber si está en el lugar correcto
+            div.dataset.correcta = `pieza_${pos.f}_${pos.c}`;
+
+            // --- Eventos de Drag & Drop ---
+            div.addEventListener('dragstart', (e) => {
+                piezaArrastrada = div;
+                div.style.opacity = "0.5";
+            });
+
+            div.addEventListener('dragend', () => {
+                piezaArrastrada.style.opacity = "1";
+            });
+
+            div.addEventListener('dragover', (e) => e.preventDefault());
+
+            div.addEventListener('drop', (e) => {
+                e.preventDefault();
+                if (div !== piezaArrastrada) {
+                    // Intercambiar las imágenes de fondo
+                    let imagenTemporal = div.style.backgroundImage;
+                    div.style.backgroundImage = piezaArrastrada.style.backgroundImage;
+                    piezaArrastrada.style.backgroundImage = imagenTemporal;
+
+                    // Intercambiar los datasets para validación futura
+                    let dataTemporal = div.dataset.correcta;
+                    div.dataset.correcta = piezaArrastrada.dataset.correcta;
+                    piezaArrastrada.dataset.correcta = dataTemporal;
+                    
+                    verificarVictoria();
+                }
+            });
+
+            tablero.appendChild(div);
+        });
+
+        function verificarVictoria() {
+            // Aquí podrías añadir una lógica para avisar si todas están en su sitio
+            console.log("Pieza movida...");
+        }
+    </script>
+</body>
+</html>
