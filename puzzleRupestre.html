@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Puzzle Puma Rupestre</title>
+    <style>
+        /* Estilos Generales y Fondo Blanco */
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            text-align: center; 
+            background-color: #ffffff; 
+            color: #333; 
+            padding: 10px;
+            margin: 0;
+            /* Evita que el navegador recargue al deslizar hacia abajo en móvil */
+            overscroll-behavior-y: contain;
+        }
+        
+        h1 { font-size: 1.5rem; margin-top: 20px; }
+
+        #contenedor-juego { 
+            margin: 20px auto; 
+            width: fit-content; 
+            touch-action: none; /* Crucial para evitar scroll mientras se juega */
+        }
+
+        #tablero {
+            display: grid;
+            grid-template-columns: repeat(4, 80px); /* Tamaño inicial para móviles pequeños */
+            grid-template-rows: repeat(4, 80px);
+            gap: 2px;
+            background-color: #f0f0f0;
+            border: 2px solid #555;
+            margin: 0 auto;
+        }
+
+        /* En pantallas más grandes (PC/Tablets), las piezas crecen */
+        @media (min-width: 500px) {
+            #tablero {
+                grid-template-columns: repeat(4, 120px);
+                grid-template-rows: repeat(4, 120px);
+            }
+            .pieza {
+                width: 120px !important;
+                height: 120px !important;
+            }
+            #imagen-final {
+                width: 486px !important;
+                height: 486px !important;
+            }
+        }
+
+        .pieza {
+            width: 80px;
+            height: 80px;
+            background-size: cover;
+            cursor: grab;
+            border: 1px solid rgba(0,0,0,0.05);
+            user-select: none;
+        }
+
+        #imagen-final {
+            display: none;
+            width: 326px; /* Ajustado para móvil */
+            height: 326px;
+            border: 3px solid #8e44ad;
+            margin: 0 auto;
+        }
+
+        #contenedor-mensaje {
+            display: none;
+            margin-top: 20px;
+            max-width: 550px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 15px;
+        }
+
+        #texto-info {
+            padding: 20px;
+            line-height: 1.6;
+            font-size: 1em;
+            color: #2c3e50;
+            border-top: 2px solid #8e44ad;
+            text-align: justify;
+            background-color: #f9f9f9;
+        }
+
+        .btn-reiniciar {
+            margin: 20px 0;
+            padding: 12px 30px;
+            background-color: #8e44ad;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .instrucciones { color: #777; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+
+    <h1>Puzzle: Arte Rupestre</h1>
+    <p id="instrucciones" class="instrucciones">Toca o arrastra las piezas para intercambiarlas.</p>
+
+    <div id="contenedor-juego">
+        <div id="tablero"></div>
+        <img id="imagen-final" src="https://jdelafuentec.github.io/web/piezas_rupestre/original_rupestre.jpg">
+    </div>
+
+    <div id="contenedor-mensaje">
+        <div id="texto-info">
+            <strong>¡Increíble!</strong><br><br>
+            El arte rupestre en la zona de Maricunga y sus alrededores representa la cosmovisión de los antiguos habitantes de los Andes. Estas pinturas y grabados en piedra nos cuentan historias de caza, caravanas de llamas y rituales que datan de hace miles de años, resistiendo el paso del tiempo en el desierto más árido del mundo.
+        </div>
+        <button class="btn-reiniciar" onclick="iniciarPuzzle()">Jugar de nuevo</button>
+    </div>
+
+    <script>
+        const tablero = document.getElementById('tablero');
+        const imgFinal = document.getElementById('imagen-final');
+        const mensaje = document.getElementById('contenedor-mensaje');
+        const instrucc = document.getElementById('instrucciones');
+        const BASE_URL = "https://jdelafuentec.github.io/web/piezas_rupestre/";
+        
+        let piezaSeleccionada = null; // Para PC (Drag)
+        let touchSource = null;       // Para Móvil (Touch)
+
+        function iniciarPuzzle() {
+            tablero.innerHTML = '';
+            tablero.style.display = 'grid';
+            imgFinal.style.display = 'none';
+            mensaje.style.display = 'none';
+            instrucc.style.display = 'block';
+
+            let piezas = [];
+            for (let f = 0; f < 4; f++) {
+                for (let c = 0; c < 4; c++) {
+                    piezas.push({ f, c });
+                }
+            }
+
+            piezas.sort(() => Math.random() - 0.5);
+
+            piezas.forEach(p => {
+                const div = document.createElement('div');
+                div.className = 'pieza';
+                div.draggable = true;
+                div.style.backgroundImage = `url('${BASE_URL}pieza_rupestre_${p.f}_${p.c}.png')`;
+                div.dataset.pos = `pieza_rupestre_${p.f}_${p.c}`;
+
+                // --- EVENTOS MOUSE ---
+                div.addEventListener('dragstart', (e) => { piezaSeleccionada = div; });
+                div.addEventListener('dragover', (e) => e.preventDefault());
+                div.addEventListener('drop', handleDrop);
+
+                // --- EVENTOS TOUCH ---
+                div.addEventListener('touchstart', (e) => {
+                    touchSource = div;
+                    div.style.outline = "2px solid #8e44ad";
+                    div.style.zIndex = "10";
+                }, {passive: true});
+
+                div.addEventListener('touchend', (e) => {
+                    div.style.outline = "none";
+                    const touch = e.changedTouches[0];
+                    const elementoDestino = document.elementFromPoint(touch.clientX, touch.clientY);
+
+                    if (elementoDestino && elementoDestino.classList.contains('pieza') && elementoDestino !== touchSource) {
+                        intercambiar(touchSource, elementoDestino);
+                    }
+                }, {passive: true});
+                
+                tablero.appendChild(div);
+            });
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            if (this !== piezaSeleccionada) {
+                intercambiar(piezaSeleccionada, this);
+            }
+        }
+
+        function intercambiar(origen, destino) {
+            let imgTmp = destino.style.backgroundImage;
+            let posTmp = destino.dataset.pos;
+
+            destino.style.backgroundImage = origen.style.backgroundImage;
+            destino.dataset.pos = origen.dataset.pos;
+
+            origen.style.backgroundImage = imgTmp;
+            origen.dataset.pos = posTmp;
+
+            chequearVictoria();
+        }
+
+        function chequearVictoria() {
+            const piezasActuales = document.querySelectorAll('.pieza');
+            let aciertos = 0;
+            let i = 0;
+            for (let f = 0; f < 4; f++) {
+                for (let c = 0; c < 4; c++) {
+                    if (piezasActuales[i].dataset.pos === `pieza_rupestre_${f}_${c}`) {
+                        aciertos++;
+                    }
+                    i++;
+                }
+            }
+            if (aciertos === 16) {
+                tablero.style.display = 'none';
+                instrucc.style.display = 'none';
+                imgFinal.style.display = 'block';
+                mensaje.style.display = 'block';
+            }
+        }
+
+        iniciarPuzzle();
+    </script>
+</body>
+</html>
