@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Puzzle Puma Rupestre</title>
+    <title>Puzzle Maricunga - Arrastre Adyacente</title>
     <style>
-        /* Estilos Generales y Fondo Blanco */
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             text-align: center; 
@@ -13,42 +12,32 @@
             color: #333; 
             padding: 10px;
             margin: 0;
-            /* Evita que el navegador recargue al deslizar hacia abajo en móvil */
             overscroll-behavior-y: contain;
         }
         
-        h1 { font-size: 1.5rem; margin-top: 20px; }
-
         #contenedor-juego { 
             margin: 20px auto; 
             width: fit-content; 
-            touch-action: none; /* Crucial para evitar scroll mientras se juega */
+            touch-action: none; 
         }
 
         #tablero {
             display: grid;
-            grid-template-columns: repeat(4, 80px); /* Tamaño inicial para móviles pequeños */
+            grid-template-columns: repeat(4, 80px);
             grid-template-rows: repeat(4, 80px);
             gap: 2px;
-            background-color: #f0f0f0;
-            border: 2px solid #555;
+            background-color: #ccc;
+            border: 3px solid #333;
             margin: 0 auto;
         }
 
-        /* En pantallas más grandes (PC/Tablets), las piezas crecen */
         @media (min-width: 500px) {
             #tablero {
                 grid-template-columns: repeat(4, 120px);
                 grid-template-rows: repeat(4, 120px);
             }
-            .pieza {
-                width: 120px !important;
-                height: 120px !important;
-            }
-            #imagen-final {
-                width: 486px !important;
-                height: 486px !important;
-            }
+            .pieza { width: 120px !important; height: 120px !important; }
+            #imagen-final { width: 490px !important; height: 490px !important; }
         }
 
         .pieza {
@@ -56,15 +45,17 @@
             height: 80px;
             background-size: cover;
             cursor: grab;
-            border: 1px solid rgba(0,0,0,0.05);
             user-select: none;
+            touch-action: none;
         }
+
+        .pieza:active { cursor: grabbing; }
 
         #imagen-final {
             display: none;
-            width: 326px; /* Ajustado para móvil */
-            height: 326px;
-            border: 3px solid #8e44ad;
+            width: 330px;
+            height: 330px;
+            border: 4px solid #27ae60;
             margin: 0 auto;
         }
 
@@ -74,37 +65,27 @@
             max-width: 550px;
             margin-left: auto;
             margin-right: auto;
-            padding: 0 15px;
-        }
-
-        #texto-info {
             padding: 20px;
-            line-height: 1.6;
-            font-size: 1em;
-            color: #2c3e50;
-            border-top: 2px solid #8e44ad;
-            text-align: justify;
             background-color: #f9f9f9;
+            border-top: 3px solid #27ae60;
         }
 
         .btn-reiniciar {
-            margin: 20px 0;
-            padding: 12px 30px;
-            background-color: #8e44ad;
+            margin-top: 15px;
+            padding: 10px 25px;
+            background-color: #27ae60;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
             font-weight: bold;
         }
-
-        .instrucciones { color: #777; font-size: 0.9em; }
     </style>
 </head>
 <body>
 
     <h1>Puzzle: Arte Rupestre</h1>
-    <p id="instrucciones" class="instrucciones">Toca o arrastra las piezas para intercambiarlas.</p>
+    <p id="instrucciones">Arrastra las piezas <b>hacia un lado, arriba o abajo</b> para moverlas.</p>
 
     <div id="contenedor-juego">
         <div id="tablero"></div>
@@ -113,10 +94,10 @@
 
     <div id="contenedor-mensaje">
         <div id="texto-info">
-            <strong>¡Increíble!</strong><br><br>
-            El arte rupestre en la zona de Maricunga y sus alrededores representa la cosmovisión de los antiguos habitantes de los Andes. Estas pinturas y grabados en piedra nos cuentan historias de caza, caravanas de llamas y rituales que datan de hace miles de años, resistiendo el paso del tiempo en el desierto más árido del mundo.
+            <strong>¡Lo lograste!</strong><br><br>
+            El arte rupestre en la zona de Maricunga representa la cosmovisión de los antiguos habitantes de los Andes, resistiendo el paso del tiempo en el desierto más árido del mundo.
         </div>
-        <button class="btn-reiniciar" onclick="iniciarPuzzle()">Jugar de nuevo</button>
+        <button class="btn-reiniciar" onclick="iniciarPuzzle()">Reiniciar</button>
     </div>
 
     <script>
@@ -126,8 +107,7 @@
         const instrucc = document.getElementById('instrucciones');
         const BASE_URL = "https://jdelafuentec.github.io/web/piezas_rupestre/";
         
-        let piezaSeleccionada = null; // Para PC (Drag)
-        let touchSource = null;       // Para Móvil (Touch)
+        let piezaArrastrada = null;
 
         function iniciarPuzzle() {
             tablero.innerHTML = '';
@@ -145,32 +125,27 @@
 
             piezas.sort(() => Math.random() - 0.5);
 
-            piezas.forEach(p => {
+            piezas.forEach((p, index) => {
                 const div = document.createElement('div');
                 div.className = 'pieza';
                 div.draggable = true;
                 div.style.backgroundImage = `url('${BASE_URL}pieza_rupestre_${p.f}_${p.c}.png')`;
-                div.dataset.pos = `pieza_rupestre_${p.f}_${p.c}`;
+                
+                div.dataset.correcta = `pieza_rupestre_${p.f}_${p.c}`;
+                div.dataset.indice = index; 
 
-                // --- EVENTOS MOUSE ---
-                div.addEventListener('dragstart', (e) => { piezaSeleccionada = div; });
+                // Eventos Mouse
+                div.addEventListener('dragstart', (e) => { piezaArrastrada = div; });
                 div.addEventListener('dragover', (e) => e.preventDefault());
-                div.addEventListener('drop', handleDrop);
+                div.addEventListener('drop', handleInteraction);
 
-                // --- EVENTOS TOUCH ---
-                div.addEventListener('touchstart', (e) => {
-                    touchSource = div;
-                    div.style.outline = "2px solid #8e44ad";
-                    div.style.zIndex = "10";
-                }, {passive: true});
-
+                // Eventos Touch
+                div.addEventListener('touchstart', (e) => { piezaArrastrada = div; }, {passive: true});
                 div.addEventListener('touchend', (e) => {
-                    div.style.outline = "none";
                     const touch = e.changedTouches[0];
-                    const elementoDestino = document.elementFromPoint(touch.clientX, touch.clientY);
-
-                    if (elementoDestino && elementoDestino.classList.contains('pieza') && elementoDestino !== touchSource) {
-                        intercambiar(touchSource, elementoDestino);
+                    const destino = document.elementFromPoint(touch.clientX, touch.clientY);
+                    if (destino && destino.classList.contains('pieza')) {
+                        handleInteraction.call(destino);
                     }
                 }, {passive: true});
                 
@@ -178,22 +153,34 @@
             });
         }
 
-        function handleDrop(e) {
-            e.preventDefault();
-            if (this !== piezaSeleccionada) {
-                intercambiar(piezaSeleccionada, this);
+        function handleInteraction() {
+            if (piezaArrastrada && piezaArrastrada !== this) {
+                if (sonAdyacentes(piezaArrastrada, this)) {
+                    intercambiar(piezaArrastrada, this);
+                }
             }
+            piezaArrastrada = null;
+        }
+
+        function sonAdyacentes(p1, p2) {
+            const i1 = parseInt(p1.dataset.indice);
+            const i2 = parseInt(p2.dataset.indice);
+
+            const r1 = Math.floor(i1 / 4), c1 = i1 % 4;
+            const r2 = Math.floor(i2 / 4), c2 = i2 % 4;
+
+            return (Math.abs(r1 - r2) === 1 && c1 === c2) || (Math.abs(c1 - c2) === 1 && r1 === r2);
         }
 
         function intercambiar(origen, destino) {
-            let imgTmp = destino.style.backgroundImage;
-            let posTmp = destino.dataset.pos;
+            const imgTmp = destino.style.backgroundImage;
+            const idTmp = destino.dataset.correcta;
 
             destino.style.backgroundImage = origen.style.backgroundImage;
-            destino.dataset.pos = origen.dataset.pos;
+            destino.dataset.correcta = origen.dataset.correcta;
 
             origen.style.backgroundImage = imgTmp;
-            origen.dataset.pos = posTmp;
+            origen.dataset.correcta = idTmp;
 
             chequearVictoria();
         }
@@ -201,15 +188,12 @@
         function chequearVictoria() {
             const piezasActuales = document.querySelectorAll('.pieza');
             let aciertos = 0;
-            let i = 0;
-            for (let f = 0; f < 4; f++) {
-                for (let c = 0; c < 4; c++) {
-                    if (piezasActuales[i].dataset.pos === `pieza_rupestre_${f}_${c}`) {
-                        aciertos++;
-                    }
-                    i++;
-                }
-            }
+            piezasActuales.forEach((p, i) => {
+                const f = Math.floor(i / 4);
+                const c = i % 4;
+                if (p.dataset.correcta === `pieza_rupestre_${f}_${c}`) aciertos++;
+            });
+
             if (aciertos === 16) {
                 tablero.style.display = 'none';
                 instrucc.style.display = 'none';
