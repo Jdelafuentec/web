@@ -3,125 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Puzzle Salares - Proyecto OASIS</title>
+    <title>Puzzle Maricunga</title>
     <style>
         body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            font-family: sans-serif; 
             text-align: center; 
             background-color: #ffffff; 
-            color: #333; 
-            padding: 10px;
-            margin: 0;
-            overscroll-behavior-y: contain;
+            margin: 0; 
+            padding: 10px; 
+            overscroll-behavior-y: contain; 
         }
+        .logo { max-width: 180px; margin: 15px auto; display: block; }
+        h1 { font-size: 1.2rem; color: #2c3e50; margin: 5px 0; }
+        .instrucciones { font-size: 0.8rem; color: #888; margin-bottom: 15px; }
 
-        .logo-proyecto {
-            max-width: 180px;
-            height: auto;
-            margin: 15px auto;
-            display: block;
-        }
-
-        @media (min-width: 500px) {
-            .logo-proyecto { max-width: 250px; }
-        }
+        #contenedor-juego { margin: 0 auto; width: fit-content; touch-action: none; }
         
-        h1 { font-size: 1.4rem; margin: 10px 0; color: #2c3e50; }
-
-        #contenedor-juego { 
-            margin: 15px auto; 
-            width: fit-content; 
-            touch-action: none; 
-        }
-
         #tablero {
             display: grid;
             grid-template-columns: repeat(4, 75px);
             grid-template-rows: repeat(4, 75px);
             gap: 4px;
-            background-color: #eee;
+            background-color: #ddd;
             border: 2px solid #333;
-            margin: 0 auto;
+            padding: 4px;
         }
 
-        @media (min-width: 500px) {
-            #tablero {
-                grid-template-columns: repeat(4, 120px);
-                grid-template-rows: repeat(4, 120px);
-            }
-            .pieza { width: 120px !important; height: 120px !important; }
-            #imagen-final { width: 492px !important; height: 492px !important; }
+        @media (min-width: 450px) {
+            #tablero { grid-template-columns: repeat(4, 100px); grid-template-rows: repeat(4, 100px); }
+            .pieza { width: 100px !important; height: 100px !important; }
+            #imagen-final { width: 412px !important; height: 412px !important; }
         }
 
         .pieza {
             width: 75px;
             height: 75px;
             background-size: cover;
+            border-radius: 2px;
             cursor: pointer;
-            border-radius: 3px;
-            transition: outline 0.1s;
             -webkit-tap-highlight-color: transparent;
+            transition: transform 0.1s;
         }
 
-        .seleccionada {
-            outline: 5px solid #27ae60;
-            z-index: 10;
-            transform: scale(1.02);
+        .seleccionada { 
+            outline: 4px solid #27ae60; 
+            z-index: 10; 
+            transform: scale(1.05); 
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
         }
 
-        #imagen-final {
-            display: none;
-            width: 312px;
-            height: 312px;
-            border: 4px solid #27ae60;
-            margin: 0 auto;
-            border-radius: 8px;
+        #imagen-final { 
+            display: none; 
+            margin: 0 auto; 
+            border: 4px solid #27ae60; 
+            border-radius: 5px;
+            animation: fadeIn 0.8s;
         }
 
-        #contenedor-mensaje {
-            display: none; /* Se activa al ganar */
-            margin-top: 20px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            padding: 15px;
-            /* Asegura visibilidad en móvil */
-            opacity: 1 !important;
-            visibility: visible !important;
+        #contenedor-mensaje { 
+            display: none; 
+            padding: 20px; 
+            max-width: 500px; 
+            margin: 0 auto; 
+            animation: fadeIn 1s;
         }
 
-        #texto-info {
-            padding: 20px;
-            line-height: 1.6;
-            font-size: 1.05em;
-            color: #444;
-            background-color: #f9f9f9;
-            border-top: 4px solid #27ae60;
-            text-align: justify;
-            border-radius: 0 0 8px 8px;
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        #texto-info { 
+            text-align: justify; 
+            line-height: 1.6; 
+            font-size: 1rem; 
+            color: #444; 
+            border-top: 3px solid #27ae60; 
+            padding-top: 15px; 
         }
 
-        .btn-reiniciar {
-            margin-top: 20px;
-            padding: 15px 35px;
-            background-color: #27ae60;
-            color: white;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 1.1em;
+        .btn-reiniciar { 
+            margin-top: 20px; 
+            padding: 15px 30px; 
+            background: #27ae60; 
+            color: white; 
+            border: none; 
+            border-radius: 25px; 
+            font-weight: bold; 
+            font-size: 1rem;
         }
-
-        .instrucciones { color: #888; font-size: 0.85em; margin-bottom: 5px; }
     </style>
 </head>
 <body>
 
-    <img src="https://jdelafuentec.github.io/web/OA_Recurso%2048.png" alt="Logo Proyecto" class="logo-proyecto">
-
-    <h1>Conoce los Salares Altoandinos</h1>
-    <p id="instrucciones" class="instrucciones">Toca una pieza y luego una vecina para intercambiarlas.</p>
+    <img src="https://jdelafuentec.github.io/web/OA_Recurso%2048.png" class="logo">
+    <h1>Puzzle: Muestra Tapete</h1>
+    <p id="instrucciones" class="instrucciones">Intercambia las piezas vecinas para completar el tapete microbiano.</p>
 
     <div id="contenedor-juego">
         <div id="tablero"></div>
@@ -132,102 +106,92 @@
         <div id="texto-info">
             Un tapete microbiano en Maricunga es una capa visible de microorganismos (principalmente bacterias y cianobacterias) que vive sobre sedimentos húmedos y salinos del salar, formando uno de los ecosistemas más antiguos y resistentes de la Tierra.
         </div>
-        <button class="btn-reiniciar" onclick="iniciarJuego()">Jugar de nuevo</button>
+        <button class="btn-reiniciar" onclick="iniciar()">Jugar de nuevo</button>
     </div>
 
     <script>
         const tablero = document.getElementById('tablero');
         const imgFinal = document.getElementById('imagen-final');
-        const contenedorMensaje = document.getElementById('contenedor-mensaje');
-        const instrucc = document.getElementById('instrucciones');
+        const mensaje = document.getElementById('contenedor-mensaje');
+        const inst = document.getElementById('instrucciones');
         const BASE_URL = "https://jdelafuentec.github.io/web/piezas_muestraTapete/";
         
-        let piezaSeleccionada = null;
+        let seleccionada = null;
 
-        function iniciarJuego() {
+        function iniciar() {
             tablero.innerHTML = '';
             tablero.style.display = 'grid';
             imgFinal.style.display = 'none';
-            contenedorMensaje.style.display = 'none';
-            instrucc.style.display = 'block';
-            piezaSeleccionada = null;
+            mensaje.style.display = 'none';
+            inst.style.display = 'block';
+            seleccionada = null;
 
-            let piezasLogicas = [];
-            for (let f = 0; f < 4; f++) {
-                for (let c = 0; c < 4; c++) {
-                    piezasLogicas.push({ f, c });
-                }
+            let piezas = [];
+            for (let i = 0; i < 16; i++) {
+                const f = Math.floor(i / 4);
+                const c = i % 4;
+                piezas.push({ id: i, url: `${BASE_URL}pieza_${f}_${c}.png` });
             }
 
-            piezasLogicas.sort(() => Math.random() - 0.5);
+            piezas.sort(() => Math.random() - 0.5);
 
-            piezasLogicas.forEach((p, index) => {
+            piezas.forEach((p, index) => {
                 const div = document.createElement('div');
                 div.className = 'pieza';
-                div.style.backgroundImage = `url('${BASE_URL}pieza_${p.f}_${p.c}.png')`;
-                // 'idPieza' guarda qué parte de la foto es
-                div.dataset.idPieza = `pieza_${p.f}_${p.c}`;
-                // 'idxActual' guarda su posición en el tablero (0-15)
-                div.dataset.idxActual = index; 
+                div.style.backgroundImage = `url('${p.url}')`;
+                div.dataset.idOriginal = p.id; 
+                div.dataset.indexActual = index; 
 
-                div.addEventListener('click', manejarToque);
+                div.onclick = tocar;
                 tablero.appendChild(div);
             });
         }
 
-        function manejarToque() {
-            if (!piezaSeleccionada) {
-                piezaSeleccionada = this;
+        function tocar() {
+            if (!seleccionada) {
+                seleccionada = this;
                 this.classList.add('seleccionada');
             } else {
-                if (this === piezaSeleccionada) {
+                if (this === seleccionada) {
                     this.classList.remove('seleccionada');
-                    piezaSeleccionada = null;
-                } else if (sonVecinas(piezaSeleccionada, this)) {
-                    intercambiar(piezaSeleccionada, this);
-                    piezaSeleccionada.classList.remove('seleccionada');
-                    piezaSeleccionada = null;
+                    seleccionada = null;
+                } else if (sonVecinas(seleccionada, this)) {
+                    intercambiar(seleccionada, this);
+                    seleccionada.classList.remove('seleccionada');
+                    seleccionada = null;
+                    revisar();
                 } else {
-                    // Si toca otra no vecina, cambia la selección a la nueva
-                    piezaSeleccionada.classList.remove('seleccionada');
-                    piezaSeleccionada = this;
+                    seleccionada.classList.remove('seleccionada');
+                    seleccionada = this;
                     this.classList.add('seleccionada');
                 }
             }
         }
 
         function sonVecinas(p1, p2) {
-            const i1 = parseInt(p1.dataset.idxActual);
-            const i2 = parseInt(p2.dataset.idxActual);
+            const i1 = parseInt(p1.dataset.indexActual);
+            const i2 = parseInt(p2.dataset.indexActual);
             const r1 = Math.floor(i1 / 4), c1 = i1 % 4;
             const r2 = Math.floor(i2 / 4), c2 = i2 % 4;
-            return (Math.abs(r1 - r2) === 1 && c1 === c2) || (Math.abs(c1 - c2) === 1 && r1 === r2);
+            return (Math.abs(r1 - r2) + Math.abs(c1 - c2)) === 1;
         }
 
         function intercambiar(p1, p2) {
-            // Intercambiamos los fondos
-            const imgTmp = p2.style.backgroundImage;
-            p2.style.backgroundImage = p1.style.backgroundImage;
-            p1.style.backgroundImage = imgTmp;
+            const imgTmp = p1.style.backgroundImage;
+            p1.style.backgroundImage = p2.style.backgroundImage;
+            p2.style.backgroundImage = imgTmp;
 
-            // Intercambiamos la identidad de la pieza
-            const idTmp = p2.dataset.idPieza;
-            p2.dataset.idPieza = p1.dataset.idPieza;
-            p1.dataset.idPieza = idTmp;
-
-            revisarVictoria();
+            const idTmp = p1.dataset.idOriginal;
+            p1.dataset.idOriginal = p2.dataset.idOriginal;
+            p2.dataset.idOriginal = idTmp;
         }
 
-        function revisarVictoria() {
-            const piezasEnTablero = document.querySelectorAll('.pieza');
+        function revisar() {
+            const actuales = document.querySelectorAll('.pieza');
             let correctas = 0;
-
-            piezasEnTablero.forEach((p, i) => {
-                const filaCorrecta = Math.floor(i / 4);
-                const colCorrecta = i % 4;
-                const nombreEsperado = `pieza_${filaCorrecta}_${colCorrecta}`;
-
-                if (p.dataset.idPieza === nombreEsperado) {
+            
+            actuales.forEach((p, i) => {
+                if (parseInt(p.dataset.idOriginal) === i) {
                     correctas++;
                 }
             });
@@ -235,16 +199,15 @@
             if (correctas === 16) {
                 setTimeout(() => {
                     tablero.style.display = 'none';
-                    instrucc.style.display = 'none';
+                    inst.style.display = 'none';
                     imgFinal.style.display = 'block';
-                    contenedorMensaje.style.display = 'block';
-                    // Scroll automático para que el usuario vea la descripción en móviles
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }, 300);
+                    mensaje.style.display = 'block';
+                    window.scrollTo({top: 0, behavior: 'smooth'});
+                }, 400);
             }
         }
 
-        iniciarJuego();
+        iniciar();
     </script>
 </body>
 </html>
