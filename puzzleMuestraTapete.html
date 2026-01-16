@@ -2,186 +2,224 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Puzzle Maricunga - Tapete Microbiano</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Puzzle - Rupestre la Puma</title>
     <style>
         body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            font-family: 'Segoe UI', sans-serif; 
             text-align: center; 
-            background-color: #1a1a1a; 
-            color: white; 
-            padding: 20px; 
+            background-color: #ffffff; 
+            color: #333; 
+            padding: 10px;
+            margin: 0;
+            /* Evita que la pantalla rebote en móviles */
+            overscroll-behavior: none;
         }
         
+        h1 { font-size: 1.4rem; margin: 15px 0; color: #2c3e50; }
+
         #contenedor-juego { 
-            position: relative; 
-            margin: 0 auto; 
+            margin: 10px auto; 
             width: fit-content; 
+            /* Evita que el dedo mueva la página al tocar el puzzle */
+            touch-action: none; 
         }
 
         #tablero {
             display: grid;
-            grid-template-columns: repeat(4, 120px);
-            grid-template-rows: repeat(4, 120px);
-            gap: 2px;
-            background-color: #333;
-            border: 4px solid #fff;
+            grid-template-columns: repeat(4, 75px);
+            grid-template-rows: repeat(4, 75px);
+            gap: 4px;
+            background-color: #eee;
+            border: 2px solid #333;
+            margin: 0 auto;
+        }
+
+        /* Ajuste para pantallas más grandes (PC/Tablets) */
+        @media (min-width: 450px) {
+            #tablero {
+                grid-template-columns: repeat(4, 110px);
+                grid-template-rows: repeat(4, 110px);
+            }
+            .pieza { width: 110px !important; height: 110px !important; }
+            #imagen-final { width: 452px !important; height: 452px !important; }
         }
 
         .pieza {
-            width: 120px;
-            height: 120px;
+            width: 75px;
+            height: 75px;
             background-size: cover;
-            cursor: grab;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: transform 0.2s;
+            cursor: pointer;
+            border-radius: 3px;
+            /* Mejora el rendimiento táctil */
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .pieza:active { cursor: grabbing; transform: scale(0.95); }
+        .seleccionada {
+            outline: 4px solid #d35400;
+            box-shadow: 0 0 15px rgba(211, 84, 0, 0.5);
+            z-index: 10;
+        }
 
         #imagen-final {
             display: none;
-            width: 486px; 
-            height: 486px;
-            border: 4px solid #27ae60;
+            width: 312px;
+            height: 312px;
+            border: 4px solid #d35400;
             margin: 0 auto;
+            border-radius: 8px;
         }
 
         #contenedor-mensaje {
             display: none;
             margin-top: 20px;
-            max-width: 600px;
+            max-width: 90%;
             margin-left: auto;
             margin-right: auto;
+            padding-bottom: 30px;
         }
 
         #texto-info {
-            padding: 20px;
-            background-color: rgba(39, 174, 96, 0.2);
-            border-left: 5px solid #27ae60;
             line-height: 1.6;
-            font-size: 1.1em;
+            font-size: 0.95em;
+            color: #444;
             text-align: justify;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
         }
 
         .btn-reiniciar {
             margin-top: 20px;
-            padding: 12px 25px;
-            font-size: 1em;
-            background-color: #27ae60;
+            padding: 15px 30px;
+            background-color: #d35400;
             color: white;
             border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1em;
+            width: 80%; /* Botón grande para tocar fácil en móvil */
         }
 
-        .btn-reiniciar:hover { background-color: #2ecc71; }
-
-        .instrucciones { margin-bottom: 20px; color: #aaa; }
+        .instrucciones { color: #888; font-size: 0.85em; margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
-    <h1>Puzzle: Muestra Tapete</h1>
-    <p class="instrucciones">Intercambia las piezas arrastrándolas hasta completar la imagen.</p>
+    <h1>Puzzle: Rupestre</h1>
+    <p id="instrucciones" class="instrucciones">Toca una pieza y luego una vecina para moverla.</p>
 
     <div id="contenedor-juego">
         <div id="tablero"></div>
-        <img id="imagen-final" src="https://jdelafuentec.github.io/web/piezas_muestraTapete/original_muestraTapete.jpg">
+        <img id="imagen-final" src="https://jdelafuentec.github.io/web/piezas_rupestre/original_rupestre.jpg">
     </div>
 
     <div id="contenedor-mensaje">
         <div id="texto-info">
-            <strong>¡Excelente trabajo!</strong><br><br>
-            Un tapete microbiano en Maricunga es una capa visible de microorganismos (principalmente bacterias y cianobacterias) que vive sobre sedimentos húmedos y salinos del salar, formando uno de los ecosistemas más antiguos y resistentes de la Tierra.
+            Rupestre fue una legendaria hembra de puma del Parque Nacional Torres del Paine que se convirtió en un ícono mundial de la vida silvestre tras protagonizar documentales de Netflix y la BBC. Conocida como la "Reina de la Patagonia", vivió aproximadamente 14 años —una edad excepcional para su especie— y destacó por ser una madre prolífica que dejó un linaje clave para la conservación en la región. Su reciente fallecimiento en enero de 2026, ocurrido por causas naturales, marca el fin de una era para el rastreo de pumas, dejando un legado invaluable sobre el comportamiento y la belleza de estos felinos en el extremo sur de Chile.<br><br>
+            <strong>Foto: Nicolás Lagos.</strong>
         </div>
-        <button class="btn-reiniciar" onclick="iniciarJuego()">Jugar de nuevo</button>
+        <button class="btn-reiniciar" onclick="iniciarPuzzle()">Jugar de nuevo</button>
     </div>
 
     <script>
         const tablero = document.getElementById('tablero');
         const imgFinal = document.getElementById('imagen-final');
-        const contenedorMensaje = document.getElementById('contenedor-mensaje');
-        const BASE_URL = "https://jdelafuentec.github.io/web/piezas_muestraTapete/";
+        const mensaje = document.getElementById('contenedor-mensaje');
+        const instrucc = document.getElementById('instrucciones');
+        const BASE_URL = "https://jdelafuentec.github.io/web/piezas_rupestre/";
         
-        let piezaArrastrada = null;
+        let piezaSeleccionada = null;
 
-        function iniciarJuego() {
-            // Limpiar estado previo
+        function iniciarPuzzle() {
             tablero.innerHTML = '';
             tablero.style.display = 'grid';
             imgFinal.style.display = 'none';
-            contenedorMensaje.style.display = 'none';
+            mensaje.style.display = 'none';
+            instrucc.style.display = 'block';
+            piezaSeleccionada = null;
 
-            // 1. Crear lista de posiciones
-            let piezasLogicas = [];
+            let piezas = [];
             for (let f = 0; f < 4; f++) {
                 for (let c = 0; c < 4; c++) {
-                    piezasLogicas.push({ f, c });
+                    piezas.push({ f, c });
                 }
             }
 
-            // 2. Desordenar
-            piezasLogicas.sort(() => Math.random() - 0.5);
+            piezas.sort(() => Math.random() - 0.5);
 
-            // 3. Crear elementos
-            piezasLogicas.forEach(p => {
+            piezas.forEach((p, index) => {
                 const div = document.createElement('div');
                 div.className = 'pieza';
-                div.draggable = true;
-                div.style.backgroundImage = `url('${BASE_URL}pieza_${p.f}_${p.c}.png')`;
-                div.dataset.identidad = `pieza_${p.f}_${p.c}`;
+                div.style.backgroundImage = `url('${BASE_URL}pieza_rupestre_${p.f}_${p.c}.png')`;
+                div.dataset.id = `pieza_rupestre_${p.f}_${p.c}`;
+                div.dataset.idx = index; 
 
-                // Eventos Drag & Drop
-                div.addEventListener('dragstart', (e) => { piezaArrastrada = div; });
-                div.addEventListener('dragover', (e) => e.preventDefault());
-                div.addEventListener('drop', handleDrop);
+                // Evento unificado: funciona en móvil y PC
+                div.addEventListener('click', manejarToque);
                 
                 tablero.appendChild(div);
             });
         }
 
-        function handleDrop(e) {
-            e.preventDefault();
-            if (this !== piezaArrastrada) {
-                // Intercambiar fondos e identidades
-                let bgTmp = this.style.backgroundImage;
-                let idTmp = this.dataset.identidad;
-
-                this.style.backgroundImage = piezaArrastrada.style.backgroundImage;
-                this.dataset.identidad = piezaArrastrada.dataset.identidad;
-
-                piezaArrastrada.style.backgroundImage = bgTmp;
-                piezaArrastrada.dataset.identidad = idTmp;
-
-                revisarVictoria();
-            }
-        }
-
-        function revisarVictoria() {
-            const piezasActuales = document.querySelectorAll('.pieza');
-            let correctas = 0;
-
-            let i = 0;
-            for (let f = 0; f < 4; f++) {
-                for (let c = 0; c < 4; c++) {
-                    if (piezasActuales[i].dataset.identidad === `pieza_${f}_${c}`) {
-                        correctas++;
-                    }
-                    i++;
+        function manejarToque() {
+            if (!piezaSeleccionada) {
+                piezaSeleccionada = this;
+                this.classList.add('seleccionada');
+            } else {
+                if (this === piezaSeleccionada) {
+                    this.classList.remove('seleccionada');
+                    piezaSeleccionada = null;
+                } else if (sonVecinas(piezaSeleccionada, this)) {
+                    intercambiar(piezaSeleccionada, this);
+                    piezaSeleccionada.classList.remove('seleccionada');
+                    piezaSeleccionada = null;
+                } else {
+                    // Si toca una no vecina, cambiamos la selección
+                    piezaSeleccionada.classList.remove('seleccionada');
+                    piezaSeleccionada = this;
+                    this.classList.add('seleccionada');
                 }
             }
+        }
 
-            if (correctas === 16) {
+        function sonVecinas(p1, p2) {
+            const i1 = parseInt(p1.dataset.idx);
+            const i2 = parseInt(p2.dataset.idx);
+            const r1 = Math.floor(i1 / 4), c1 = i1 % 4;
+            const r2 = Math.floor(i2 / 4), c2 = i2 % 4;
+            return (Math.abs(r1 - r2) === 1 && c1 === c2) || (Math.abs(c1 - c2) === 1 && r1 === r2);
+        }
+
+        function intercambiar(p1, p2) {
+            const imgTmp = p2.style.backgroundImage;
+            const idTmp = p2.dataset.id;
+            p2.style.backgroundImage = p1.style.backgroundImage;
+            p2.dataset.id = p1.dataset.id;
+            p1.style.backgroundImage = imgTmp;
+            p1.dataset.id = idTmp;
+            verificarVictoria();
+        }
+
+        function verificarVictoria() {
+            const actuales = document.querySelectorAll('.pieza');
+            let aciertos = 0;
+            actuales.forEach((p, i) => {
+                const f = Math.floor(i / 4);
+                const c = i % 4;
+                if (p.dataset.id === `pieza_rupestre_${f}_${c}`) aciertos++;
+            });
+
+            if (aciertos === 16) {
                 tablero.style.display = 'none';
+                instrucc.style.display = 'none';
                 imgFinal.style.display = 'block';
-                contenedorMensaje.style.display = 'block';
+                mensaje.style.display = 'block';
+                window.scrollTo(0,0); // Sube la pantalla para ver la foto
             }
         }
 
-        // Iniciar al cargar la página
-        iniciarJuego();
+        iniciarPuzzle();
     </script>
 </body>
 </html>
