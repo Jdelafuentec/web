@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Puzzles conociendo los Salares - Proyecto OASIS</title>
+    <title>Puzzle Maricunga - Tapete Microbiano</title>
     <style>
-        /* Fondo blanco para la web */
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             text-align: center; 
@@ -13,20 +12,32 @@
             color: #333; 
             padding: 10px;
             margin: 0;
-            overscroll-behavior-y: contain; /* Evita rebote en móvil */
+            overscroll-behavior-y: contain;
+        }
+
+        /* Estilo para el Logo */
+        .logo-proyecto {
+            max-width: 180px; /* Tamaño contenido para móvil */
+            height: auto;
+            margin: 15px auto;
+            display: block;
+        }
+
+        @media (min-width: 500px) {
+            .logo-proyecto { max-width: 250px; } /* Un poco más grande en PC */
         }
         
-        h1 { font-size: 1.5rem; margin-top: 20px; }
+        h1 { font-size: 1.4rem; margin: 10px 0; color: #2c3e50; }
 
         #contenedor-juego { 
-            margin: 20px auto; 
+            margin: 15px auto; 
             width: fit-content; 
-            touch-action: none; /* Bloquea scroll sobre el puzzle */
+            touch-action: none; 
         }
 
         #tablero {
             display: grid;
-            grid-template-columns: repeat(4, 75px); /* Tamaño móvil */
+            grid-template-columns: repeat(4, 75px);
             grid-template-rows: repeat(4, 75px);
             gap: 4px;
             background-color: #eee;
@@ -34,7 +45,6 @@
             margin: 0 auto;
         }
 
-        /* Responsive para PC/Tablets */
         @media (min-width: 500px) {
             #tablero {
                 grid-template-columns: repeat(4, 120px);
@@ -50,20 +60,18 @@
             background-size: cover;
             cursor: pointer;
             border-radius: 3px;
-            transition: outline 0.1s, transform 0.1s;
+            transition: outline 0.1s;
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Resalte al tocar una pieza */
         .seleccionada {
             outline: 4px solid #27ae60;
-            transform: scale(1.02);
             z-index: 10;
         }
 
         #imagen-final {
             display: none;
-            width: 312px; /* Ajustado para móvil */
+            width: 312px;
             height: 312px;
             border: 3px solid #27ae60;
             margin: 0 auto;
@@ -98,15 +106,16 @@
             border-radius: 25px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 1em;
         }
 
-        .instrucciones { color: #888; font-size: 0.9em; margin-bottom: 10px; }
+        .instrucciones { color: #888; font-size: 0.85em; margin-bottom: 5px; }
     </style>
 </head>
 <body>
-<h1>Puzzles conociendo los Salares - Proyecto OASIS</h1>
-    <h2>Tapete Microbiano</h2>
+
+    <img src="https://jdelafuentec.github.io/web/OA_Recurso%2048.png" alt="Logo Proyecto" class="logo-proyecto">
+
+    <h1>Puzzle: Muestra Tapete</h1>
     <p id="instrucciones" class="instrucciones">Toca una pieza y luego una vecina para intercambiarlas.</p>
 
     <div id="contenedor-juego">
@@ -145,7 +154,6 @@
                 }
             }
 
-            // Mezclar
             piezasLogicas.sort(() => Math.random() - 0.5);
 
             piezasLogicas.forEach((p, index) => {
@@ -155,9 +163,7 @@
                 div.dataset.real = `pieza_${p.f}_${p.c}`;
                 div.dataset.idx = index; 
 
-                // Evento único para móvil y PC
                 div.addEventListener('click', manejarToque);
-                
                 tablero.appendChild(div);
             });
         }
@@ -175,7 +181,6 @@
                     piezaSeleccionada.classList.remove('seleccionada');
                     piezaSeleccionada = null;
                 } else {
-                    // Si toca otra que no es vecina, cambia la selección
                     piezaSeleccionada.classList.remove('seleccionada');
                     piezaSeleccionada = this;
                     this.classList.add('seleccionada');
@@ -188,33 +193,26 @@
             const i2 = parseInt(p2.dataset.idx);
             const r1 = Math.floor(i1 / 4), c1 = i1 % 4;
             const r2 = Math.floor(i2 / 4), c2 = i2 % 4;
-            // Solo adyacentes (arriba, abajo, izq, der)
             return (Math.abs(r1 - r2) === 1 && c1 === c2) || (Math.abs(c1 - c2) === 1 && r1 === r2);
         }
 
         function intercambiar(p1, p2) {
             const imgTmp = p2.style.backgroundImage;
             const idTmp = p2.dataset.real;
-
             p2.style.backgroundImage = p1.style.backgroundImage;
             p2.dataset.real = p1.dataset.real;
-
             p1.style.backgroundImage = imgTmp;
             p1.dataset.real = idTmp;
-
             revisarVictoria();
         }
 
         function revisarVictoria() {
             const piezasActuales = document.querySelectorAll('.pieza');
             let correctas = 0;
-
             piezasActuales.forEach((p, i) => {
                 const f = Math.floor(i / 4);
                 const c = i % 4;
-                if (p.dataset.real === `pieza_${f}_${c}`) {
-                    correctas++;
-                }
+                if (p.dataset.real === `pieza_${f}_${c}`) correctas++;
             });
 
             if (correctas === 16) {
