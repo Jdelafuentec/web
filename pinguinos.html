@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Contador de Pingüinos - Monitoreo</title>
+    <style>
+        body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; background: #f0f0f0; }
+        #canvas-container { position: relative; cursor: crosshair; margin-top: 20px; box-shadow: 0 0 15px rgba(0,0,0,0.2); }
+        canvas { max-width: 100%; height: auto; display: block; }
+        .marker {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #ff3e3e;
+            border: 1px solid white;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+        .controls { background: white; padding: 15px; border-radius: 8px; margin-top: 20px; display: flex; gap: 20px; align-items: center; }
+        #counter { font-size: 24px; font-weight: bold; color: #2c3e50; }
+    </style>
+</head>
+<body>
+
+    <h2>Herramienta de Conteo de Pingüinos</h2>
+    
+    <div class="controls">
+        <input type="file" id="upload" accept="image/*">
+        <div id="counter">Pingüinos contados: 0</div>
+        <button onclick="exportData()">Exportar CSV</button>
+        <button onclick="resetCanvas()">Reiniciar</button>
+    </div>
+
+    <div id="canvas-container">
+        <canvas id="penguinCanvas"></canvas>
+    </div>
+
+    <script>
+        const upload = document.getElementById('upload');
+        const canvas = document.getElementById('penguinCanvas');
+        const ctx = canvas.getContext('2d');
+        const container = document.getElementById('canvas-container');
+        const counterDisplay = document.getElementById('counter');
+        
+        let penguinData = [];
+        let img = new Image();
+
+        // Cargar imagen
+        upload.addEventListener('change', (e) => {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                img.onload = () => {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.drawImage(img, 0, 0);
+                    resetData();
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(e.target.files[0]);
+        });
+
+        // Marcar pingüino al hacer clic
+        canvas.addEventListener('click', (e) => {
+            if (!img.src) return;
+
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            
+            // Coordenadas relativas a la imagen original
+            const x = (e.clientX - rect.left) * scaleX;
+            const y = (e.clientY - rect.top) * scaleY;
+
+            // Guardar datos
+            penguinData.push({ x: x.toFixed(2), y: y.toFixed(2) });
+            
+            // Crear marcador visual
+            const marker = document.createElement('div');
+            marker.className = 'marker';
+            marker.style.left = (e.clientX - rect.left) + 'px';
+            marker.style.top = (e.clientY - rect.top) + 'px';
+            container.appendChild(marker);
+
+            // Actualizar contador
+            counterDisplay.innerText = `Pingüinos contados: ${penguinData.length}`;
+        });
+
+        function resetData() {
+            penguinData = [];
+            counterDisplay.innerText = `Pingüinos contados: 0`;
+            document.querySelectorAll('.marker').forEach(m => m.remove());
+        }
+
+        function resetCanvas() {
+            if (img.src) ctx.drawImage(img, 0, 0);
+            resetData();
+        }
+
+        // Exportar coordenadas (útil para investigación o entrenamiento de IA)
+        function exportData() {
+            if (penguinData.length === 0) return alert("No hay datos para exportar");
+            
+            let csvContent = "data:text/csv;charset=utf-8,X,Y\n" 
+                + penguinData.map(p => `${p.x},${p.y}`).join("\n");
+            
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "conteo_pinguinos.csv");
+            document.body.appendChild(link);
+            link.click();
+        }
+    </script>
+</body>
+</html>
