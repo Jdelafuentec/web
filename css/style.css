@@ -12,7 +12,7 @@ body, html {
 
 /* Imagen de fondo 1 */
 .bg-1 {
-  background-image: url('https://jdelafuentec.github.io/web/lagunaMirador_Panorama-1paralaxsi.jpg');
+  background-image: url('../img/lagunaMirador_Panorama-1paralaxsi.jpg');
   background-size: 100% auto;
   background-repeat: no-repeat;
   background-position: top center;
@@ -21,7 +21,7 @@ body, html {
 
 /* Imagen de fondo 2 */
 .bg-2 {
-  background-image: url('https://jdelafuentec.github.io/web/laGallina.jpg'); /* Cambia esta URL */
+  background-image: url('../img/laGallina.jpg'); /* Cambia esta URL */
   background-size: 100% auto;
   background-repeat: no-repeat;
   background-position: top center;
@@ -30,7 +30,7 @@ body, html {
 
 /* Imagen de fondo 3 */
 .bg-3 {
-  background-image: url('https://jdelafuentec.github.io/web/transectoSal.jpg'); /* Cambia esta URL */
+  background-image: url('../img/transectoSal.jpg'); /* Cambia esta URL */
   background-size: 100% auto;
   background-repeat: no-repeat;
   background-position: top center;
@@ -38,7 +38,7 @@ body, html {
 }
 /* Imagen de fondo 3 */
 .bg-4 {
-  background-image: url('https://jdelafuentec.github.io/web/transecto6_Panorama_part1.jpg'); /* Cambia esta URL */
+  background-image: url('../img/transecto6_Panorama_part1.jpg'); /* Cambia esta URL */
   background-size: 100% auto;
   background-repeat: no-repeat;
   background-position: top center;
@@ -46,7 +46,7 @@ body, html {
 }
 /* Imagen de fondo 3 */
 .bg-5 {
-  background-image: url('https://jdelafuentec.github.io/web/guatita2.jpg'); /* Cambia esta URL */
+  background-image: url('../img/guatita2.jpg'); /* Cambia esta URL */
   background-size: 100% auto;
   background-repeat: no-repeat;
   background-position: top center;
@@ -184,27 +184,27 @@ margin: 0 auto; /* Centra horizontalmente */
 
 /* Fondo de la imagen 1 */
 .bg-11 {
-  background-image: url('https://jdelafuentec.github.io/web/lagunaMirador_Panorama-1paralaxsi.jpg');
+  background-image: url('../img/thumbnails/lagunaMirador_Panorama-1paralaxsi_min.jpg');
 }
 
 /* Fondo de la imagen 2 */
 .bg-22 {
-  background-image: url('https://jdelafuentec.github.io/web/laGallina.jpg');
+  background-image: url('../img/thumbnails/laGallina_min.jpg');
 }
 
 /* Fondo de la imagen 3 */
 .bg-33 {
-  background-image: url('https://jdelafuentec.github.io/web/transectoSal.jpg');
+  background-image: url('../img/thumbnails/transectoSal_min.jpg');
 }
 
 /* Fondo de la imagen 4 */
 .bg-44 {
-  background-image: url('https://jdelafuentec.github.io/web/transecto6_Panorama_part1.jpg');
+  background-image: url('../img/thumbnails/transecto6_Panorama_part1_min.jpg');
 }
 
 /* Fondo de la imagen 5 */
 .bg-55 {
-  background-image: url('https://jdelafuentec.github.io/web/guatita2.jpg');
+  background-image: url('../img/thumbnails/guatita2_min.jpg');
 }
 
 /* Efecto al pasar el mouse (se ponen a color) */
@@ -894,15 +894,15 @@ font-weight: bold !important;
 
 /* Fondo inicial: imagen */
 .boton-tema.eco {
-  background-image: url('https://jdelafuentec.github.io/web/botonEco.png');
+  background-image: url('../img/botonEco.png');
 }
 
 .boton-tema.micro {
-  background-image: url('https://jdelafuentec.github.io/web/boton_mocoSal.jpg');
+  background-image: url('../img/boton_mocoSal.jpg');
 }
 
 .boton-tema.geo {
-  background-image: url('https://jdelafuentec.github.io/web/piedrasGeo.jpg');
+  background-image: url('../img/piedrasGeo.jpg');
 }
 
 /* Hover: color de fondo + texto visible */

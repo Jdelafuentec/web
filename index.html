@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Índice de la Página</title>
-  <link rel="stylesheet" href="https://jdelafuentec.github.io/web/style.css">
+  <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
  <div id="indicebody" >
@@ -12,7 +12,7 @@
  <div class="row">
 <div class="index-container-arriba">
   <div class="logo-oasis" style="text-align: left;">
-    <img src="https://jdelafuentec.github.io/web/OA_Recurso48.png" 
+    <img src="./img/OA_Recurso48.png" 
          alt="Logo Observatorio OASIS" 
          style="width: 40%; height: auto; display: inline-block; padding-top:4%;">
   </div>
@@ -21,11 +21,11 @@
   <!-- Cuadrado dividido en 5 -->
   <div class="index-container">
     <div class="image-grid">
-      <a href="https://jdelafuentec.github.io/web/transectoMirador1.html" class="image-item bg-11"></a>
-      <a href="https://jdelafuentec.github.io/web/transectolaGallina.html" class="image-item bg-22"></a>
-      <a href="https://jdelafuentec.github.io/web/transectoSal.html" class="image-item bg-33"></a>
-      <a href="https://jdelafuentec.github.io/web/transectoMirador2.html" class="image-item bg-44"></a>
-      <a href="https://jdelafuentec.github.io/web/transectoBofedalintervenido.html" class="image-item bg-55"></a>
+      <a href="./transectoMirador1.html" class="image-item bg-11"></a>
+      <a href="./transectolaGallina.html" class="image-item bg-22"></a>
+      <a href="./transectoSal.html" class="image-item bg-33"></a>
+      <a href="./transectoMirador2.html" class="image-item bg-44"></a>
+      <a href="./transectoBofedalintervenido.html" class="image-item bg-55"></a>
     </div>
   </div>
 
@@ -55,10 +55,10 @@ Desde la geología, microbiología, ecología y ciencias sociales, el proyecto b
 Área de estudio: Región de Atacama, entre 3.700 y 4.300 m.s.n.m., incluyendo Laguna Verde, Laguna del Negro Francisco, Laguna Santa Rosa y el Salar de Maricunga.</h2>
 </div>
     <div class="botones-tematicos">
-  <a href="https://jdelafuentec.github.io/web/ecologia.html" class="boton-tema eco">
+  <a href="./ecologia.html" class="boton-tema eco">
   ECOLOGÍA Y SOCIO-ECOLOGÍA
 </a>
-       <a href="https://jdelafuentec.github.io/web/microbiologia.html" class="boton-tema micro">
+       <a href="./microbiologia.html" class="boton-tema micro">
   ECOLOGÍA MICROBIANA
 </a>
 
@@ -71,7 +71,7 @@ Desde la geología, microbiología, ecología y ciencias sociales, el proyecto b
   </div>
 <div class="row">
   <div class="imagen-padding">
-  <img src="https://jdelafuentec.github.io/web/IMG_1080.png" alt="Dos flamencos en una laguna" >
+  <img src="./img/IMG_1080.png" alt="Dos flamencos en una laguna" >
   
   </div>
 </div>
@@ -81,7 +81,7 @@ Desde la geología, microbiología, ecología y ciencias sociales, el proyecto b
     </div>
     <div class="iframe-container">
    <iframe 
-  id="iframe-mapa"
+  id="iframe-indices"
   src="https://proyectooasis-464321.projects.earthengine.app/view/nwdizonas" 
   frameborder="0"
   allowfullscreen>
@@ -139,7 +139,7 @@ Desde la geología, microbiología, ecología y ciencias sociales, el proyecto b
   </div>
 <div class="row">
   <div class="imagen-padding">
-  <img src="https://jdelafuentec.github.io/web/salarCentro.jpeg" alt="centro del salar" >
+  <img src="./img/salarCentro.jpeg" alt="centro del salar" >
   
   </div>
 </div>
@@ -149,7 +149,7 @@ Desde la geología, microbiología, ecología y ciencias sociales, el proyecto b
     </div>
     <div class="iframe-container">
    <iframe 
-  id="iframe-mapa"
+  id="iframe-santarosa"
   src="https://proyectooasis-464321.projects.earthengine.app/view/ndwindvistarosa" 
   frameborder="0"
   allowfullscreen>
@@ -165,7 +165,7 @@ Desde la geología, microbiología, ecología y ciencias sociales, el proyecto b
     </div>
     <div class="iframe-container">
    <iframe 
-  id="iframe-mapa"
+  id="iframe-landcover"
   src="https://proyectooasis-464321.projects.earthengine.app/view/landcovermaricunga" 
   frameborder="0"
   allowfullscreen>
@@ -215,22 +215,22 @@ Desde la geología, microbiología, ecología y ciencias sociales, el proyecto b
 
 </div>  
  <script>
-  const iframe = document.getElementById('iframe-mapa');
+  const iframe_indices = document.getElementById('iframe-indices');
 
   document.getElementById('boton-ndwi').addEventListener('click', function() {
-    iframe.src = "https://proyectooasis-464321.projects.earthengine.app/view/nwdizonas";
+    iframe_indices.src = "https://proyectooasis-464321.projects.earthengine.app/view/nwdizonas";
   });
 
   document.getElementById('boton-ndvi').addEventListener('click', function() {
-    iframe.src = "https://proyectooasis-464321.projects.earthengine.app/view/ndvizonas";
+    iframe_indices.src = "https://proyectooasis-464321.projects.earthengine.app/view/ndvizonas";
   });
 
   document.getElementById('boton-ndsi').addEventListener('click', function() {
-    iframe.src = "https://proyectooasis-464321.projects.earthengine.app/view/smizonas"; // pendiente
+    iframe_indices.src = "https://proyectooasis-464321.projects.earthengine.app/view/smizonas"; // pendiente
   });
 
   document.getElementById('boton-si').addEventListener('click', function() {
-    iframe.src = "https://proyectooasis-464321.projects.earthengine.app/view/stizonas"; // pendiente
+    iframe_indices.src = "https://proyectooasis-464321.projects.earthengine.app/view/stizonas"; // pendiente
   });
 </script>
 
