@@ -970,12 +970,15 @@ font-weight: bold !important;
   .footer-oasis .logo-row {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
-    gap: 30px;
+    flex-wrap: nowrap;
+    gap: 40px;
+    width: 100%;
   }
 
   .footer-oasis .logo-row img {
-    max-height: 54px;
+    height: 45px;
+    width: auto;
+    max-width: 100%;
     object-fit: contain;
   }
 
@@ -983,6 +986,7 @@ font-weight: bold !important;
     width: 150px;
     height: 50px;
     opacity: 0;
+    display: none;
   }
 
   .footer-oasis .logo-anid {
@@ -997,6 +1001,13 @@ font-weight: bold !important;
     object-fit: contain;
   }
 
+  @media (max-width: 900px) {
+    .footer-oasis .logo-row {
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+  }
+
   @media (max-width: 768px) {
     .footer-oasis .footer-columns {
       flex-direction: column;
@@ -1004,24 +1015,13 @@ font-weight: bold !important;
       gap: 30px;
     }
 
-    .footer-oasis .logo-row {
-      justify-content: center;
-      gap: 20px;
-    }
-    a.logos-smi img {
-    width: 50% !important;
-}
-    .logos-smi img {
-  transform: scale(0.5) !important;
-  transform-origin: center;
-}
-
     .logo-oasis {
-  text-align: center;
-  margin-top: 20px;
-}
+      text-align: center;
+      margin-top: 20px;
+    }
 
-.logo-oasis img {
-    width:50% !important;
-    padding-top:4% !important;
-}
+    .logo-oasis img {
+      width: 50% !important;
+      padding-top: 4% !important;
+    }
+  }
