@@ -868,14 +868,16 @@ font-weight: bold !important;
   justify-content: center;
   align-items: center;
   gap: 30px;
-  padding: 5% 10%;
-  flex-wrap: nowrap;
-  overflow-x: auto;
+  padding: 5% 5%;
+  flex-wrap: wrap;
+  overflow: hidden;
 }
 
 .boton-tema {
-  width: 300px;
-  height: 300px;
+  width: 100%;
+  max-width: 300px;
+  aspect-ratio: 1 / 1;
+  height: auto;
   font-size: 1.2rem;
   font-weight: bold;
   color: transparent;
@@ -885,7 +887,6 @@ font-weight: bold !important;
   background-position: center;
   position: relative;
   transition: all 0.3s ease;
-  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
