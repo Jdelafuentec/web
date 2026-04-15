@@ -982,6 +982,11 @@ font-weight: bold !important;
     object-fit: contain;
   }
 
+  .footer-oasis .logo-row a.logos-smi img {
+    height: 25px; /* Reducimos la altura específicamente de la SMI para que su tipografía se vea equilibrada con el resto */
+    margin-top: 10px; /* Para centrarlo un poco verticalmente respecto a los otros de 45px */
+  }
+
   .footer-oasis .logo-placeholder {
     width: 150px;
     height: 50px;
