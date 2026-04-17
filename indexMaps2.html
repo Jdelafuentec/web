@@ -6,12 +6,10 @@
     <title>Salar Laguna Centro - Mapa Interactivo</title>
     <meta name="description" content="Visualizador interactivo de ortofoto GeoTIFF del Salar Laguna Centro, Maricunga.">
     
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     
-    <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
     
     <style>
@@ -275,7 +273,6 @@
         </footer>
     </div>
 
-    <!-- Leaflet & GeoRaster Scripts -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/proj4@2.9.0/dist/proj4.js"></script>
     <script src="https://unpkg.com/geotiff@2.1.0/dist-browser/geotiff.js"></script>
@@ -284,7 +281,6 @@
     
     <script>
         // Initialize Map
-        // Dark base layer to contrast the bright salt flat imagery
         const map = L.map('map', {
             center: [-26.938, -69.088], // approximate center of Salar de Maricunga
             zoom: 13,
@@ -295,11 +291,10 @@
             position: 'bottomright'
         }).addTo(map);
 
-        // Add a high-contrast dark satellite / minimal basemap
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-            subdomains: 'abcd',
-            maxZoom: 20
+        // Add Esri World Imagery Satellite basemap
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+            maxZoom: 19
         }).addTo(map);
 
         // The URL of our freshly created Cloud Optimized GeoTIFF
