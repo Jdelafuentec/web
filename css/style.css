@@ -672,15 +672,15 @@ font-weight: bold !important;
 
 /* Mensaje de advertencia para móviles en mapas de Earth Engine */
 @media (max-width: 768px) {
-  .iframe-container iframe {
+  .iframe-container iframe[src*="earthengine.app"] {
     display: none !important;
   }
   
-  .iframe-container {
+  .iframe-container:has(iframe[src*="earthengine.app"]) {
     min-height: 250px;
   }
 
-  .iframe-container::before {
+  .iframe-container:has(iframe[src*="earthengine.app"])::before {
     display: flex;
     align-items: center;
     justify-content: center;
