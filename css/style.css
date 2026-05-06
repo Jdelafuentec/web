@@ -836,26 +836,32 @@ img:not(.leaflet-tile):not(.leaflet-marker-icon):not(.leaflet-control-layers-tog
   background-image: url('../img/piedrasGeo.jpg');
 }
 
-/* Hover: foto a color + texto blanco con resplandor/tinte de color */
+/* Hover: foto a color + texto blanco con resaltado plano */
+.boton-tema span {
+  transition: all 0.3s ease;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
 .boton-tema.eco:hover {
   color: white;
-  text-shadow: 0 0 8px #01A99D, 0 0 15px #01A99D, 0 0 25px #01A99D;
-  background-color: rgba(1, 169, 157, 0.5);
-  background-blend-mode: multiply;
+}
+.boton-tema.eco:hover span {
+  background-color: #01A99D;
 }
 
 .boton-tema.micro:hover {
   color: white;
-  text-shadow: 0 0 8px #F288A4, 0 0 15px #F288A4, 0 0 25px #F288A4;
-  background-color: rgba(242, 136, 164, 0.5);
-  background-blend-mode: multiply;
+}
+.boton-tema.micro:hover span {
+  background-color: #F288A4;
 }
 
 .boton-tema.geo:hover {
   color: white;
-  text-shadow: 0 0 8px #AA8744, 0 0 15px #AA8744, 0 0 25px #AA8744;
-  background-color: rgba(170, 135, 68, 0.5);
-  background-blend-mode: multiply;
+}
+.boton-tema.geo:hover span {
+  background-color: #AA8744;
 }
 
 #main-header #logo.appLogo img {

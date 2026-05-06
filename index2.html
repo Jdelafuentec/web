@@ -68,10 +68,10 @@ Desde la geología, microbiología, ecología y ciencias sociales, el proyecto b
     </div>
 
     <div class="botones-tematicos">
-      <a href="./ecologia.html" class="boton-tema eco">ECOLOGÍA Y SOCIO-ECOLOGÍA</a>
-      <a href="./microbiologia.html" class="boton-tema micro">ECOLOGÍA MICROBIANA</a>
-      <a href="./geociencias.html" class="boton-tema geo">GEOCIENCIAS</a>
-      <a href="./remotecensing.html" class="boton-tema micro">TELEDETECCIÓN</a>
+      <a href="./ecologia.html" class="boton-tema eco"><span>ECOLOGÍA Y SOCIO-ECOLOGÍA</span></a>
+      <a href="./microbiologia.html" class="boton-tema micro"><span>ECOLOGÍA MICROBIANA</span></a>
+      <a href="./geociencias.html" class="boton-tema geo"><span>GEOCIENCIAS</span></a>
+      <a href="./remotecensing.html" class="boton-tema micro"><span>TELEDETECCIÓN</span></a>
     </div>
   </div>
 
@@ -143,12 +143,14 @@ Desde la geología, microbiología, ecología y ciencias sociales, el proyecto b
     attribution: 'Esri'
   }).addTo(map);
 
+  let globalBounds = L.latLngBounds();
+
   // 3. Función para cargar capas con colores específicos
   async function cargarCapa(url, nombre, hexColor) {
     try {
       const response = await fetch(url);
       const data = await response.json();
-      L.geoJSON(data, {
+      let layer = L.geoJSON(data, {
         style: {
           color: hexColor,      // Borde
           weight: 3,            // Grosor
@@ -159,6 +161,11 @@ Desde la geología, microbiología, ecología y ciencias sociales, el proyecto b
           layer.bindPopup(`<strong class="popup-title">${nombre}</strong><br>Proyecto OASIS`);
         }
       }).addTo(map);
+      
+      // Auto-centrar el mapa al cargar el geojson
+      globalBounds.extend(layer.getBounds());
+      map.fitBounds(globalBounds);
+      
     } catch (e) {
       console.error("Error cargando:", nombre, e);
     }
