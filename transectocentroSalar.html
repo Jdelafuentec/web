@@ -171,13 +171,11 @@
         if (modalId === "locationModal") {
           setTimeout(function() {
             if (!mapCentroSalar) {
-              mapCentroSalar = L.map('mapCentroSalar').setView([-26.936961, -69.111469], 10);
+              mapCentroSalar = L.map('mapCentroSalar').setView([-26.936961, -69.111469], 11);
               L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
                 attribution: 'Tiles &copy; Esri'
               }).addTo(mapCentroSalar);
-              L.marker([-26.936961, -69.111469]).addTo(mapCentroSalar)
-                .bindPopup('<b>Salar de Maricunga</b><br>Copiapó, Atacama.')
-                .openPopup();
+              L.marker([-26.936961, -69.111469]).addTo(mapCentroSalar);
             } else {
               mapCentroSalar.invalidateSize();
             }
