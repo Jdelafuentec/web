@@ -206,7 +206,7 @@ width:30% !important;
 .button-container {
   display: grid;
   
-  grid-template-columns: repeat(3, 1fr); /* Por defecto, 3 botones en una fila */
+  grid-template-columns: repeat(4, 1fr); /* Por defecto, 4 botones en una fila */
   gap: 10px;
   width: 100%;
   padding: 0 ;
@@ -264,7 +264,7 @@ width:30% !important;
 /* Tabletas: Pantallas medianas */
 @media (max-width: 1024px) {
   .button-container {
-    grid-template-columns: 1fr; /* En tabletas, los botones se apilan en una columna */
+    grid-template-columns: repeat(2, 1fr); /* En tabletas, los botones en grid 2x2 */
     gap: 10px;
     padding: 0;
   }
@@ -292,7 +292,7 @@ width:30% !important;
 /* Pantallas grandes (escritorios) */
 @media (min-width: 1200px) {
   .button-container {
-    grid-template-columns: repeat(3, 1fr); /* En pantallas grandes, 3 botones en una fila */
+    grid-template-columns: repeat(4, 1fr); /* En pantallas grandes, 4 botones en una fila */
     gap: 0px;
     padding: 0;
   }
@@ -821,23 +821,17 @@ font-weight: bold !important;
   background-image: url('../img/piedrasGeo.jpg');
 }
 
-/* Hover: color de fondo + texto visible */
+/* Hover: foto a color + texto con el color característico */
 .boton-tema.eco:hover {
-  background-color: #01A99D;
-  background-image: none;
-  color: white;
+  color: #01A99D;
 }
 
 .boton-tema.micro:hover {
-  background-color: #F288A4;
-  background-image: none;
-  color: white;
+  color: #F288A4;
 }
 
 .boton-tema.geo:hover {
-  background-color: #AA8744;
-  background-image: none;
-  color: white;
+  color: #AA8744;
 }
 
 #main-header #logo.appLogo img {

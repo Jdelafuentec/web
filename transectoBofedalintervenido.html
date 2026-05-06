@@ -1,77 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Transecto sector "La Guatita"</title>
-  <link rel="stylesheet" href="./css/style.css">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Transecto sector "La Guatita"
+  </title>
+  <link href="./css/style.css" rel="stylesheet"/>
   <style>
-    
   </style>
-</head>
-<body>
-  <img class="fondo-transecto" src="./img/guatita2.jpg" alt="Transecto">
-  <div class="infoScroll"> 
-      <p> Deslízate hasta el final de la página para recorrer el transecto</p>
+ </head>
+ <body>
+  <img alt="Transecto" class="fondo-transecto" src="./img/guatita2.jpg"/>
+  <div class="infoScroll">
+   <p>
+    Desl&iacute;zate hasta el final de la p&aacute;gina para recorrer el transecto
+   </p>
   </div>
-
-  
-
- <!-- Botones -->
+  <!-- Botones -->
   <div class="white-row">
-    <div class="button-container">
-      <button class="button" id="descriptionButton">DESCRIPCIÓN</button>
-      <button class="button" id="locationButton">UBICACIÓN</button>
-      <button class="button" id="compositionButton">COMPOSICIÓN</button>
-    </div>
+   <div class="button-container">
+    <button class="button" id="descriptionButton">
+     DESCRIPCI&Oacute;N
+    </button>
+    <button class="button" id="locationButton">
+     UBICACI&Oacute;N
+    </button>
+    <button class="button" id="compositionButton">
+     COMPOSICI&Oacute;N
+    </button>
+    <button class="button" id="imagesButton">
+     IM&Aacute;GENES
+    </button>
+   </div>
   </div>
-
- <!-- Modal de DESCRIPCIÓN -->
-<!-- Modal de DESCRIPCIÓN -->
-<div id="descriptionModal" class="modal">
-  <div class="modal-content">
-    <button class="close-btn closeDescriptionModal" id="closeDescriptionModal">X</button>
+  <!-- Modal de DESCRIPCIÓN -->
+  <!-- Modal de DESCRIPCIÓN -->
+  <div class="modal" id="descriptionModal">
+   <div class="modal-content">
+    <button class="close-btn closeDescriptionModal" id="closeDescriptionModal">
+     X
+    </button>
     <div class="modal-column">
-      <img src="./img/laguatitafoto1.jpeg" alt="Descripción" />
+     <img alt="Descripci&oacute;n" src="./img/laguatitafoto1.jpeg">
+     </img>
     </div>
     <div class="modal-column descripcionContent">
-      <h2>"La Guatita" Salar de Maricunga</h2>
-      <p>Aquí va el texto que describe algo importante...</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris volutpat, augue at tincidunt tincidunt, arcu elit interdum nunc, vel convallis elit odio at est. Sed eu erat nec odio fermentum scelerisque sit amet eget lorem. Nulla facilisi. Nulla ac risus a augue ultricies laoreet. Integer varius sollicitudin ipsum, et facilisis magna bibendum et. Fusce id volutpat nisl, eget auctor felis. Phasellus sollicitudin, nisl ac aliquet interdum, felis nisl auctor neque, non volutpat justo libero sit amet libero.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris volutpat, augue at tincidunt tincidunt, arcu elit interdum nunc, vel convallis elit odio at est. Sed eu erat nec odio fermentum scelerisque sit amet eget lorem. Nulla facilisi. Nulla ac risus a augue ultricies laoreet. Integer varius sollicitudin ipsum, et facilisis magna bibendum et. Fusce id volutpat nisl, eget auctor felis. Phasellus sollicitudin, nisl ac aliquet interdum, felis nisl auctor neque, non volutpat justo libero sit amet libero.</p>
-
+     <h2>
+      "La Guatita" Salar de Maricunga
+     </h2>
+     <p>
+      Aqu&iacute; va el texto que describe algo importante...
+     </p>
+     <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris volutpat, augue at tincidunt tincidunt, arcu elit interdum nunc, vel convallis elit odio at est. Sed eu erat nec odio fermentum scelerisque sit amet eget lorem. Nulla facilisi. Nulla ac risus a augue ultricies laoreet. Integer varius sollicitudin ipsum, et facilisis magna bibendum et. Fusce id volutpat nisl, eget auctor felis. Phasellus sollicitudin, nisl ac aliquet interdum, felis nisl auctor neque, non volutpat justo libero sit amet libero.
+     </p>
+     <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris volutpat, augue at tincidunt tincidunt, arcu elit interdum nunc, vel convallis elit odio at est. Sed eu erat nec odio fermentum scelerisque sit amet eget lorem. Nulla facilisi. Nulla ac risus a augue ultricies laoreet. Integer varius sollicitudin ipsum, et facilisis magna bibendum et. Fusce id volutpat nisl, eget auctor felis. Phasellus sollicitudin, nisl ac aliquet interdum, felis nisl auctor neque, non volutpat justo libero sit amet libero.
+     </p>
     </div>
+   </div>
   </div>
-</div>
-
-<!-- Modal de UBICACIÓN -->
-<div id="locationModal" class="modal">
-  <div class="modal-content">
-    <button class="close-btn closeDescriptionModal" id="closeLocationModal">X</button>
-    <h2>Transectos del sector y otros datos</h2>
-    <iframe src="https://ee-javidelafountain.projects.earthengine.app/view/transectoslaguatita"></iframe>
+  <!-- Modal de UBICACIÓN -->
+  <div class="modal" id="locationModal">
+   <div class="modal-content">
+    <button class="close-btn closeDescriptionModal" id="closeLocationModal">
+     X
+    </button>
+    <h2>
+     Transectos del sector y otros datos
+    </h2>
+    <iframe src="https://ee-javidelafountain.projects.earthengine.app/view/transectoslaguatita">
+    </iframe>
+   </div>
   </div>
-</div>
-
-<!-- Modal de COMPOSICIÓN -->
-<div id="compositionModal" class="modal">
-  <div class="modal-content">
-    <button class="close-btn closeDescriptionModal" id="closeCompositionModal">X</button>
+  <!-- Modal de COMPOSICIÓN -->
+  <div class="modal" id="compositionModal">
+   <div class="modal-content">
+    <button class="close-btn closeDescriptionModal" id="closeCompositionModal">
+     X
+    </button>
     <div class="modal-column">
-      <h2>Ciencias de la Tierra</h2>
-      <div class="button-group">
-        <button>Geología</button>
-        <button>Micro Biologia</button>
-        <button>Ecología</button>
-      </div>
+     <h2>
+      Ciencias de la Tierra
+     </h2>
+     <div class="button-group">
+      <button>
+       Geolog&iacute;a
+      </button>
+      <button>
+       Micro Biologia
+      </button>
+      <button>
+       Ecolog&iacute;a
+      </button>
+     </div>
     </div>
     <div class="modal-column">
-      <img src="./img/laguatitafoto2.jpeg" alt="Composición" />
+     <img alt="Composici&oacute;n" src="./img/laguatitafoto2.jpeg"/>
     </div>
+   </div>
   </div>
-</div>
-
-
   <script>
    document.addEventListener("DOMContentLoaded", function () {
   // Función para abrir y cerrar los modales
@@ -125,6 +154,55 @@
     // Agregar "active" al botón seleccionado
     event.currentTarget.classList.add('active');
   }
-</script>
-</body>
+  </script>
+  <div class="modal" id="imagesModal">
+   <div class="modal-content">
+    <button class="close-btn closeDescriptionModal" id="closeImagesModal">
+     X
+    </button>
+    <div class="modal-column" style="padding: 20px;">
+     <h2>
+      Im&aacute;genes
+     </h2>
+     <p>
+      Contenido de im&aacute;genes por definir...
+     </p>
+    </div>
+   </div>
+  </div>
+  <script class="injected-modal-script">
+   document.addEventListener("DOMContentLoaded", function () {
+  function setupModalInjected(buttonId, modalId, closeId) {
+    const button = document.getElementById(buttonId);
+    const modal = document.getElementById(modalId);
+    const close = document.getElementById(closeId);
+
+    if (button && modal && close) {
+      button.addEventListener("click", function () {
+        modal.style.display = "flex";
+      });
+      close.addEventListener("click", function () {
+        modal.style.display = "none";
+      });
+      window.addEventListener("click", function (event) {
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      });
+    }
+  }
+
+  setupModalInjected("descriptionButton", "descriptionModal", "closeDescriptionModal");
+  setupModalInjected("locationButton", "locationModal", "closeLocationModal");
+  setupModalInjected("compositionButton", "compositionModal", "closeCompositionModal");
+  setupModalInjected("imagesButton", "imagesModal", "closeImagesModal");
+
+  document.querySelectorAll(".modal").forEach((m) => {
+    if (m.style.display !== "none" && m.style.display !== "flex") {
+        m.style.display = "none";
+    }
+  });
+});
+  </script>
+ </body>
 </html>
