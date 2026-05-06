@@ -101,6 +101,10 @@ margin: 0 auto; /* Centra horizontalmente */
   background-image: url('../img/thumbnails/guatita2_min.jpg');
 }
 
+.bg-66 {
+  background-image: url('./salarLagunaCentro_maricunga.jpg');
+}
+
 /* Efecto al pasar el mouse (se ponen a color) */
 .image-item:hover {
   filter: grayscale(0%); /* Elimina el filtro de blanco y negro */
