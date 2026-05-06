@@ -102,7 +102,7 @@ margin: 0 auto; /* Centra horizontalmente */
 }
 
 .bg-66 {
-  background-image: url('./salarLagunaCentro_maricunga.jpg');
+  background-image: url('src="./salarLagunaCentro_maricunga.jpg');
 }
 
 /* Efecto al pasar el mouse (se ponen a color) */
