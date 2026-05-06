@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Teledetecci&oacute;n | Observatorio OASIS
+  </title>
+  <link href="./css/style.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <div id="indicebody">
+   <div class="row">
+    <div class="logo-oasis" style="text-align: left;">
+     <a href="./index.html">
+      <img alt="Observatorio OASIS" src="./img/OA_Recurso48.png" style="width: 40%; height: auto; display: inline-block; padding-top:4%;"/>
+     </a>
+    </div>
+   </div>
+   <div class="row">
+    <div class="button-container">
+     <a class="button" href="./ecologia.html">
+      ECOLOG&Iacute;A Y SOCIO-ECOLOG&Iacute;A
+     </a>
+     <a class="button" href="./microbiologia.html">
+      MICROBIOLOG&Iacute;A
+     </a>
+     <a class="button" href="./geociencias.html">
+      GEOCIENCIAS
+     </a>
+    </div>
+   </div>
+   <div class="row">
+    <div class="imagen-padding">
+     <img alt="Teledetecci&oacute;n" src="./img/salarCentro.jpeg"/>
+    </div>
+    <div class="titulo2">
+     <h1>
+      Teledetecci&oacute;n
+     </h1>
+    </div>
+    <div class="texto">
+     <h2>
+      Esta secci&oacute;n agrupa todos los mapas interactivos y herramientas de observaci&oacute;n satelital desarrollados para el monitoreo del Salar de Maricunga y sus lagunas.
+     </h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="titulo1">
+     <h1>
+      Lugares de estudio
+     </h1>
+    </div>
+    <div class="iframe-container">
+     <iframe allowfullscreen="" frameborder="0" src="https://proyectooasis-464321.projects.earthengine.app/view/zonasoasis">
+     </iframe>
+    </div>
+    <div class="texto">
+     <h2>
+      Proyecto de investigaci&oacute;n interdisciplinaria que estudia los salares altoandinos del norte de Chile. Su objetivo es comprender los ciclos geoqu&iacute;micos, biogeoqu&iacute;micos y ecol&oacute;gicos de estos ecosistemas, as&iacute; como los impactos sociales y ambientales asociados a la miner&iacute;a del litio.
+
+Desde la geolog&iacute;a, microbiolog&iacute;a, ecolog&iacute;a y ciencias sociales, el proyecto busca generar informaci&oacute;n &uacute;til para la gesti&oacute;n ambiental y la toma de decisiones sobre el uso sostenible de estos territorios.
+ 
+&Aacute;rea de estudio: Regi&oacute;n de Atacama, entre 3.700 y 4.300 m.s.n.m., incluyendo Laguna Verde, Laguna del Negro Francisco, Laguna Santa Rosa y el Salar de Maricunga.
+     </h2>
+    </div>
+    <div class="botones-tematicos">
+     <a class="boton-tema eco" href="./ecologia.html">
+      ECOLOG&Iacute;A Y SOCIO-ECOLOG&Iacute;A
+     </a>
+     <a class="boton-tema micro" href="./microbiologia.html">
+      ECOLOG&Iacute;A MICROBIANA
+     </a>
+     <button class="boton-tema geo">
+      GEOCIENCIAS
+     </button>
+    </div>
+   </div>
+   <div class="row">
+    <div class="titulo2">
+     <h1>
+      Indices monitoreo
+     </h1>
+    </div>
+    <div class="iframe-container">
+     <iframe allowfullscreen="" frameborder="0" id="iframe-indices" src="https://proyectooasis-464321.projects.earthengine.app/view/nwdizonas">
+     </iframe>
+    </div>
+    <div>
+     <p>
+      Selecciona uno de los &iacute;ndices disponibles para visualizar su comportamiento espacial en el &aacute;rea de estudio.
+     </p>
+     <div class="contenedor-botones2">
+      <button class="boton-mapa" id="boton-ndwi">
+       NDWI
+      </button>
+      <button class="boton-mapa" id="boton-ndvi">
+       NDVI
+      </button>
+      <button class="boton-mapa" id="boton-ndsi">
+       SMI
+      </button>
+      <button class="boton-mapa" id="boton-si">
+       STI
+      </button>
+     </div>
+    </div>
+    <div class="tabla-indices">
+     <table>
+      <thead>
+       <tr>
+        <th>
+         &Iacute;ndice
+        </th>
+        <th>
+         Nombre
+        </th>
+        <th>
+         &iquest;Para qu&eacute; sirve?
+        </th>
+        <th>
+         F&oacute;rmula
+        </th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr>
+        <td>
+         NDWI
+        </td>
+        <td>
+         &Iacute;ndice Normalizado de Agua
+        </td>
+        <td>
+         Detecta lagunas, humedales temporales y humedad superficial en vegas
+        </td>
+        <td>
+         (Green &minus; NIR) / (Green + NIR)
+        </td>
+       </tr>
+       <tr>
+        <td>
+         NDVI
+        </td>
+        <td>
+         &Iacute;ndice de Vegetaci&oacute;n
+        </td>
+        <td>
+         Localiza vegas, bofedales y parches de vegetaci&oacute;n en zonas h&uacute;medas
+        </td>
+        <td>
+         (NIR &minus; Red) / (NIR + Red)
+        </td>
+       </tr>
+       <tr>
+        <td>
+         SMI
+        </td>
+        <td>
+         &Iacute;ndice de Humedad del Suelo
+        </td>
+        <td>
+         Estima la humedad superficial del suelo con base en OPTRAM usando Sentinel-2
+        </td>
+        <td>
+         (NDVI &minus; NDVI
+         <sub>
+          dry
+         </sub>
+         ) / (NDVI
+         <sub>
+          wet
+         </sub>
+         &minus; NDVI
+         <sub>
+          dry
+         </sub>
+         )
+        </td>
+       </tr>
+       <tr>
+        <td>
+         STI
+        </td>
+        <td>
+         &Iacute;ndice de Temperatura Superficial
+        </td>
+        <td>
+         Eval&uacute;a la temperatura de la superficie terrestre a partir de Landsat 8 (LST)
+        </td>
+        <td>
+         LST (Kelvin) &minus; 273.15
+        </td>
+       </tr>
+      </tbody>
+     </table>
+    </div>
+   </div>
+   <div class="row">
+    <div class="titulo2">
+     <h1>
+      Indices Laguna Santa Rosa
+     </h1>
+    </div>
+    <div class="iframe-container">
+     <iframe allowfullscreen="" frameborder="0" id="iframe-santarosa" src="https://proyectooasis-464321.projects.earthengine.app/view/ndwindvistarosa">
+     </iframe>
+     <p>
+      Este mapa te permite explorar c&oacute;mo ha cambiado el Sector Santa Rosa desde 2016, usando filtros satelitales que revelan detalles que no siempre vemos a simple vista. Puedes jugar con cinco indicadores: el NDVI y la Clorofila para ver la salud de las plantas, el NDWI para ubicar el agua, el SED para notar qu&eacute; tan turbia est&aacute;, y el BSI para encontrar zonas de tierra expuesta o construcciones. La barra central es para comparar; solo desl&iacute;zala para ver el antes y el despu&eacute;s, o para cruzar datos de distintos a&ntilde;os y ver c&oacute;mo ha evolucionado el paisaje, la humedad y el suelo de manera s&uacute;per visual.
+     </p>
+    </div>
+   </div>
+   <div class="row">
+    <div class="titulo2">
+     <h1>
+      LandCover
+     </h1>
+    </div>
+    <div class="iframe-container">
+     <iframe allowfullscreen="" frameborder="0" id="iframe-landcover" src="https://proyectooasis-464321.projects.earthengine.app/view/landcovermaricunga">
+     </iframe>
+    </div>
+   </div>
+   <div class="row">
+    <div class="titulo1">
+     <h1>
+      Mapa NDVI de zonas de estudio
+     </h1>
+    </div>
+    <div class="texto">
+     <h2>
+      El
+      <strong>
+       NDVI (Normalized Difference Vegetation Index)
+      </strong>
+      es un &iacute;ndice espectral que mide la
+      <strong>
+       cantidad y el vigor de la vegetaci&oacute;n
+      </strong>
+      a partir de im&aacute;genes satelitales. Se calcula comparando la radiaci&oacute;n reflejada en las bandas del
+      <em>
+       infrarrojo cercano (NIR)
+      </em>
+      y del
+      <em>
+       rojo visible
+      </em>
+      , lo que permite identificar &aacute;reas con mayor o menor actividad fotosint&eacute;tica.
+      <br/>
+      <br/>
+      En el contexto del Observatorio OASIS, este indicador es clave para
+      <strong>
+       monitorear los ecosistemas altoandinos
+      </strong>
+      , donde los cambios en la vegetaci&oacute;n reflejan variaciones en la
+      <strong>
+       disponibilidad de agua, el estr&eacute;s ambiental
+      </strong>
+      y la
+      <strong>
+       presi&oacute;n sobre humedales y vegas
+      </strong>
+      .  
+          El an&aacute;lisis temporal del NDVI permite detectar
+      <strong>
+       tendencias de degradaci&oacute;n o recuperaci&oacute;n
+      </strong>
+      , evaluar los efectos de la sequ&iacute;a y comprender c&oacute;mo las comunidades vegetales responden a las fluctuaciones del clima y las actividades humanas.
+      <br/>
+      <br/>
+      El NDVI, que refleja la actividad fotosint&eacute;tica y, por ende, la productividad primaria de cada p&iacute;xel, puede funcionar como un indicador de alerta temprana sobre la condici&oacute;n de la vegetaci&oacute;n. De esta forma, se integran observaciones satelitales validadas con datos de terreno como herramientas de apoyo a la gesti&oacute;n socioambiental de la cuenca de Maricunga.
+     </h2>
+    </div>
+    <div class="iframe-container">
+     <iframe allowfullscreen="" frameborder="0" src="https://proyectooasis-464321.projects.earthengine.app/view/ndvisectorstarosa" title="Mapa NDVI - OASIS">
+     </iframe>
+    </div>
+   </div>
+   <div class="row">
+    <div class="titulo1">
+     <h1>
+      Transecto Laguna Mirador
+     </h1>
+    </div>
+    <div class="iframe-container">
+     <iframe allowfullscreen="" frameborder="0" src="https://proyectooasis-464321.projects.earthengine.app/view/transectomirador50x50" title="Transecto Laguna Santa Rosa">
+     </iframe>
+    </div>
+   </div>
+   <div class="row">
+    <div class="titulo1">
+     <h1>
+      Puntos de muestreo microbiol&oacute;gico
+     </h1>
+    </div>
+    <div class="texto">
+     <h2>
+      El siguiente mapa interactivo muestra los
+      <strong>
+       puntos de muestreo de tapetes microbianos y agua
+      </strong>
+      en las lagunas y
+          sectores de estudio del sistema Maricunga. Cada punto corresponde a una muestra donde se registran las condiciones
+          ambientales del sitio y se obtienen muestras para el an&aacute;lisis de la comunidad microbiana (secuenciaci&oacute;n, abundancia
+          relativa de linajes dominantes y mediciones de gases de efecto invernadero).
+      <br/>
+      <br/>
+      Al hacer clic sobre cada punto, es posible visualizar el
+      <strong>
+       nombre del punto y el sector
+      </strong>
+      asociado, lo que permite
+          relacionar la informaci&oacute;n microbiol&oacute;gica con otros componentes del Observatorio, como la vegetaci&oacute;n, la hidrolog&iacute;a y
+          los gradientes f&iacute;sico&ndash;qu&iacute;micos presentes en la cuenca de Maricunga.
+     </h2>
+    </div>
+    <div class="iframe-container">
+     <iframe allowfullscreen="" frameborder="0" src="https://proyectooasis-464321.projects.earthengine.app/view/micropuntos2025ene" title="Mapa de puntos de muestreo microbiol&oacute;gico - OASIS">
+     </iframe>
+    </div>
+   </div>
+   <div class="row">
+    <div class="titulo1">
+     <h1>
+      Transectos del sector La Guatita
+     </h1>
+    </div>
+    <div class="iframe-container">
+     <iframe allowfullscreen="" frameborder="0" src="https://ee-javidelafountain.projects.earthengine.app/view/transectoslaguatita">
+     </iframe>
+    </div>
+   </div>
+   <footer class="footer-oasis">
+    <div class="footer-text">
+     Proyecto Anillo Tem&aacute;tico Li y Salares &ndash; ANID || ATE2400015 (2024&ndash;2027)
+    </div>
+    <div class="footer-columns">
+     <div class="logos-left">
+      <div class="logo-row">
+       <div class="logo-placeholder">
+       </div>
+       <a href="https://www.udd.cl/" target="_blank">
+        <img alt="UDD" src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-49-scaled.png"/>
+       </a>
+       <a href="https://www.uda.cl/" target="_blank">
+        <img alt="UDA" src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-50.png"/>
+       </a>
+      </div>
+      <div class="logo-row">
+       <a href="https://www.unab.cl/" target="_blank">
+        <img alt="UNAB" src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-55-1024x343.png"/>
+       </a>
+       <a href="https://www.udec.cl/pexterno/" target="_blank">
+        <img alt="UdeC" src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-54-1024x388.png"/>
+       </a>
+       <a href="https://www.ufro.cl/" target="_blank">
+        <img alt="UFRO" src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-53-1024x358.png"/>
+       </a>
+       <a class="logos-smi" href="https://smiicechile.cl/" target="_blank">
+        <img alt="SMI ICE Chile" src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-52-1024x127.png" style="width: 40%; height: auto; display: inline-block;"/>
+       </a>
+      </div>
+     </div>
+     <div class="logo-anid">
+      <a href="https://anid.cl/" target="_blank">
+       <img alt="ANID" src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-51-1024x932.png"/>
+      </a>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+   const iframe_indices = document.getElementById('iframe-indices');
+
+  document.getElementById('boton-ndwi').addEventListener('click', function() {
+    iframe_indices.src = "https://proyectooasis-464321.projects.earthengine.app/view/nwdizonas";
+  });
+
+  document.getElementById('boton-ndvi').addEventListener('click', function() {
+    iframe_indices.src = "https://proyectooasis-464321.projects.earthengine.app/view/ndvizonas";
+  });
+
+  document.getElementById('boton-ndsi').addEventListener('click', function() {
+    iframe_indices.src = "https://proyectooasis-464321.projects.earthengine.app/view/smizonas"; // pendiente
+  });
+
+  document.getElementById('boton-si').addEventListener('click', function() {
+    iframe_indices.src = "https://proyectooasis-464321.projects.earthengine.app/view/stizonas"; // pendiente
+  });
+  </script>
+ </body>
+</html>
