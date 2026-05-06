@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Índice de la Página</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+ <div id="indicebody" >
+  <!-- Sección principal con fondo blanco -->
+ <div class="row">
+<div class="index-container-arriba">
+  <div class="logo-oasis" style="text-align: left;">
+    <img src="./img/OA_Recurso48.png" 
+         alt="Logo Observatorio OASIS" 
+         style="width: 40%; height: auto; display: inline-block; padding-top:4%;">
+  </div>
+</div>
+
+  <!-- Cuadrado dividido en 5 -->
+  <div class="index-container">
+    <div class="image-grid">
+      <a href="./transectoMirador1.html" class="image-item bg-11"></a>
+      <a href="./transectolaGallina.html" class="image-item bg-22"></a>
+      <a href="./transectoSal.html" class="image-item bg-33"></a>
+      <a href="./transectoMirador2.html" class="image-item bg-44"></a>
+      <a href="./transectoBofedalintervenido.html" class="image-item bg-55"></a>
+    </div>
+  </div>
+
+  <!-- Sección de la bajada alineada a la derecha -->
+  <div class="index-container-abajo">
+    <div class="bajada"> 
+      <h4>Texturas </h4><h3>| Parque Nacional Nevado Tres Cruces - Región de Atacama |</h3><h4> Haz click en una imagen</h4>
+    </div>
+  </div>
+ </div>
+ <div class="row">
+    <div class="titulo1">
+      <h1>Lugares de estudio</h1>
+    </div>
+    <div class="iframe-container">
+    <iframe 
+      src="https://proyectooasis-464321.projects.earthengine.app/view/zonasoasis" 
+      frameborder="0"
+      allowfullscreen>
+    </iframe>
+  </div>
+<div class="texto">
+  <h2>Proyecto de investigación interdisciplinaria que estudia los salares altoandinos del norte de Chile. Su objetivo es comprender los ciclos geoquímicos, biogeoquímicos y ecológicos de estos ecosistemas, así como los impactos sociales y ambientales asociados a la minería del litio.
+
+Desde la geología, microbiología, ecología y ciencias sociales, el proyecto busca generar información útil para la gestión ambiental y la toma de decisiones sobre el uso sostenible de estos territorios.
+ 
+Área de estudio: Región de Atacama, entre 3.700 y 4.300 m.s.n.m., incluyendo Laguna Verde, Laguna del Negro Francisco, Laguna Santa Rosa y el Salar de Maricunga.</h2>
+</div>
+    <div class="botones-tematicos">
+  <a href="./ecologia.html" class="boton-tema eco">
+  ECOLOGÍA Y SOCIO-ECOLOGÍA
+</a>
+       <a href="./microbiologia.html" class="boton-tema micro">
+  ECOLOGÍA MICROBIANA
+</a>
+
+  <button class="boton-tema geo">GEOCIENCIAS</button>
+</div>
+
+
+
+    
+  </div>
+<div class="row">
+  <div class="imagen-padding">
+  <img src="./img/IMG_1080.png" alt="Dos flamencos en una laguna" >
+  
+  </div>
+</div>
+  <div class="row">
+ <div class="titulo2">
+      <h1>Indices monitoreo</h1>
+    </div>
+    <div class="iframe-container">
+   <iframe 
+  id="iframe-indices"
+  src="https://proyectooasis-464321.projects.earthengine.app/view/nwdizonas" 
+  frameborder="0"
+  allowfullscreen>
+</iframe>
+
+  </div>
+    <div>
+      <p>Selecciona uno de los índices disponibles para visualizar su comportamiento espacial en el área de estudio.</p>
+      <div class="contenedor-botones2">
+  <button class="boton-mapa" id="boton-ndwi">NDWI</button>
+        <button class="boton-mapa" id="boton-ndvi">NDVI</button>
+  <button class="boton-mapa" id="boton-ndsi">SMI</button>
+        <button class="boton-mapa" id="boton-si">STI</button>
+</div>
+    </div>
+     <div class="tabla-indices">
+  <table>
+  <thead>
+    <tr>
+      <th>Índice</th>
+      <th>Nombre</th>
+      <th>¿Para qué sirve?</th>
+      <th>Fórmula</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>NDWI</td>
+      <td>Índice Normalizado de Agua</td>
+      <td>Detecta lagunas, humedales temporales y humedad superficial en vegas</td>
+      <td>(Green − NIR) / (Green + NIR)</td>
+    </tr>
+    <tr>
+      <td>NDVI</td>
+      <td>Índice de Vegetación</td>
+      <td>Localiza vegas, bofedales y parches de vegetación en zonas húmedas</td>
+      <td>(NIR − Red) / (NIR + Red)</td>
+    </tr>
+    <tr>
+      <td>SMI</td>
+      <td>Índice de Humedad del Suelo</td>
+      <td>Estima la humedad superficial del suelo con base en OPTRAM usando Sentinel-2</td>
+      <td>(NDVI − NDVI<sub>dry</sub>) / (NDVI<sub>wet</sub> − NDVI<sub>dry</sub>)</td>
+    </tr>
+    <tr>
+      <td>STI</td>
+      <td>Índice de Temperatura Superficial</td>
+      <td>Evalúa la temperatura de la superficie terrestre a partir de Landsat 8 (LST)</td>
+      <td>LST (Kelvin) − 273.15</td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+  </div>
+<div class="row">
+  <div class="imagen-padding">
+  <img src="./img/salarCentro.jpeg" alt="centro del salar" >
+  
+  </div>
+</div>
+ <div class="row">
+ <div class="titulo2">
+      <h1>Indices Laguna Santa Rosa</h1>
+    </div>
+    <div class="iframe-container">
+   <iframe 
+  id="iframe-santarosa"
+  src="https://proyectooasis-464321.projects.earthengine.app/view/ndwindvistarosa" 
+  frameborder="0"
+  allowfullscreen>
+</iframe>
+      <p>Este mapa te permite explorar cómo ha cambiado el Sector Santa Rosa desde 2016, usando filtros satelitales que revelan detalles que no siempre vemos a simple vista. Puedes jugar con cinco indicadores: el NDVI y la Clorofila para ver la salud de las plantas, el NDWI para ubicar el agua, el SED para notar qué tan turbia está, y el BSI para encontrar zonas de tierra expuesta o construcciones. La barra central es para comparar; solo deslízala para ver el antes y el después, o para cruzar datos de distintos años y ver cómo ha evolucionado el paisaje, la humedad y el suelo de manera súper visual.</p>
+  </div>
+  </div>
+
+   
+  <div class="row">
+ <div class="titulo2">
+      <h1>LandCover</h1>
+    </div>
+    <div class="iframe-container">
+   <iframe 
+  id="iframe-landcover"
+  src="https://proyectooasis-464321.projects.earthengine.app/view/landcovermaricunga" 
+  frameborder="0"
+  allowfullscreen>
+</iframe>
+
+  </div>
+  </div>
+<footer class="footer-oasis">
+  <div class="footer-text">
+    Proyecto Anillo Temático Li y Salares – ANID || ATE2400015 (2024–2027)
+  </div>
+
+  <div class="footer-columns">
+    <div class="logos-left">
+      <div class="logo-row">
+        <!-- Fila Superior -->
+        <a href="https://www.udd.cl/" target="_blank">
+          <img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-49-scaled.png" alt="UDD">
+        </a>
+        <a href="https://www.uda.cl/" target="_blank">
+          <img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-50.png" alt="UDA">
+        </a>
+        <a href="https://www.unab.cl/" target="_blank">
+          <img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-55-1024x343.png" alt="UNAB">
+        </a>
+      </div>
+      <div class="logo-row">
+        <!-- Fila Inferior -->
+        <a href="https://www.udec.cl/pexterno/" target="_blank">
+          <img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-54-1024x388.png" alt="UdeC">
+        </a>
+        <a href="https://www.ufro.cl/" target="_blank">
+          <img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-53-1024x358.png" alt="UFRO">
+        </a>
+        <a class="logos-smi" href="https://smiicechile.cl/" target="_blank">
+          <img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-52-1024x127.png" alt="SMI ICE Chile">
+        </a>
+      </div>
+    </div>
+
+    <div class="logo-anid">
+      <a href="https://anid.cl/" target="_blank">
+        <img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-51-1024x932.png" alt="ANID">
+      </a>
+    </div>
+  </div>
+</footer>
+
+</div>  
+ <script>
+  const iframe_indices = document.getElementById('iframe-indices');
+
+  document.getElementById('boton-ndwi').addEventListener('click', function() {
+    iframe_indices.src = "https://proyectooasis-464321.projects.earthengine.app/view/nwdizonas";
+  });
+
+  document.getElementById('boton-ndvi').addEventListener('click', function() {
+    iframe_indices.src = "https://proyectooasis-464321.projects.earthengine.app/view/ndvizonas";
+  });
+
+  document.getElementById('boton-ndsi').addEventListener('click', function() {
+    iframe_indices.src = "https://proyectooasis-464321.projects.earthengine.app/view/smizonas"; // pendiente
+  });
+
+  document.getElementById('boton-si').addEventListener('click', function() {
+    iframe_indices.src = "https://proyectooasis-464321.projects.earthengine.app/view/stizonas"; // pendiente
+  });
+</script>
+
+
+</body>
+</html>
