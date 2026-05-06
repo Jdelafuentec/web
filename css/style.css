@@ -783,6 +783,7 @@ img:not(.leaflet-tile):not(.leaflet-marker-icon):not(.leaflet-control-layers-tog
 }
 .row {
   padding-bottom: 4%;
+  margin-bottom: 50px;
 }
 
 .botones-tematicos {
