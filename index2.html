@@ -10,19 +10,21 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   
   <style>
-    /* Estilos para asegurar que el mapa se vea bien en tu layout */
+    /* Estilos para el contenedor del mapa */
     #map { 
-      height: 500px; 
+      height: 550px; 
       width: 100%; 
       border-radius: 4px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      z-index: 1; /* Para evitar conflictos con menús */
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      z-index: 1;
+      border: 2px solid #343b4d; /* Azul Roca aplicado al borde */
     }
     .iframe-container {
-      padding: 20px 0;
+      padding: 25px 0;
       background: none;
     }
     .titulo1 h1 {
+      color: #343b4d; /* Azul Roca en el título */
       margin-bottom: 20px;
     }
   </style>
@@ -30,7 +32,6 @@
 <body>
 
 <div id="indicebody">
-  <!-- Sección principal con fondo blanco -->
   <div class="row">
     <div class="index-container-arriba">
       <div class="logo-oasis" style="text-align: left;">
@@ -40,7 +41,6 @@
       </div>
     </div>
 
-    <!-- Cuadrado dividido en 5 -->
     <div class="index-container">
       <div class="image-grid">
         <a href="./transectoSal.html" class="image-item bg-33"></a>
@@ -51,7 +51,6 @@
       </div>
     </div>
 
-    <!-- Sección de la bajada -->
     <div class="index-container-abajo">
       <div class="bajada"> 
         <h4>Texturas y Ecosistemas </h4><h3>| Parque Nacional Nevado Tres Cruces - Región de Atacama |</h3><h4> Haz click en una imagen</h4>
@@ -65,7 +64,7 @@
     </div>
      
     <div class="texto">
-      <h2>Proyecto de investigación interdisciplinaria que estudia los salares altoandinos del norte de Chile... (texto omitido por brevedad)</h2>
+      <h2>Proyecto de investigación interdisciplinaria que estudia los salares altoandinos del norte de Chile. Su objetivo es comprender los ciclos geoquímicos, biogeoquímicos y ecológicos de estos ecosistemas, así como los impactos sociales y ambientales asociados a la minería del litio.</h2>
     </div>
   </div>
 
@@ -75,7 +74,6 @@
       <h1>Lugares de estudio</h1>
     </div>
     <div class="iframe-container">
-      <!-- Contenedor para Leaflet -->
       <div id="map"></div>
     </div>
 
@@ -97,7 +95,6 @@
     <div class="footer-text">
       Proyecto Anillo Temático Li y Salares – ANID || ATE2400015 (2024–2027)
     </div>
-    <!-- Logos del footer (se mantienen igual que en tu base) -->
     <div class="footer-columns">
       <div class="logos-left">
         <div class="logo-row">
@@ -122,46 +119,44 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
-  // 1. Inicializar Mapa (Centrado en Atacama)
+  // 1. Inicializar Mapa centrado en la zona de interés
   const map = L.map('map').setView([-26.75, -69.15], 9);
 
-  // 2. Capa base satelital
+  // 2. Capa base satelital Esri
   L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
     attribution: 'Esri &mdash; Proyecto OASIS'
   }).addTo(map);
 
-  // 3. Función para cargar capas GeoJSON
-  async function cargarCapa(url, nombre, color) {
+  // 3. Función de carga con los nuevos colores institucionales
+  async function cargarCapa(url, nombre, hexColor) {
     try {
       const response = await fetch(url);
       const data = await response.json();
       L.geoJSON(data, {
         style: {
-          color: color,
-          weight: 2,
-          fillOpacity: 0.3,
-          fillColor: color
+          color: hexColor,      // Color del borde
+          weight: 3,            // Grosor del borde
+          fillOpacity: 0.45,    // Opacidad del relleno
+          fillColor: hexColor   // Color del relleno
         },
         onEachFeature: (feature, layer) => {
-          layer.bindPopup(`<strong>Área:</strong> ${nombre}`);
+          layer.bindPopup(`<strong style="color:#343b4d;">${nombre}</strong><br>Área de estudio OASIS`);
         }
       }).addTo(map);
     } catch (e) {
-      console.error("Error cargando:", nombre, e);
+      console.error("Error al cargar la capa:", nombre, e);
     }
   }
 
-  // 4. Cargar tus archivos específicos de GitHub
-  cargarCapa('https://jdelafuentec.github.io/web/geoJson/polygonMaricunga.geojson', 'Salar de Maricunga', '#00e5ff');
-  cargarCapa('https://jdelafuentec.github.io/web/geoJson/polygonNegroFco.geojson', 'Laguna Negro Francisco', '#ff4d4d');
-  cargarCapa('https://jdelafuentec.github.io/web/geoJson/polygonPedernales.geojson', 'Salar de Pedernales', '#7cff4d');
-
-  /* 
-     Nota sobre los botones NDVI/NDWI:
-     Como eliminaste el iframe de Earth Engine, el script que cambiaba los 'src' 
-     ya no funcionará. Para integrar esos índices en Leaflet, tendrías que 
-     exportarlos como capas de teselas (WMS) o imágenes.
-  */
+  // 4. Carga de GeoJSON con la paleta asignada
+  // Maricunga -> Turquesa Agua
+  cargarCapa('https://jdelafuentec.github.io/web/geoJson/polygonMaricunga.geojson', 'Salar de Maricunga', '#00a99d');
+  
+  // Negro Francisco -> Rosa Fauna (asociado a la fauna de la laguna)
+  cargarCapa('https://jdelafuentec.github.io/web/geoJson/polygonNegroFco.geojson', 'Laguna Negro Francisco', '#FF7BAC');
+  
+  // Pedernales -> Ocre Tierra
+  cargarCapa('https://jdelafuentec.github.io/web/geoJson/polygonPedernales.geojson', 'Salar de Pedernales', '#a98743');
 </script>
 
 </body>
