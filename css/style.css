@@ -752,14 +752,22 @@ font-weight: bold !important;
   }
 }
 
-/* Regla global para imágenes (excluyendo mapa de Leaflet) */
-img:not(.leaflet-tile):not(.leaflet-marker-icon):not(.leaflet-control-layers-toggle) {
+/* Regla global para imágenes (excluyendo mapa de Leaflet y GLightbox) */
+img:not(.leaflet-tile):not(.leaflet-marker-icon):not(.leaflet-control-layers-toggle):not(.gslide-image img):not([class*="glight"]) {
   filter: grayscale(100%);
   transition: filter 0.5s ease;
 }
 
-img:not(.leaflet-tile):not(.leaflet-marker-icon):not(.leaflet-control-layers-toggle):hover {
+img:not(.leaflet-tile):not(.leaflet-marker-icon):not(.leaflet-control-layers-toggle):not(.gslide-image img):not([class*="glight"]):hover {
   filter: grayscale(0%);
+}
+
+/* GLightbox: siempre en color, sin hover */
+.glightbox-container img,
+.gslide-image img,
+.gslide img {
+  filter: grayscale(0%) !important;
+  transition: none !important;
 }
 
 .imagen-padding img {
