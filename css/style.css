@@ -78,27 +78,27 @@ margin: 0 auto; /* Centra horizontalmente */
 
 /* Fondo de la imagen 1 */
 .bg-11 {
-  background-image: url('../img/thumbnails/lagunaMirador_Panorama-1paralaxsi_min.jpg');
+  background-image: url('../img/thumbnails/lagunaMirador_Panorama-1paralaxsi.jpg');
 }
 
 /* Fondo de la imagen 2 */
 .bg-22 {
-  background-image: url('../img/thumbnails/laGallina_min.jpg');
+  background-image: url('../img/thumbnails/laGallina.jpg');
 }
 
 /* Fondo de la imagen 3 */
 .bg-33 {
-  background-image: url('../img/thumbnails/transectoSal_min.jpg');
+  background-image: url('../img/thumbnails/transectoSal.jpg');
 }
 
 /* Fondo de la imagen 4 */
 .bg-44 {
-  background-image: url('../img/thumbnails/transecto6_Panorama_part1_min.jpg');
+  background-image: url('../img/transecto6_Panorama_part1.jpg');
 }
 
 /* Fondo de la imagen 5 */
 .bg-55 {
-  background-image: url('../img/thumbnails/guatita2_min.jpg');
+  background-image: url('../img/thumbnails/guatita2.jpg');
 }
 
 .bg-66 {
