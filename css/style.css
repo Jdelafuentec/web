@@ -620,6 +620,16 @@ font-weight: bold !important;
   display: block;
 }
 
+/* Regla global para imágenes (excluyendo mapa de Leaflet) */
+img:not(.leaflet-tile):not(.leaflet-marker-icon):not(.leaflet-control-layers-toggle) {
+  filter: grayscale(100%);
+  transition: filter 0.5s ease;
+}
+
+img:not(.leaflet-tile):not(.leaflet-marker-icon):not(.leaflet-control-layers-toggle):hover {
+  filter: grayscale(0%);
+}
+
 .imagen-padding img {
   width: 100%;
   height: auto;
@@ -767,6 +777,10 @@ font-weight: bold !important;
   max-height: 40px;
   opacity: 0.8; /* UDD un poco más tenue para darle prioridad visual a ANID */
 }
+
+.footer-oasis img {
+  max-height: 50px;
+}
 .row {
   padding-bottom: 4%;
 }
@@ -821,17 +835,26 @@ font-weight: bold !important;
   background-image: url('../img/piedrasGeo.jpg');
 }
 
-/* Hover: foto a color + texto con el color característico */
+/* Hover: foto a color + texto blanco con resplandor/tinte de color */
 .boton-tema.eco:hover {
-  color: #01A99D;
+  color: white;
+  text-shadow: 0 0 8px #01A99D, 0 0 15px #01A99D, 0 0 25px #01A99D;
+  background-color: rgba(1, 169, 157, 0.5);
+  background-blend-mode: multiply;
 }
 
 .boton-tema.micro:hover {
-  color: #F288A4;
+  color: white;
+  text-shadow: 0 0 8px #F288A4, 0 0 15px #F288A4, 0 0 25px #F288A4;
+  background-color: rgba(242, 136, 164, 0.5);
+  background-blend-mode: multiply;
 }
 
 .boton-tema.geo:hover {
-  color: #AA8744;
+  color: white;
+  text-shadow: 0 0 8px #AA8744, 0 0 15px #AA8744, 0 0 25px #AA8744;
+  background-color: rgba(170, 135, 68, 0.5);
+  background-blend-mode: multiply;
 }
 
 #main-header #logo.appLogo img {
@@ -933,7 +956,6 @@ font-weight: bold !important;
       text-align: center;
       margin-top: 20px;
     }
-
     .logo-oasis img {
       width: 50% !important;
       padding-top: 4% !important;
@@ -947,7 +969,13 @@ font-weight: bold !important;
   border-radius: 4px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.15);
   z-index: 1;
-  border: 2px solid #343b4d; /* Azul Roca */
+  border: none;
+  filter: grayscale(100%);
+  transition: filter 0.5s ease;
+}
+
+#map:hover {
+  filter: grayscale(0%);
 }
 
 .iframe-container {

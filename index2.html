@@ -69,7 +69,7 @@ Desde la geología, microbiología, ecología y ciencias sociales, el proyecto b
       <a href="./ecologia.html" class="boton-tema eco">ECOLOGÍA Y SOCIO-ECOLOGÍA</a>
       <a href="./microbiologia.html" class="boton-tema micro">ECOLOGÍA MICROBIANA</a>
       <a href="./geociencias.html" class="boton-tema geo">GEOCIENCIAS</a>
-      <a href="./remotecensing.html" class="boton-tema micro">CENSADO REMOTO</a>
+      <a href="./remotecensing.html" class="boton-tema micro">TELEDETECCIÓN</a>
     </div>
   </div>
 
@@ -129,6 +129,16 @@ Desde la geología, microbiología, ecología y ciencias sociales, el proyecto b
   // 2. Capa base satelital (Esri World Imagery)
   L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
     attribution: 'Esri &mdash; Proyecto OASIS'
+  }).addTo(map);
+
+  // Capa de Etiquetas (Ciudades, fronteras, parques y algunos cerros)
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Esri'
+  }).addTo(map);
+
+  // Capa de Rutas y Caminos
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Esri'
   }).addTo(map);
 
   // 3. Función para cargar capas con colores específicos
