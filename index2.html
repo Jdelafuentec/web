@@ -9,30 +9,7 @@
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   
-  <style>
-    /* Estilos para el contenedor del mapa */
-    #map { 
-      height: 550px; 
-      width: 100%; 
-      border-radius: 4px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-      z-index: 1;
-      border: 2px solid #343b4d; /* Azul Roca */
-    }
-    .iframe-container {
-      padding: 25px 0;
-      background: none;
-    }
-    .titulo1 h1 {
-      color: #343b4d; /* Azul Roca */
-      margin-bottom: 20px;
-    }
-    /* Estilo para los Popups de Leaflet */
-    .leaflet-popup-content-wrapper {
-      border-radius: 4px;
-      font-family: sans-serif;
-    }
-  </style>
+
 </head>
 <body>
 
@@ -40,10 +17,9 @@
   <!-- Sección principal con fondo blanco -->
   <div class="row">
     <div class="index-container-arriba">
-      <div class="logo-oasis" style="text-align: left;">
+      <div class="logo-oasis">
         <img src="./img/OA_Recurso48.png" 
-             alt="Logo Observatorio OASIS" 
-             style="width: 40%; height: auto; display: inline-block; padding-top:4%;">
+             alt="Logo Observatorio OASIS">
       </div>
     </div>
 
@@ -168,7 +144,7 @@ Desde la geología, microbiología, ecología y ciencias sociales, el proyecto b
           fillColor: hexColor   // Relleno
         },
         onEachFeature: (feature, layer) => {
-          layer.bindPopup(`<strong style="color:#343b4d;">${nombre}</strong><br>Proyecto OASIS`);
+          layer.bindPopup(`<strong class="popup-title">${nombre}</strong><br>Proyecto OASIS`);
         }
       }).addTo(map);
     } catch (e) {

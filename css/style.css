@@ -38,6 +38,17 @@ margin: 0 auto; /* Centra horizontalmente */
   
 }
 
+.logo-oasis {
+  text-align: left;
+}
+
+.logo-oasis img {
+  width: 40%;
+  height: auto;
+  display: inline-block;
+  padding-top: 4%;
+}
+
 
 
 .index-container-abajo {
@@ -102,7 +113,7 @@ margin: 0 auto; /* Centra horizontalmente */
 }
 
 .bg-66 {
-  background-image: url('https://jdelafuentec.github.io/web/salarLagunaCentro_maricunga.jpg');
+  background-image: url('../img/salarLagunaCentro_maricunga.jpg');
 }
 
 /* Efecto al pasar el mouse (se ponen a color) */
@@ -765,15 +776,16 @@ font-weight: bold !important;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 30px;
+  gap: 15px; /* Reducimos el gap para que quepan mejor */
   padding: 5% 5%;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* Permitimos que bajen en móviles si es estrictamente necesario, pero en escritorio cabrán */
   overflow: hidden;
 }
 
 .boton-tema {
-  width: 100%;
-  max-width: 300px;
+  width: 22%; /* Para que 4 ocupen el ~88% y dejen espacio para el gap */
+  min-width: 120px; /* Para que en móviles no sean minúsculos */
+  max-width: 220px; /* Reducimos el máximo para que los 4 entren en pantallas estándar */
   aspect-ratio: 1 / 1;
   height: auto;
   font-size: 1.2rem;
@@ -789,6 +801,11 @@ font-weight: bold !important;
   align-items: center;
   justify-content: center;
   text-align: center;
+  filter: grayscale(100%); /* Comienzan en blanco y negro */
+}
+
+.boton-tema:hover {
+  filter: grayscale(0%); /* Vuelven a tener color al pasar el mouse */
 }
 
 /* Fondo inicial: imagen */
@@ -928,3 +945,32 @@ font-weight: bold !important;
       padding-top: 4% !important;
     }
   }
+
+/* Map and popup styles extracted from index2.html */
+#map { 
+  height: 550px; 
+  width: 100%; 
+  border-radius: 4px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  z-index: 1;
+  border: 2px solid #343b4d; /* Azul Roca */
+}
+
+.iframe-container {
+  padding: 25px 0;
+  background: none;
+}
+
+.titulo1 h1 {
+  color: #343b4d; /* Azul Roca */
+  margin-bottom: 20px;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 4px;
+  font-family: sans-serif;
+}
+
+.popup-title {
+  color: #343b4d;
+}
