@@ -1135,3 +1135,10 @@ img:not(.leaflet-tile):not(.leaflet-marker-icon):not(.leaflet-control-layers-tog
 .popup-title {
   color: #343b4d;
 }
+
+/* GLightbox: imágenes siempre en color dentro del visor */
+.glightbox-container img,
+.gslide-image img {
+  filter: grayscale(0%) !important;
+  transition: none !important;
+}
