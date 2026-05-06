@@ -653,7 +653,14 @@ font-weight: bold !important;
 }
 
 .iframe-container {
-  width:100%;
+  position: relative;
+  width: 100%;
+  height: auto;
+  min-height: 550px; /* Aseguramos al menos esta altura en caso de iframes pequeños */
+  padding-bottom: 0;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
 }
 
 .iframe-container iframe {
@@ -661,6 +668,35 @@ font-weight: bold !important;
   height: 724px !important;
   border: none;
   display: block;
+}
+
+/* Mensaje de advertencia para móviles en mapas de Earth Engine */
+@media (max-width: 768px) {
+  .iframe-container iframe {
+    display: none !important;
+  }
+  
+  .iframe-container {
+    min-height: 250px;
+  }
+
+  .iframe-container::before {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    content: "Para interactuar con el mapa satelital, por favor ingresa desde una pantalla de mayor tamaño (Tablet o Computador).";
+    width: 100%;
+    height: 250px;
+    background-color: #f1f3f5;
+    color: #343b4d;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 20px;
+    border: 2px dashed #01A99D;
+    border-radius: 8px;
+    box-sizing: border-box;
+  }
 }
 
 /* Regla global para imágenes (excluyendo mapa de Leaflet) */
