@@ -979,6 +979,10 @@ img:not(.leaflet-tile):not(.leaflet-marker-icon):not(.leaflet-control-layers-tog
   background-image: url('../img/piedrasGeo.jpg');
 }
 
+.boton-tema.tele {
+  background-image: url('../img/teledeteccion.jpg');
+}
+
 /* Hover: foto a color + texto blanco con resaltado plano */
 .boton-tema span {
   transition: all 0.3s ease;
@@ -1005,6 +1009,13 @@ img:not(.leaflet-tile):not(.leaflet-marker-icon):not(.leaflet-control-layers-tog
 }
 .boton-tema.geo:hover span {
   background-color: #AA8744;
+}
+
+.boton-tema.tele:hover {
+  color: white;
+}
+.boton-tema.tele:hover span {
+  background-color: #343b4d;
 }
 
 #main-header #logo.appLogo img {
