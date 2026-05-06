@@ -17,21 +17,27 @@
       border-radius: 4px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.15);
       z-index: 1;
-      border: 2px solid #343b4d; /* Azul Roca aplicado al borde */
+      border: 2px solid #343b4d; /* Azul Roca */
     }
     .iframe-container {
       padding: 25px 0;
       background: none;
     }
     .titulo1 h1 {
-      color: #343b4d; /* Azul Roca en el título */
+      color: #343b4d; /* Azul Roca */
       margin-bottom: 20px;
+    }
+    /* Estilo para los Popups de Leaflet */
+    .leaflet-popup-content-wrapper {
+      border-radius: 4px;
+      font-family: sans-serif;
     }
   </style>
 </head>
 <body>
 
 <div id="indicebody">
+  <!-- Sección principal con fondo blanco -->
   <div class="row">
     <div class="index-container-arriba">
       <div class="logo-oasis" style="text-align: left;">
@@ -41,6 +47,7 @@
       </div>
     </div>
 
+    <!-- Cuadrado dividido en 5 -->
     <div class="index-container">
       <div class="image-grid">
         <a href="./transectoSal.html" class="image-item bg-33"></a>
@@ -51,6 +58,7 @@
       </div>
     </div>
 
+    <!-- Sección de la bajada alineada a la derecha -->
     <div class="index-container-abajo">
       <div class="bajada"> 
         <h4>Texturas y Ecosistemas </h4><h3>| Parque Nacional Nevado Tres Cruces - Región de Atacama |</h3><h4> Haz click en una imagen</h4>
@@ -64,7 +72,11 @@
     </div>
      
     <div class="texto">
-      <h2>Proyecto de investigación interdisciplinaria que estudia los salares altoandinos del norte de Chile. Su objetivo es comprender los ciclos geoquímicos, biogeoquímicos y ecológicos de estos ecosistemas, así como los impactos sociales y ambientales asociados a la minería del litio.</h2>
+      <h2>Proyecto de investigación interdisciplinaria que estudia los salares altoandinos del norte de Chile. Su objetivo es comprender los ciclos geoquímicos, biogeoquímicos y ecológicos de estos ecosistemas, así como los impactos sociales y ambientales asociados a la minería del litio.
+
+Desde la geología, microbiología, ecología y ciencias sociales, el proyecto busca generar información útil para la gestión ambiental y la toma de decisiones sobre el uso sostenible de estos territorios.
+ 
+Área de estudio: Región de Atacama, entre 3.700 y 4.300 m.s.n.m., incluyendo Laguna Verde, Laguna del Negro Francisco, Laguna Santa Rosa y el Salar de Maricunga.</h2>
     </div>
   </div>
 
@@ -95,21 +107,37 @@
     <div class="footer-text">
       Proyecto Anillo Temático Li y Salares – ANID || ATE2400015 (2024–2027)
     </div>
+
     <div class="footer-columns">
       <div class="logos-left">
         <div class="logo-row">
-          <a href="https://www.udd.cl/" target="_blank"><img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-49-scaled.png" alt="UDD"></a>
-          <a href="https://www.uda.cl/" target="_blank"><img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-50.png" alt="UDA"></a>
-          <a href="https://www.unab.cl/" target="_blank"><img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-55-1024x343.png" alt="UNAB"></a>
+          <a href="https://www.udd.cl/" target="_blank">
+            <img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-49-scaled.png" alt="UDD">
+          </a>
+          <a href="https://www.uda.cl/" target="_blank">
+            <img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-50.png" alt="UDA">
+          </a>
+          <a href="https://www.unab.cl/" target="_blank">
+            <img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-55-1024x343.png" alt="UNAB">
+          </a>
         </div>
         <div class="logo-row">
-          <a href="https://www.udec.cl/pexterno/" target="_blank"><img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-54-1024x388.png" alt="UdeC"></a>
-          <a href="https://www.ufro.cl/" target="_blank"><img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-53-1024x358.png" alt="UFRO"></a>
-          <a class="logos-smi" href="https://smiicechile.cl/" target="_blank"><img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-52-1024x127.png" alt="SMI ICE Chile"></a>
+          <a href="https://www.udec.cl/pexterno/" target="_blank">
+            <img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-54-1024x388.png" alt="UdeC">
+          </a>
+          <a href="https://www.ufro.cl/" target="_blank">
+            <img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-53-1024x358.png" alt="UFRO">
+          </a>
+          <a class="logos-smi" href="https://smiicechile.cl/" target="_blank">
+            <img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-52-1024x127.png" alt="SMI ICE Chile">
+          </a>
         </div>
       </div>
+
       <div class="logo-anid">
-        <a href="https://anid.cl/" target="_blank"><img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-51-1024x932.png" alt="ANID"></a>
+        <a href="https://anid.cl/" target="_blank">
+          <img src="https://oasis.udd.cl/wp-content/uploads/2025/06/OA_Recurso-51-1024x932.png" alt="ANID">
+        </a>
       </div>
     </div>
   </footer>
@@ -119,43 +147,43 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
-  // 1. Inicializar Mapa centrado en la zona de interés
+  // 1. Inicializar Mapa
   const map = L.map('map').setView([-26.75, -69.15], 9);
 
-  // 2. Capa base satelital Esri
+  // 2. Capa base satelital (Esri World Imagery)
   L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
     attribution: 'Esri &mdash; Proyecto OASIS'
   }).addTo(map);
 
-  // 3. Función de carga con los nuevos colores institucionales
+  // 3. Función para cargar capas con colores específicos
   async function cargarCapa(url, nombre, hexColor) {
     try {
       const response = await fetch(url);
       const data = await response.json();
       L.geoJSON(data, {
         style: {
-          color: hexColor,      // Color del borde
-          weight: 3,            // Grosor del borde
-          fillOpacity: 0.45,    // Opacidad del relleno
-          fillColor: hexColor   // Color del relleno
+          color: hexColor,      // Borde
+          weight: 3,            // Grosor
+          fillOpacity: 0.4,     // Relleno
+          fillColor: hexColor   // Relleno
         },
         onEachFeature: (feature, layer) => {
-          layer.bindPopup(`<strong style="color:#343b4d;">${nombre}</strong><br>Área de estudio OASIS`);
+          layer.bindPopup(`<strong style="color:#343b4d;">${nombre}</strong><br>Proyecto OASIS`);
         }
       }).addTo(map);
     } catch (e) {
-      console.error("Error al cargar la capa:", nombre, e);
+      console.error("Error cargando:", nombre, e);
     }
   }
 
-  // 4. Carga de GeoJSON con la paleta asignada
-  // Maricunga -> Turquesa Agua
+  // 4. Carga de los 3 GeoJSON con la paleta solicitada
+  // Maricunga -> TURQUESA AGUA
   cargarCapa('https://jdelafuentec.github.io/web/geoJson/polygonMaricunga.geojson', 'Salar de Maricunga', '#00a99d');
   
-  // Negro Francisco -> Rosa Fauna (asociado a la fauna de la laguna)
+  // Negro Francisco -> ROSA FAUNA
   cargarCapa('https://jdelafuentec.github.io/web/geoJson/polygonNegroFco.geojson', 'Laguna Negro Francisco', '#FF7BAC');
   
-  // Pedernales -> Ocre Tierra
+  // Pedernales -> OCRE TIERRA
   cargarCapa('https://jdelafuentec.github.io/web/geoJson/polygonPedernales.geojson', 'Salar de Pedernales', '#a98743');
 </script>
 
